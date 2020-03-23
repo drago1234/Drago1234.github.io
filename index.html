@@ -1,21 +1,188 @@
----
-layout: home-page
----
-<ol class="post-card-box clearfix">
-  {% for post in paginator.posts %}
-  <li>
-    <div class="post-card">
-      <a href="{{post.url | prepend: site.baseurl}}" class="post-card-image" style="background-image: url( {{ "/assets/img/" | prepend: site.baseurl | append : post.img}} )">
-      </a>
+<!DOCTYPE html> <!-- Required; the HTML 5 standard -->
+<html lang="en">
+	<SCRIPT>
+function passWord() {
+var testV = 1;
+var pass1 = prompt('Please Enter the Password','');
+while (testV < 3) {
+if (!pass1) 
+history.go(-1);
+if (pass1.toLowerCase() == "drago") {
+alert('You Got it!');
+window.open("2020 Spring Key.html");
+// window.location.replace("2019 Summer Key.html");
+<!-- window.open('2019 Spring Key.html', "_blank"); -->
+break;
+} 
+testV+=1;
+var pass1 = 
+prompt('Access Denied - Password Incorrect, Please Try Again.','Password');
+}
+if (pass1.toLowerCase()!="password" & testV ==3) 
+history.go(-1);
+return "";
+} 
+</SCRIPT>
 
-      <div class="post-card-body">
-        {% for tag in post.tags %}
-        <a href="{{site.baseurl}}/tags#{{tag}}" class="tag">|&#32;{{ tag }}</a>
-        {% endfor %}
-        <a href="{{post.url | prepend: site.baseurl}}" class="post-card-link"><h3 class="post-card-title">{{post.title}}</h3></a>
-      </div>
+<head> <!-- Required -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Drago's First HTML Page</title>  <!-- Required -->
+	<style media="screen" type="text/css">
+		html {
+			background-color: #FF9500;
+			}
+		body {
+			width: 1000px;
+			margin: 0 auto; <!-- More setting reference: https://developer.mozilla.org/en-US/docs/Web/CSS/margin#Syntax-->
+			background-color: #fefbd8;
+			padding: 20px 20px 20px 20px;
+			border: 5px solid black;
+		}	
+		img {
+		  display: block; <!-- More setting reference: https://developer.mozilla.org/en-US/docs/Web/CSS/display-->
+		  margin: 0 0;
+		}	
+		<!-- 
+		What to do if image overflow?
+		 To rectify this, you can either 1) reduce the image's width using a graphics editor[https://en.wikipedia.org/wiki/Raster_graphics_editor], or 2)  size the image using CSS by setting the width property on the <img> element with a smaller value (e.g., 400 px;).
+		-->
+	</style>
+</head>
 
-    </div>
-  </li>
-  {% endfor %}
-</ol>
+<body style="background-color:#fefbd8;"> <!-- Color with the HEX coded value -->
+
+<CENTER>
+<FORM>
+<input type="button" value="2019 Spring Key" onClick="passWord()">
+<input type="button" value="2019 Summer Key" onClick="passWord()">
+<input type="button" value="2020 Spring Key" onClick="passWord()">
+</FORM>
+</CENTER>
+	<!-- Commmon: This is Drago's first HTML webpage --> <!-- -->
+	
+	<h1> Direct to Surviving Kit</h1>
+	<a href="final.zip"></a>
+	<h2>This is heading 2</h2>
+	<h3>This is heading 3</h3>
+	<h4>This is heading 4</h4>
+	<h5>This is heading 5</h5>
+	<h6>This is heading 6</h6>
+
+	<p style="color:red; background:gray">An paragraph</p>
+	<blockquote>In our experience, those who enjoy the most success are the ones who do the best job prioritizing 
+	the day's activities and accomplishing the most important tasks--not th greatest number of tesks.
+	</blockquote>
+
+	<h3>Image1</h3>
+	<hr />
+	<p>
+		<a
+			href="http://sfwallpaper.com/categories/dragon-ball-z-wallpapers-goku.html">
+			<img src="Images/dragon.jpg" alt="dragon" width="500px"/>
+		</a>
+	</p>
+
+
+	<h3>Table1</h3>
+	<hr /> <!-- Horizontal line -->
+	<br> <!-- Line breaking -->
+	
+<table style="width:100%"> 
+	<tr> <th scope="col"> Header 1 </th>
+		<th scope="col"> Hearder 2 </th>
+	</tr>
+    <tr>
+        <td>Row1, Column1</td>
+        <td>Row1, Column2</td>
+    </tr>
+    <tr>
+        <td>Row2, Column1</td>
+        <td>Row2, Column2</td>
+    </tr>
+</table>
+
+	<h3> List </h3>
+	<hr style="color: red;" />
+	<ol>
+		<li>list1</li>
+		<li>list2</li>
+		<li>list3</li>
+	</ol>
+	<ul>
+		<li>list1</li>
+		<li>list2</li>
+		<li>list3</li>
+	</ul>
+
+	<h3> Form </h3>
+	<hr />
+	<form action="https://en.wikipedia.org/wiki/Bj%C3%B6rn_Ironside" method="post"> 
+	<!-- When button is clicked, an HTTP POST message will be send to corresponding site -->
+		<div>
+			<!-- Why to use div? 
+				<div> tag is a container to wrap up other element and divide HTML to severla section. The developer like 
+				to take the advantage of CSS styles and apply a font to all paragraphs in the <div> tag.
+			-->		
+			First name:<br>
+			<input type="text" name="firstname" value="Bjorn"><br>
+			Last name:<br>
+			<input type="text" name="lastname" value="Ironside"><br>
+			<br>
+			<label for="msg">Message:</label>
+			<textarea id="msg" name="user_message"></textarea>
+
+
+			<br>
+			<button type="submit">Send your message</button>
+			<br>
+			<label> Input: Radio</label>
+			<br>
+			<input type="radio" name="gender" value="male"> Male<br>
+			<input type="radio" name="gender" value="female"> Female<br>
+			<input type="radio" name="gender" value="other"> Other<br>
+
+			<br>
+			<label>Drop-down list</label>
+			<select name="cars">
+				<option value="volvo">Volvo</option>
+				<option value="saab">Saab</option>
+				<option value="fiat">Fiat</option>
+				<option value="audi">Audi</option>
+			</select>
+			
+			<br>
+			
+			
+		</div>
+	</form>
+	
+	<h3> HTML Link </h3><hr/>
+	<label>Intro level</label>
+	<ol>
+		<li><a href="https://www.w3schools.com/html/html_links.asp">WC3 Schools</a></li>
+		<li><a href="https://developers.google.com/university/"> Google School</a></li>
+		<li><a href="https://www.udacity.com/school-of-programming">Udacity's School</a></li>
+		<li><a href="https://developer.mozilla.org/en-US/">MDN web School</a></li>
+	</ol>
+	<label>Extra</label>
+	<ol>
+		<li> <a href="https://www.w3.org/TR/2011/REC-CSS2-20110607/#minitoc">W3C CSS Specification</a></li>
+		<li> Code playgrounds: <a href="http://www.jsfiddle.net">jsfiddle</a>, <a href="http://www.codepen.io">codepen</a>, <a href="http://www.jsbin.com">jsbin</a></li>
+		<li> <a href="http://caniuse.com/">When can I use...</a>compatibility tables for support of HTML5, CSS3, JavaScript</li>
+		<li> <a href="http://www.alistapart.com">A List Apart</a>: articles on web site design and development</li>
+		<li><em>Head First HTML and CSS</em>[<a href="http://proquest.safaribooksonline.com.proxy.lib.ohio-state.edu/book/-/9781449324469" class="Safarilink">online</a>]</li>
+	</ol>		
+	
+	<h3>Special Entities</h3>
+	<p>Speical characters: &quot; &amp; &lt &gt; &nbsp; &copy; &reg; &trade; &pound; &euro; &ldquo; &rdquo;</p>
+	<p>
+		<a href="https://cse.osu.edu/"> <img src="Images/CSE.png" alt = "cse webpage"
+			height="100" width="400" />
+		</a>
+	</p>
+
+
+
+</body>
+
+</html>
