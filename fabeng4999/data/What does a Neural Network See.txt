@@ -1,0 +1,35 @@
+Hi Zhengqi,
+
+I hope you and your family are safe in these difficult times. I have been telling everybody to use this time well. Sure, spend some time reading the news, but make sure you spend a lot more time building your skills. Time is the coin of your life and everybody gets the same 24 hours to spend.
+
+Today we have an interesting post that contains an interesting bag of tricks every Deep Learning engineer should have.
+
+Let's say you have trained a convolutional neural network for image classification.
+
+A lot of times we think of image classification as a black box -- we input an image and out comes a class label ( e.g. cat, dog, camel etc.).
+
+What part of the image did the neural network "see" to make the decision? A naive deep learning engineer has no idea!
+
+This question becomes very important when you are trying to debug a network which is not giving the right results. It is also important when your application requires you to not only output a class label but also explain why a decision was made.
+
+In today's post, we will explain how to answer this question.
+
+https://www.learnopencv.com/cnn-receptive-field-computation-using-backprop/
+
+and the PyTorch code is at
+
+https://github.com/spmallick/learnopencv/tree/master/PyTorch-Receptive-Field-With-Backprop
+
+AI Courses by OpenCV.org
+
+AI Courses by OpenCV.org will open for enrollment until April 6. If you interested in a career in Computer Vision, Machine Learning, and AI, these courses are a perfect start. We were planning to raise the price this time but decided against it because of the difficult times.
+
+Please use the coupon code LEARN-AI-10 at checkout to receive a 10% discount. Here is link to enroll
+
+https://opencv.org/courses/
+
+That's all we wanted to cover in this email.
+
+Cheers!
+
+Satya
