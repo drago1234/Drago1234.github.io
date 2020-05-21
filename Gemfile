@@ -8,4 +8,4 @@ group :jekyll_plugins do
     gem 'jekyll-gist'
     gem 'jekyll-feed'
 end
-
+gem "activesupport", ">= 4.1.11"
