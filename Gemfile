@@ -9,3 +9,4 @@ group :jekyll_plugins do
     gem 'jekyll-feed'
 end
 gem "activesupport", ">= 4.1.11"
+gem 'wdm', '>= 0.1.0'
