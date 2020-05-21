@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<!-- Header  -->
+  {% include head.html %}
+<!-- TO-DO -->
+  {% if jekyll.environment == 'production' %}
+    {% include google-analytics.html %}
+  {% endif %}
+
+  <body>
+<!-- page Navigation panel  -->
+{%include navigation.html %}
+<!-- <div class="masthead">
+      <div class="container">
+        <h3 class="masthead-title">
+          <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+          {% for page in site.pages_list %}
+            &nbsp;&nbsp;&nbsp;<small><a href="{{ page[1] }}">{{ page[0] }}</a></small>
+          {% endfor %}
+        </h3>
+      </div>
+    </div> -->
+
+<!-- page Content -->
+    <div class="container content">
+      {{ content }}
+      {% include comments.html %}
+    </div>
+
+<!-- page Footer -->
+    <div class="footer">
+      <div class="container">
+        <p>
+          &copy;&nbsp;{{ site.time | date: '%Y' }}&nbsp;{{ site.author.name }}. Powered by Jekyll &amp; Lanyon.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

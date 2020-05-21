@@ -1,0 +1,12 @@
+- name: Home
+  link: /home.html
+- name: About
+  link: /about
+- name: Categories
+  link: /categories
+- name: Archive
+  link: /archive
+- name: Feed
+  link: /atom.xml
+- name: FEBENG 4999
+  link: /fabeng4999/FABENG4999H.html

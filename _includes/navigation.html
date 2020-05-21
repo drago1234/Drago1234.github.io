@@ -1,0 +1,12 @@
+<nav>
+  <div class="masthead">
+    <div class="container">
+      <h3 class="masthead-title">
+        <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+        {% for item in site.data.navigation %}
+        &nbsp;&nbsp;&nbsp;<small><a href="{{ item.link }}">{{ item.name }}</a></small>
+        {% endfor %}
+      </h3>
+    </div>
+  </div>
+</nav>

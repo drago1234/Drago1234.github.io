@@ -1,0 +1,66 @@
+# Setup
+title:            "Drago's Blog"
+url:              'https://drago1234.github.io/Drago.github.io/'
+giturl:           'https://drago1234.github.io/Drago.github.io/'
+baseurl:          null
+paginate:         7
+rss:              'atom.xml'
+
+# About
+author:           
+  name:           'Drago'
+
+# List of pages to include in the masthead of the website
+pages_list:
+  # Resume:         
+  About:          '/about'
+  Categories:     '/categories'
+  Tags:           '/tags'
+  Archive:        '/archive'
+  Feed:           '/atom.xml'
+
+# YAML front matter defaults
+defaults:
+  - scope:
+      path:       ''
+      type:       posts
+    values:
+      layout:     post
+      related:    true
+      comments:   true
+  - scope:
+      path:       ''
+      type:       pages
+    values:
+      layout:     page
+      related:    false
+      comments:   false
+
+# Comments
+disqus:           'zhengqi'
+
+# Dependencies
+markdown:         kramdown
+highlighter:      rouge
+lsi:              false
+incremental:      false
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+
+# mimic GitHub Pages with --safe
+whitelist:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+
+# Outputting
+permalink:        pretty
+paginate:         7                      # amount of posts to show per page
+paginate_path:    '/page:num'
+timezone:         'America/New_York'  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
