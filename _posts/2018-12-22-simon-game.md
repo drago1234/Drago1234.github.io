@@ -17,7 +17,6 @@ excerpt: >-
 ## The Simon Game
 ![simon_game](\assets\images\ece_simon_game\simon_game.png)
 
-
 ### Executive Summary: 
 
 The Simon have totally five state: 1) Wait state, the LEDs sequence in a circular pattern; 2)Auto-display state: display the current LEDs sequence; 3)Game state: read the pressed button and check whether input match the displayed sequence; 4)Win state: display the “win” sounds and and “win” sequence; 5)Lost: display the “lose” sounds and and “lose” sequence. During the design process, the Random counter and TEST Controller was modified and the VHDL code was modified for controlling the state of each feature of Simon Game
