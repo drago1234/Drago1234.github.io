@@ -7,7 +7,7 @@ title: About Me
 Welcome!
 
 
-This is a website created with Jekyll. I started to use this blog website to share my idea, and interesting porject, or anything that spark my thought!
+This is a website created with Jekyll. I started to use this blog website to share my idea, interesting porject, and anything that spark my thought!
 
 Let me know if you have any advice for me to improve the site!
 

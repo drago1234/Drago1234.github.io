@@ -15,6 +15,8 @@ excerpt: >-
 ---
 
 ## The Simon Game
+![simon_game](\assets\images\ece_simon_game\simon_game.png)
+
 
 ### Executive Summary: 
 
