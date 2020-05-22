@@ -16,10 +16,12 @@ comments: false
       <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">
         Read more...
       </a>
+      <p>{{ post.url }}</p>
     {% endif %}
   </div>
   {% endfor %}
 </div>
+
 
 <div class="pagination">
   {% if paginator.previous_page %}
