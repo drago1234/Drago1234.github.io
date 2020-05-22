@@ -1,17 +1,17 @@
 ---
 layout: default
 ---
-
+<br/>
 <div class="post">
-  <h1 class="post-title">{{ page.title }}</h1>
   <span class="post-metadata">
     <!-- post date -->
     Published:&nbsp;
     {{ page.date | date: "%B %d, %Y" }}
+    &bull; <a href={{ page.id | absolute_url | append: '#disqus_thread'}}> Post a comment</a>
     <br/>
+    <!-- Note: The category and tag for each post is defiend within post itself. -->
     <!-- post categories -->
     {% if page.categories.size > 0 %}
-
       {% if page.categories.size == 1 %}
         Category:
       {% else %}
@@ -22,10 +22,13 @@ layout: default
       {% for category_name in category_list %}
         {% capture category_id %}{{ category_name | downcase }}{% endcapture %}
         <a class="category-name" href="{{ site.url }}{{ site.baseurl }}/categories/#{{ category_id }}">
-          <i class="fa fa-folder-open" aria-hidden="true"></i>&nbsp;{{ category_name }}
+        <!-- Rerence: https://fontawesome.com/v4.7.0/icon/folder-open -->
+          <i class="fa fa-folder-open" aria-hidden="true"></i>&nbsp; 
+            {{ category_name }}
         </a>
       {% endfor %}
     {% endif %}
+
     <!-- post tags -->
     {% if page.tags.size > 0 %}
       <br/>

@@ -4,6 +4,8 @@
   link: /about
 - name: Categories
   link: /categories
+- name: Tags
+  link: /tags
 - name: Archive
   link: /archive
 - name: Feed

@@ -29,12 +29,12 @@ defaults:
       related:    true
       comments:   true
   - scope:
-      path:       ''
-      type:       pages
+      path:       ""
+      type:       default
     values:
-      layout:     page
-      related:    false
-      comments:   false
+      layout:     default
+      related:    true
+      comments:   true
 
 # Comments
 disqus:           'zhengqi'

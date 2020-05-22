@@ -1,8 +1,9 @@
 ---
-layout: page
+layout: default
 title: "Tags"
 ---
 
+<!-- Displaying all the tag had defined in the site.tag, and sorted in alphabetical order. Note: assign and capture just two keyword for defined a new variables in jekyll. -->
 <div class="tag-list">
   {% assign separator = "; " %}
   {% assign tag_list = "" %}
