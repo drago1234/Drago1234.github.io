@@ -54,8 +54,6 @@ We only need to know how to connect a potentiometer to an analog pin of the Ardu
 
 Basically, we only need to write a program that read values from the potentiometer and then convert that value (which ranges from 0 to 1024) to right values for the Serial Monitor (0-255).
 
-See below for my code on the Arduino IDE, or [view it on my GitHub](https://github.com/philectron/arduino/blob/master/tweak_the_arduino_logo/tweak_the_arduino_logo.ino).
-
 <?prettify?>
 <pre class="prettyprint c-html linenums">
 /**
@@ -69,8 +67,6 @@ See below for my code on the Arduino IDE, or [view it on my GitHub](https://gith
  *
  * Author: Zhengqi Dong
  * Location:  
- * Created: January 07, 2017
- * Updated: June 22, 2017
  */
 
 // Required hardware I/O connections
@@ -97,8 +93,6 @@ This time, I used `Serial.write()`, not `Serial.println()`. `Serial.println()` i
 
 That's what I uploaded to my Arduino. Next step is to write a program on the computer so that my Arduino can communicate with it.
 
-See below for my code on the Processing IDE, or [view it on my GitHub](https://github.com/philectron/arduino/blob/master/tweak_the_arduino_logo/tweak_the_arduino_logo.pde). Note that the `BAUD_RATE` in both programs **MUST BE THE SAME** (in this case, `19200`).
-
 <?prettify?>
 <pre class="prettyprint java-html linenums">
 /**
@@ -112,8 +106,6 @@ See below for my code on the Processing IDE, or [view it on my GitHub](https://g
  *
  * Author: Zhengqi Dong
  * Location:  
- * Created: January 07, 2017
- * Updated: June 22, 2017
  */
 
 import processing.serial.*;
