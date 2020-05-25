@@ -5,64 +5,52 @@ categories:
   - Arduino
 tags:
   - arduino_uno
-  - arduino_projects_book
-  - breadboarding
-  - led
-  - sensor
 excerpt: >-
-  In this project, I will play around with the temperature sensor. I learned a lot of built-in functions through this project.
+  In this project, we will use a temperature sensor to measure the temperature of a person's skin. The warmer your skin the more LED light indicator will be turn on. At the end, we will learn how TMP36 termperature sensor is used to reading off the degree from voltage.
 ---
 
-In this project, I will play around with the temperature sensor. I learned a lot of built-in functions through this project. So, let's prepare a cold hand and a warm hand for the sensor!
+  In this project, we will use a temperature sensor to measure the temperature of a person's skin. The warmer your skin the more LED light indicator will be turn on. At the end, we will learn how TMP36 termperature sensor is used to reading off the degree from voltage.
 
-## **PREPARATION:**
+## **Equipment Setup:**
 
 - 1 x Arduino UNO
 
-![arduino-uno](/images/arduino-uno.jpg)
+![arduino-uno](/images/arduino-projects-book-project-03/arduino_uno.jpg)
 
 - 1 x Breadboard
-
-![breadboard](/images/breadboard.jpg)
-
 - 8 x Jumper wires
 - 3 x 220-ohm resistors
 - 1 x Temperature sensor
 - 3 x LEDs
 
-![parts](/images/arduino-projects-book-project-03/parts.jpg)
-
 ## **BUILDING THE CIRCUIT:**
 
-I used both **ANALOG** and **DIGITAL** in this project. I learned more about **ANALOG** and how to process it in Arduino IDE. Here is my schematic:
+Schematic view:
 
 ![schematic](/images/arduino-projects-book-project-03/schematic.png)
 
-Below is my breadboard layout from [Fritzing](http://fritzing.org/home/):
+Circuit illustration from [Fritzing](http://fritzing.org/home/):
 
 ![breadboard-layout](/images/arduino-projects-book-project-03/breadboard-layout.jpg)
-
-Both of them are available on my [GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/love_o_meter). And here is my circuit. Again, the anode of the LED should be connected to a **DIGITAL** pin, _not_ the **POWER**:
+**POWER**:
 
 ![build](/images/arduino-projects-book-project-03/build.jpg)
 
 ## **THE CODE:**
 
-There're several built-in functions in this project, but I will try my best to explain them in my own way. As always, pay attention to **cAsE sEnSiTiViTy**.
-
 <p align="center"><font face="consolas"><b>Serial.begin(baud_rate);</b></font></p>
 
-This function opens a connection between the Arduino and the computer with a defined speed, `baud_rate`. There're a lot of bit rates, such as 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, or 115200\. I mostly use 9600 and 115200 as my baud rates.
+This function opens a connection between the Arduino and the computer with a defined speed, `baud_rate`, e.g. Serial.begin(9600) says the Arduino and your PC's will communite in 9600 bits per second. (Verify this in the IDE's serial monitor)
 
 <p align="center"><font face="consolas"><b>analogRead(pin);</b></font></p>
 
-Similarly to `digitalRead(pin)`, `analogRead(pin)` will get the value from the particular pin number (from A0 to A5). However, this function will get the **value** of the pin, not just the **state** like `digitalRead()`. That means the value it reads in is a real number (float). The function's range is between 0 and 1023.
+Similarly to `digitalRead(pin)`, `analogRead(pin)` will get the value from the particular pin number (from A0 to A5), and it indicates the voltage of that pin, which varies between 0 and 1023.
 
 <p align="center"><font face="consolas"><b>Serial.print(variable);</b></font></p>
 
-It prints the value of `variable` from the Arduino to the serial monitor. We can view this on the Arduino IDE using the combination `Ctrl + Shift + M`.
+It sends the information from Arduino to your PC, which can be view from the serial monitor.(Serial monitor locate at upper right conner of IDE, or use shortcut `Ctrl + Shift + M`)
 
-Here are some formulas from this lab. They interpret how the sensor works and relationship between the sensor and the voltage:
+Here are the formulas that I used for this lab, which describe the relationship between the sensor and the voltage:
 
 <p align="center"><font face="consolas"><b>float voltage = (sensorValue / 1024.0) * 5.0;</b></font></p>
 
@@ -72,97 +60,93 @@ Voltage is assigned a real value between 0V and 5V. Since the sensor will read a
 
 For this TMP36 temperature sensor, every 10mV equals 1 degree Celsius.
 
-See below for my full code for this project, or view it on [GitHub](https://github.com/philectron/arduino/tree/master/love_o_meter/love_o_meter.ino).
+Here is the code that I used(I modified from original code to have 5 LED. Each degree increase in your skin temperature, one more LED will be turn on. It has more precise indication to measure your skin temerature, which usually range from 32–35 °C, https://hypertextbook.com/facts/2001/AbantyFarzana.shtml)
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">
 /**
  * Project Name: Arduino Projects Book - Project 03: Love-O-Meter
  *
- * File Name: love_o_meter.ino
- *
- * Description: Uses the temperature sensor to test how hot you really are!
- *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
- * Created: September 30, 2015
- * Updated: June 22, 2017
+ * File Name: Project3_Love-o-Meter.ino
+ * Description: 
+ * Author: Zhengqi Dong
+ * Created:
+ * Updated:
  */
 
-// Required hardware I/O connections
-const byte SENSOR_PIN = A0; // connect TMP sensor to A0
-const byte LED_1      = 2;  // connect LED 1 to 2
-const byte LED_2      = 3;  // connect LED 2 to ~3
-const byte LED_3      = 4;  // connect LED 3 to 4
-
-// Global constants
-const float BASE_TEMP = 20.0;
-
-// Global variables
-unsigned int sensor_val;
+const int sensorPin = A0;
+const float baselineTemp = 32.0;
 
 void setup() {
-    Serial.begin(9600);
-
-    for (byte pin = LED_1; pin <= LED_3; pin++) {
-        pinMode(pin, OUTPUT);
-        digitalWrite(pin, LOW);
-    }
+  Serial.begin(9600);
+  int pinNumber;
+  for(pinNumber = 2; pinNumber < 7; pinNumber++){
+    pinMode(pinNumber, OUTPUT);
+    digitalWrite(pinNumber, LOW);
+  }
 }
 
 void loop() {
-    // read & print temperature value
-    sensor_val = analogRead(SENSOR_PIN);
-    Serial.print("Sensor value: ");
-    Serial.println(sensor_val);
+  // put your main code here, to run repeatedly:
+  int sensorVal = analogRead(sensorPin);
+  Serial.print("Sensor Value: ");
+  Serial.print(sensorVal);
 
-    // map & print temperature value to voltage
-    float voltage = (sensor_val / 1024.0) * 5.0;
-    Serial.print("Volts: ");
-    Serial.println(voltage);
+  // convert the ADC reading to voltage
+  float voltage = (sensorVal/1024.0) * 5.0;
+  Serial.print(", Volts: ");
+  Serial.print(voltage);
 
-    // from voltage, define temperature
-    float temperature = (voltage - 0.5) * 100;
-    Serial.print("Degrees C: ");
-    Serial.println(temperature);
-    Serial.println();
+  //convert the voltage to temperature in degrees
+  Serial.print(", degress C: ");
+  float temperature = (voltage - 0.5) * 100;
+  Serial.println(temperature);
 
-    // from temperature, indicate the LEDs
-    if ((temperature >= BASE_TEMP)
-            && (temperature < BASE_TEMP + 2)) {
-        digitalWrite(LED_1, HIGH);
-        digitalWrite(LED_2, HIGH); // level 1: all LEDs turned on
-        digitalWrite(LED_3, HIGH);
-    } else if (temperature < BASE_TEMP) {
-        digitalWrite(LED_1, LOW);
-        digitalWrite(LED_2, LOW); // level 0: all LEDs turned off
-        digitalWrite(LED_3, LOW);
-    } else if ((temperature >= BASE_TEMP + 2)
-               && (temperature < BASE_TEMP + 4)) {
-        digitalWrite(LED_1, HIGH);
-        digitalWrite(LED_2, LOW); // level 2: LED_1 turned on, LEDs 2 & 3 turned off
-        digitalWrite(LED_3, LOW);
-    } else if ((temperature >= BASE_TEMP + 4)
-               && (temperature < BASE_TEMP + 6)) {
-        digitalWrite(LED_1, LOW);
-        digitalWrite(LED_2, HIGH); // level 3: LED_2 turned on, LEDs 1 & 3 turned off
-        digitalWrite(LED_3, LOW);
-    } else {
-        digitalWrite(LED_1, LOW);
-        digitalWrite(LED_2, LOW); // level 4: LED 3 turned on, LEDs 1 & 2 turned off
-        digitalWrite(LED_3, HIGH);
-    }
+  //Control how the LED will change with different temperature
+  if(temperature < baselineTemp){
+    digitalWrite(2, LOW);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);    
+  }else if(temperature >= baselineTemp+1 && temperature <= baselineTemp+2){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);    
+  }else if(temperature >= baselineTemp+2 && temperature <= baselineTemp+3){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);    
+  }else if(temperature >= baselineTemp+3 && temperature <= baselineTemp+4){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW); 
+  }else if(temperature >= baselineTemp+4 && temperature <= baselineTemp+5){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    digitalWrite(6, LOW); 
+  }else if(temperature >= baselineTemp+5 && temperature <= baselineTemp+6){
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    digitalWrite(6, HIGH); 
+  }
 }
 </pre>
 
-## **USING:**
+## **Video Explanation:**
 
-Place the cold hand on the temperature sensor, then place the hot hand. There will be some magical changes in the LEDs.
-
+Here is more detailed explanation of those electronic componenet that I used in this lab:
 <div class="embedded-video">
-  <iframe width="720" height="405" src="https://www.youtube.com/embed/B_oXmm7LXKk?list=PLt_UZum7NVtmFEVMdv4XH8TgXzJvzd78x" frameborder="0" allowfullscreen></iframe>
+  <iframe width="720" height="405" src="https://www.youtube.com/watch?v=tjamdT8UPZY" frameborder="0" allowfullscreen></iframe>
 </div>
 
-## **WRAP UP:**
-
-Today I have learned a bunch of new commands and cool things about the temperature sensor. I'm very tired now. I need to sleep. Thanks for reading!

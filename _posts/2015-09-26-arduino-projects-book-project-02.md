@@ -1,53 +1,108 @@
 ---
-title: 'Arduino Projects Book - Project 02: Spaceship Interface'
+title: 'Arduino Projects Book - Project 02: SOS -- Morse Code Emergence Distress Singal'
 date: '2015-09-26 17:06:46'
 categories:
   - Arduino
 tags:
-  - arduino_projects_book
   - arduino_uno
-  - breadboarding
+
 excerpt: >-
-  In this project, I learned about digital inputs and outputs and wrote my first
-  Arduino program. It took me about 45 minutes to complete this project.
+  In this lab, I modified the original project to a SOS signal indicator. 
 ---
 
-In this project, I learned about digital inputs and outputs and wrote my first Arduino program. It took me about 45 minutes to complete this project.
+## **Motivation**
+Imagine a situation where the Flash floods swept through your hometown, and your house was surrounded by the water, What to do? 
+![flood](/images/arduino-projects-book-project-02/flood.jpg)
 
-## **DIGITAL PINS:**
+What might be a easy way to send a helping message? ==> S.O.S
 
-There is a **Digital (PWM~)** zone on the Arduino. In this project, we will use pin ~5, 4, ~3 and 2. Arduino digital pins can read only two states: `LOW` and `HIGH`. `LOW` means "there is no voltage on this pin," and `HIGH` means "There is voltage here." Setting a pin `LOW` means turning it off. Vice versa, setting a pin `HIGH` means turning it on.
+But, next question is how you want to send it? 
+- Write a message in your house? --> What about the hylicoptor flighting at night?
+- Using flashlight as indicator? --> Cool, but are you gonna standing at your house and doing this whole day?
+
+Now, let me show you a good idea to achieve this with an Arduino board, a couple of LED lights, some resistors, and some wires. After finish this lab, you will be able to implement this on your own less than an hour!
+
+## **Idea:**
+Encode the S.O.S message as Morse code, and repeatefly flash the LED at specific frequency!
+
+Specifically, Here is the Morse code translation:
+- S --> "..." --> 2 milisecond flash
+- O --> "- - -" --> 5 milisecond flash
+
+In this example, I used 2 milisecond flash to represent ".", and 5 milisecond flash to represent "-".  Then, you just throw this into a loop, Power up the kits, Open a favoriate TV channel, and Waiting for the help!
+
+
+## **Lab Setup:**
+
+Supplies:
+- Switch
+- 3 LED light
+- 3 220-ohm Resistors
+- 1 10-kilohm Resistor
 
 ## **BUILDING THE CIRCUIT:**
-
-It's a bit complicated when I build the circuit without copy from the book. The book also recommends covering the breadboard. That's optional.
+![build](/images/arduino-projects-book-project-02/build.png)
 
 ## **THE CODE:**
 
-This is **the most important part of this project**. For me, coding is like transferring life into hardware. So, I will focus on this part.
-
-Every Arduino program must have functions: `void setup()` and `void loop()`. `void setup()` runs only once, whereas `void loop()` runs repeatedly. Other important things are variables. Variables are names we give to places in the Arduino's memory so that we can keep track of what is happening. Variables' names must be **meaningful** and **simple**. For example, `checkNumber` is a meaningful variable, so the users are able to understand it only by looking at its name. However, the variable `x1` doesn't tell them exactly what it is.
-
-In this section, we will learn about some built-in functions, such as `pinMode()`, `digitalRead()`, and `digitalWrite()`. The `pinMode()` function is used for setting up digital pins on the Arduino.
-
 <p align="center"><font face="consolas"><b>pinMode(pin, state);</b></font></p>
 
-`pin` is the address of the pin we want to have access, and `state` can be `OUTPUT` or `INPUT`. `OUTPUT` means popping out electrical energy, and `INPUT` means receiving electrical energy. Note that all programming terms here are **cAsE sEnSiTiVe**. Next, the `digitalRead()` function is a function that reads the pin for voltage.
+You use function `pinMode()` whenever you have a wire connected to the Arduino board, and you want to specify whether you want to use it as input or output. For example: `pinMode(3, OUTPUT)` says "set pin3 as output".
 
 <p align="center"><font face="consolas"><b>digitalRead(pin);</b></font></p>
 
-If `pin` is `LOW`, the function will return `LOW`. Otherwise, it will return `HIGH`. Finally, `digitalWrite()` sets a pin to be `HIGH` or `LOW`.
 
 <p align="center"><font face="consolas"><b>digitalWrite(pin, state);</b></font></p>
+Telling Arduino which pin you want to turn on/off? Ex. `digitalWrite(3, HIGH)`, says "turn on the the LED connected at pin3".
 
-`digitalWrite()` writes the `state` into the selected `pin`. For example, `digitalWrite(LED_PIN, HIGH)` will turn on the LED.
+Here are the entire code that I used: 
 
-Again, pay full attention to the **cAsE sEnSiTiViTy** in the code.
+<?prettify?>
+<pre class="prettyprint cpp-html linenums">
+#define ledPin 4
 
-## **USE IT:**
+int duration[] = {200, 200, 200, 500, 500, 500, 200, 200, 200};
+int swtichState = 0;
+void setup() {
+  pinMode(2, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+}
 
-When done with programming, verify the program and upload it to the Arduino. The Arduino will turn on the green LED if the switch is pressed. Those two LEDs will start blinking. Hardware always looks cooler when it contains software.
+/* Function: blink the red LED when button is pressed. */
+void loop() {
+  swtichState = digitalRead(2);
+  if(swtichState == LOW){
+    digitalWrite(3, HIGH);  //green LED
+    digitalWrite(4, LOW);   //red LED
+    digitalWrite(5, LOW);   //red LED
+  }else{ //button is pressed
+    digitalWrite(3, LOW);
+    int i;
+    for(i =0; i<9; i++){
+      flash(duration[i]);
+    }
+    delay(1000);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+    delay(250);   //pause for 2.5 ms
+    digitalWrite(4, LOW);
+    digitalWrite(5, HIGH);
+    delay(250);
+  }
+}
 
-## **WRAP UP:**
+void flash(int delayPeriod){
+  digitalWrite(ledPin, HIGH);
+  delay(delayPeriod);
+  digitalWrite(ledPin, LOW);
+  delay(delayPeriod);
+}
+</pre>
 
-Congratulations! You have created your first Arduino program (and got it working. I believe so).
+## Video Showcase
+<div class="embedded-video">
+  <iframe width="720" height="405" src="https://www.youtube.com/embed/4uTRCNTmnDw" frameborder="0" allowfullscreen></iframe>
+</div>
+
