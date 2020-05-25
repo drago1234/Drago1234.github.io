@@ -1,4 +1,4 @@
-This is a static website which is powered by jekyll, and jekyll is developed based on Ruby. There are couple reason why I'd like to use static site over dynamic site:
+This is a static website which is powered by jekyll, and jekyll is developed based on Ruby. There are couple reason why I'd like to use static site over others:
 * No database
 * More secure
 * Less maintenance
