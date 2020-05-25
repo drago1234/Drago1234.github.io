@@ -84,8 +84,8 @@ See below for my code, or [view it on my GitHub](https://github.com/philectron/a
  *
  * Description: Turns on an LED every 2 second. Operates like an hourglass.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: July 27, 2016
  * Updated: June 22, 2017
  */

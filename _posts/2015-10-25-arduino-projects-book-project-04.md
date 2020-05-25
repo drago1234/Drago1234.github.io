@@ -71,10 +71,8 @@ Here is my full code. It is also available on my [GitHub](https://github.com/phi
  * Description: Indicates different colors on the RGB LED
  * according to the amount of light each photocell receives.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
- * Created: October 25, 2015
- * Updated: June 22, 2017
+ * Author: Zhengqi Dong
+ * Location:  
  */
 
 // Required hardware I/O connections

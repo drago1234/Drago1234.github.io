@@ -95,8 +95,8 @@ See below for my code, or [view it on my GitHub](https://github.com/philectron/a
  * Description: Controls the speed and the direction of the DC motor using
  * two switches and a potentiometer.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: August 21, 2016
  * Updated: June 22, 2017
  */

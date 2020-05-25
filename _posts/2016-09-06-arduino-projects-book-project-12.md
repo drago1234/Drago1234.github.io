@@ -81,8 +81,8 @@ See below for my code, or [view on my GitHub](https://github.com/philectron/ardu
  * Description: Uses the Piezo buzzer to make a secret locking mechanism in
  * order to keep intruders out.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: September 06, 2016
  * Updated: June 22, 2017
  */

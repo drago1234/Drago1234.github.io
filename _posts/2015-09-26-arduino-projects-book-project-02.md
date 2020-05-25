@@ -59,6 +59,14 @@ Here are the entire code that I used:
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">
+/**
+ * Project Name: Arduino Projects Book - Project 02: SOS -- Morse Code Emergence Distress Singal
+ * File Name: Project2_SOS_LED_version.ino
+ * Description: 
+ * Author: Zhengqi Dong
+ * Created:
+ * Updated:
+ */
 #define ledPin 4
 
 int duration[] = {200, 200, 200, 500, 500, 500, 200, 200, 200};

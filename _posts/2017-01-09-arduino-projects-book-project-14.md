@@ -67,8 +67,8 @@ See below for my code on the Arduino IDE, or [view it on my GitHub](https://gith
  * information to the computer. Draws the Arduino logo on the computer screen
  * and adjust the background color by the potentiometer
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: January 07, 2017
  * Updated: June 22, 2017
  */
@@ -110,8 +110,8 @@ See below for my code on the Processing IDE, or [view it on my GitHub](https://g
  * information to the computer. Draws the Arduino logo on the computer screen
  * and adjust the background color by the potentiometer
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: January 07, 2017
  * Updated: June 22, 2017
  */

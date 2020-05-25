@@ -135,8 +135,8 @@ See below for my code, or [view it on my GitHub](https://github.com/philectron/a
  * Description: Uses the LCD to help "predict" the future when tilting the
  * tilt switch.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: August 26, 2016
  * Updated: June 22, 2017
  */

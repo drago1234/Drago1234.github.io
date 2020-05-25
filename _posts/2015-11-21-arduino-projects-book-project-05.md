@@ -83,8 +83,8 @@ Finally, see below for my project 05 code, or [see it on GitHub](https://github.
  *
  * Description: Expresses your feeling by a servo motor.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: November 21, 2015
  * Updated: June 22, 2017
  */

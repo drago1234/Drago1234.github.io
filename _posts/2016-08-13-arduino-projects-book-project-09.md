@@ -89,8 +89,8 @@ See below for my code, or [view it on my GitHub](https://github.com/philectron/a
  *
  * Description: Gets the Arduino to spin a colorful pinwheel using a motor.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: August 13, 2016
  * Updated: June 22, 2017
  */

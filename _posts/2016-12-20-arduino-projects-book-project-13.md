@@ -87,8 +87,8 @@ See below for my code, or [view it on my GitHub](https://github.com/philectron/a
  * Description: Uses the capacitance of your body to turn an LED on/off
  * when you touch a piece of conductive material.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: December 18, 2016
  * Updated: June 22, 2017
  */

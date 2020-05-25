@@ -93,8 +93,8 @@ See below for my code, or view it on [my GitHub](https://github.com/philectron/a
  *
  * Description: Makes a light-based theremin using photocells and a buzzer.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: January 10, 2016
  * Updated: June 22, 2017
  */

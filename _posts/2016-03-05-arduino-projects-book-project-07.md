@@ -82,8 +82,8 @@ Below is [my code](https://github.com/philectron/arduino/blob/master/keyboard_in
  * Description: Simulates keys C, D, E, and F of the real piano
  * using push buttons and piezo buzzer.
  *
- * Author: Phi Luu
- * Location: Portland, Oregon, United States
+ * Author: Zhengqi Dong
+ * Location:  
  * Created: March 05, 2016
  * Updated: June 22, 2017
  */
