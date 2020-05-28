@@ -5,6 +5,7 @@ giturl:           'https://drago1234.github.io'
 baseurl:          null
 paginate:         7
 rss:              'atom.xml'
+# theme: minima
 
 # About
 author:           
