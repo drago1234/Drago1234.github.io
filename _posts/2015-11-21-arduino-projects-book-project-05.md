@@ -85,8 +85,6 @@ Finally, see below for my project 05 code, or [see it on GitHub](https://github.
  *
  * Author: Zhengqi Dong
  * Location:  
- * Created: November 21, 2015
- * Updated: June 22, 2017
  */
 
 // include Servo library for servo motors
