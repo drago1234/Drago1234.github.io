@@ -29,7 +29,7 @@ Favorite Quote:
 8)  "Premature Optimization is the root of all evil." --Knuth
 
 Favorite Question:
-1) What can I do to make the future better? --A entrepreneur
+1) What can I do to make the future better? --A Entrepreneur
 2) Who told you you should be happy? --Vikings
 
 
