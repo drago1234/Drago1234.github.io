@@ -20,12 +20,12 @@ What I see myself:
 
 Favorite Quote:
 1. Don't waste time dreaming of great far-away opportuniies; start to work and improve yourself right now. Someday a small opportuniies will come, and those are often the beginning of greate and amazing things.
-2. A small group of dedicated people can change the world! --A friend of mine
+2. "A small group of dedicated people can change the world!" --A friend of mine
 3. 明天和意外，你永远不知道哪个先来， 下辈子拼的就是健康。
 4. "Imagination is more important than knowledge." --Alber Einstein
 5. "You MULTIPLY your time by giving yourself the EMOTIONAL PERMISSION to spend time on things TODAY that will give you more time TOMORROW" --Rory Vaden
 6. "I am not afraid of a person who knows 10000 kicks. But I am afraid of a person who knows one kick but practices it for 10000 times." --Bruce Lee
-7. You don't measure, you don't know where it spend; If you don't profile, you can't see. 
+7. You don't measure, you don't know; If you don't profile, you can't see. 
 8. "Premature Optimization is the root of all evil." --Knuth
 9. “世界上只有一种真正的英雄主义，那就是在认清生活的真相后依然热爱生活。” --罗曼·罗兰 《米开朗琪罗》
 
