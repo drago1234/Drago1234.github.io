@@ -27,6 +27,7 @@ Favorite Quote:
 6. "I am not afraid of a person who knows 10000 kicks. But I am afraid of a person who knows one kick but practices it for 10000 times." --Bruce Lee
 7. You don't measure, you don't know where it spend; If you don't profile, you can't see. 
 8. "Premature Optimization is the root of all evil." --Knuth
+9. “世界上只有一种真正的英雄主义，那就是在认清生活的真相后依然热爱生活。” --罗曼·罗兰 《米开朗琪罗》
 
 Favorite Question:
 1. What can I do to make the future better? --A Entrepreneur
