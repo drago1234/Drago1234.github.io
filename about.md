@@ -10,7 +10,7 @@ Welcome to my blog!
 This is a website created with Jekyll. I started to use this blog website to share my idea, interesting porject, and anything that spark my thought!
 
 What I see myself:
-1. Personality: Passionate, curious about the world, self-motivated, independent, adaptable, punctuality, self-management, far-sighted, and ambitions.
+1. Personality: Passionate, curious about the world, self-motivated, independent, realistic, adaptable, punctuality, self-management, far-sighted, and ambitions.
 2. Familiar Programming languages: Python, R, C, Ruby, Java, assembly languages, and Matlab.
 3. Familiar algorithms(BFS/DFS, UCS, DLS, A*, dijkstra, and bellman ford) and data structures(String, Array, Stack, Set, Dictionary, Tuple, Hash, Heap, BTree, LinkedList)
 4. Familiar AI topic: ML techniques(LR, SVM, DT, KNN, K-mean), DL techniques(NN, CNN, RNN, LSTM), CV(Monocular Depth estimation), and NLP(Seq2Seq)
