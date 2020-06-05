@@ -7,7 +7,7 @@ title: About Me
 Welcome to my blog!
 
 
-This is a website created with Jekyll. I started to use this blog website to share my idea, interesting porject, and anything that spark my thought!
+I am a techie, a student, study CSE in OSU. This is a website created with Jekyll. I started to use this blog website to share my idea, interesting porject, and anything that spark my thought!
 
 What I see myself:
 1. Personality: Passionate, curious about the world, self-motivated, independent, realistic, adaptable, punctuality, self-management, far-sighted, and ambitions.
@@ -30,6 +30,7 @@ Favorite Quote:
 9. “世界上只有一种真正的英雄主义，那就是在认清生活的真相后依然热爱生活。” --罗曼·罗兰 《米开朗琪罗》
 10.  “When he talks, people listen” -- Warren Buffet
 11.  “Be Fearful When Others Are Greedy and Greedy When Others Are Fearful” -- Warren Buffet
+12.  Speak in such a way that others love to listen; Listen in such a way that other love to speak
 
 Favorite Question:
 1. What can I do to make the future better? --A Entrepreneur
