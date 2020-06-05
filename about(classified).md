@@ -36,6 +36,11 @@ Favorite Question:
 1. What can I do to make the future better? --A Entrepreneur
 2. Who told you you should be happy? --Vikings
 
+---
+[TO-DO]
+[] Add a CAPTCHA feature, https://devblast.com/b/railsjutsu-14-protect-your-rails-forms-with-an-easy-captcha
+[] Study the page structure, D:\Zhengqi Dong\Education\OSU\2019Fall\WebBlog\remicnrd.github.io
+[] Figure out how to use robots.txt
 
 Let me know if you have any advice for me to improve the site!
 

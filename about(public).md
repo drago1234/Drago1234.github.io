@@ -7,7 +7,7 @@ title: About Me
 Welcome to my blog!
 
 
-I am a techie, a student, study CSE in OSU. This is a website created with Jekyll. I started to use this blog website to share my idea, interesting porject, and anything that spark my thought!
+I am a techie, a student, study CSE in OSU. This is a website created with Jekyll--a free, simple, blog-aware, static site generator. I started to use this blog website to share my idea, interesting porject, and anything that spark my thought!
 
 What I see myself:
 1. Personality: Passionate, curious about the world, self-motivated, independent, realistic, adaptable, punctuality, self-management, far-sighted, and ambitions.
@@ -34,7 +34,8 @@ Favorite Quote:
 Favorite Question:
 1. What can I do to make the future better? --A Entrepreneur
 
-
+---
+More features?
 Let me know if you have any advice for me to improve the site!
 
 ---
