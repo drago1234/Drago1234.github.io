@@ -56,7 +56,7 @@ My tilt switch has 4 legs while the book only demonstrates the two-leg tilt swit
 
 ## **BREADBOARD LAYOUT:**
 
-Here are my EAGLE schematic and virtual breadboard layout. Note that both of these are available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/digital_hourglass):
+Here are my EAGLE schematic and virtual breadboard layout.
 
 ![schematic](/images/arduino-projects-book-project-08/schematic.png)
 
@@ -73,7 +73,7 @@ And this is my real board circuit:
 
 [Recall]({{ site.url }}{{ site.baseurl }}/arduino/2016/01/10/arduino-projects-book-project-06/#arduino-code) that `millis()` function counts the time elapsed after its last call, whereas the `delay()` function completely pauses the Arduino for a given time.
 
-See below for my code, or [view it on my GitHub](https://github.com/philectron/arduino/blob/master/digital_hourglass/digital_hourglass.ino).
+Here is the code: 
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

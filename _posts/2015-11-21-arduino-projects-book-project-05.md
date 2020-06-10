@@ -48,7 +48,7 @@ Here is my breadboard layout from [Fritzing](http://fritzing.org/home/):
 
 ![breadboard-layout](/images/arduino-projects-book-project-05/breadboard-layout.jpg)
 
-As always, these are available on my [GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/mood_cue). Lastly, this is my circuit board:
+Lastly, this is my circuit board:
 
 ![build](/images/arduino-projects-book-project-05/build.jpg)
 
@@ -72,7 +72,7 @@ MyServo.attach(SERVO_PIN);  // the Arduino pin that controls the servo
 MyServo.write(90);          // write the angle
 </pre>
 
-Finally, see below for my project 05 code, or [see it on GitHub](https://github.com/philectron/arduino/blob/master/mood_cue/mood_cue.ino).
+Here is the code: 
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

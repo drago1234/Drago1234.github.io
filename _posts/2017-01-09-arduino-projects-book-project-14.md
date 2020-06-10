@@ -42,7 +42,7 @@ You can download it [here](https://processing.org/download/). After installing P
 
 ## **CIRCUIT LAYOUT:**
 
-We only need to know how to connect a potentiometer to an analog pin of the Arduino. The schematic and the virtual breadboard layout are available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/tweak_the_arduino_logo).
+We only need to know how to connect a potentiometer to an analog pin of the Arduino.
 
 ![schematic](/images/arduino-projects-book-project-14/schematic.png)
 

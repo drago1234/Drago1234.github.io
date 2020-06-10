@@ -24,7 +24,7 @@ In this project, we will simulate how the crystal ball works. People say their w
 
 ## **LCD:**
 
-The LCD can be used to display alphanumeric characters. My LCD has **16 columns and 2 rows, numbering from 0 to 15 and 0 to 1, respectively**. There are 16 pins on the LCD circuit. To make it work, we have to connect them correctly. The following figure is a snippet of the [LCD data sheet](https://github.com/philectron/arduino/blob/master/data_sheets/JHD_JHD659_LCD.pdf).
+The LCD can be used to display alphanumeric characters. My LCD has **16 columns and 2 rows, numbering from 0 to 15 and 0 to 1, respectively**. 
 
 ![lcd-pins](/images/arduino-projects-book-project-11/lcd-pins.png)
 
@@ -78,7 +78,7 @@ This is the breadboard layout. It's a bit different from the schematic.
 
 ![breadboard-layout](/images/arduino-projects-book-project-11/breadboard-layout.jpg)
 
-The schematic and the breadboard layout are available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/crystal_ball). It took me long enough to build the circuit. It's really complicated at the first look. But just focus on the connection of each pin, it became easier. The circuit looks really messy.
+ It took me long enough to build the circuit. It's really complicated at the first look. But just focus on the connection of each pin, it became easier. The circuit looks really messy.
 
 ![build](/images/arduino-projects-book-project-11/build.jpg)
 
@@ -123,8 +123,7 @@ switch (variable) {
 
 `switch()` is similar to `if()`, but it makes the code look when we need to branch the code by different conditions of the same variable. **It is important to put a** `break` **statement at the end of each case** in order to break of the `switch()` statement when `variable` falls into one of the values of the cases. If there is no `break` statement, the code will still fall into one of the cases, but it will continue executing the code of the cases after that. In most situations, it's not a good idea.
 
-See below for my code, or [view it on my GitHub](https://github.com/philectron/arduino/blob/master/crystal_ball/crystal_ball.ino).
-
+Here is the code: 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">
 /**

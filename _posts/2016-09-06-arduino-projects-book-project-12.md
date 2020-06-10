@@ -61,15 +61,13 @@ And this is my breadboard layout:
 
 ![breadboard-layout](/images/arduino-projects-book-project-12/breadboard-layout.jpg)
 
-As always, the schematic and the breadboard layout are available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/knock_lock). I built my circuit and put it in a box.
-
 ![build](/images/arduino-projects-book-project-12/build.jpg)
 
 ## **CODE:**
 
 We first encounter function in this project. Instead of writing our code repetitively, we will only write those lines of code once in a function and call that function over and over again. Functions are good for us because we are not only able to **reuse** the code but also make our **main code more readable**.
 
-See below for my code, or [view on my GitHub](https://github.com/philectron/arduino/blob/master/knock_lock/knock_lock.ino).
+Here is the code: 
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

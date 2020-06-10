@@ -56,7 +56,7 @@ and the breadboard layout:
 
 ![breadboard-layout](/images/arduino-projects-book-project-07/breadboard-layout.jpg)
 
-They are also available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/keyboard_instrument). This is my real board layout:
+This is my real board layout:
 
 ![build](/images/arduino-projects-book-project-07/build.jpg)
 
@@ -70,7 +70,7 @@ They are also available on [my GitHub](https://github.com/philectron/pcb/tree/ma
 
 `noTone()` is used to **mute** the buzzer. There is only 1 parameter for this function, which is the **pin number**.
 
-Below is [my code](https://github.com/philectron/arduino/blob/master/keyboard_instrument/keyboard_instrument.ino).
+Here is the code: 
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

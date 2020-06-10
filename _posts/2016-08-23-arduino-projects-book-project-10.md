@@ -40,7 +40,6 @@ The figure on the left shows the pin structure of the 20-pin IC; I don't use it,
 - Since we plan to control the **direction** of the DC motor, we can hook one lead of the motor to `OUTPUT 1` and the other lead to `OUTPUT 2`. **Circuit 1 and Circuit 2 act like a polarity-controlled diode, which means they can change the one-way direction of the current according to `INPUT 1` and `INPUT 2`**. If `INPUT 1 = HIGH` and `INPUT 2 = LOW`, the current will flow from `OUTPUT 1` to `OUTPUT 2`, resulting in the motor spinning in one direction; the vice versa is also true, resulting in the motor spinning in another direction.
 - **V<sub>s</sub>** should be connected to `+9V` because the motor draws a lot of energy, whereas the **V<sub>ss</sub>** should be connected to `+5V` of the Arduino.
 
-For more information, see the [IC data sheet](https://github.com/philectron/arduino/blob/master/data_sheets/st_L293D_IC.pdf).
 
 ## **PULSE-WIDTH MODULATION (PWM):**
 
@@ -77,13 +76,13 @@ And this is the virtual layout of my breadboard:
 
 ![breadboard-layout](/images/arduino-projects-book-project-10/breadboard-layout.jpg)
 
-As always, they are available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/zoetrope). Finally, this is how I wired my circuit:
+Finally, this is how I wired my circuit:
 
 ![build](/images/arduino-projects-book-project-10/build.jpg)
 
 ## **CODE:**
 
-See below for my code, or [view it on my GitHub](https://github.com/philectron/arduino/blob/master/zoetrope/zoetrope.ino).
+Here is the code: 
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

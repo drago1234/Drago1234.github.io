@@ -65,7 +65,7 @@ And this is my breadboard layout:
 
 ![breadboard-layout](/images/arduino-projects-book-project-13/breadboard-layout.png)
 
-As always, they are available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/touchy_feely_lamp). See below for my circuit.
+See below for the circuit.
 
 ![build](/images/arduino-projects-book-project-13/build.jpg)
 
@@ -75,7 +75,7 @@ The code for this project is quite simple. Like the book, I used an LED to indic
 
 The author, Paul Badger, makes things easier for us in the `CapcitiveSensor.h` library. We only need to `#include` the library, set the send and receive pins, name the instance (in this case, `CapSensor`), and then write `CapSensor.capacitiveSensor(number_of_samples)`. I suggest that `number_of_samples` should be `30`. If there are too few samples, the sensor will not capture the intermediate changes; if there are too many samples, the sensor will fatigue and will cause lag.
 
-See below for my code, or [view it on my GitHub](https://github.com/philectron/arduino/blob/master/touchy_feely_lamp/touchy_feely_lamp.ino).
+Here is the code: 
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

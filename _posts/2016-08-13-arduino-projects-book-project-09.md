@@ -72,13 +72,13 @@ Virtual breadboard layout by Fritzing:
 
 ![breadboard-layout](/images/arduino-projects-book-project-09/breadboard-layout.jpg)
 
-They are available on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/motorized_pinwheel). Here is my circuit layout:
+Here is my circuit layout:
 
 ![build](/images/arduino-projects-book-project-09/build.jpg)
 
 ## **CODE:**
 
-See below for my code, or [view it on my GitHub](https://github.com/philectron/arduino/blob/master/motorized_pinwheel/motorized_pinwheel.ino).
+Here is the code: 
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

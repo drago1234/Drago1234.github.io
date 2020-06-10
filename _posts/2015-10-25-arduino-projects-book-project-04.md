@@ -53,13 +53,13 @@ Here is my breadboard layout from [Fritzing](http://fritzing.org/home/):
 
 ![breadboard-layout](/images/arduino-projects-book-project-04/breadboard-layout.jpg)
 
-Both are available on my [GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/color_mixing_lamp). This is my circuit:
+This is my circuit:
 
 ![build](/images/arduino-projects-book-project-04/build.jpg)
 
 ## **THE CODE:**
 
-Here is my full code. It is also available on my [GitHub](https://github.com/philectron/arduino/blob/master/color_mixing_lamp/color_mixing_lamp.ino).
+Here is the code:
 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">

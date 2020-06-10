@@ -43,7 +43,7 @@ Today, I become a musician! I'll use light to control the piezo buzzer. It's goi
 
 It's quite easy to build the circuit. As usual, the photocell always goes with a 10-kilohm resistor, and the LED always goes with a 220-ohm resistor. We don't need any resistor for the Piezo, though.
 
-Below are my schematic and virtual breadboard layout. See them on [my GitHub](https://github.com/philectron/pcb/tree/master/arduino_repo/light_theremin).
+Below are my schematic and virtual breadboard layout.
 
 ![schematic](/images/arduino-projects-book-project-06/schematic.png)
 
@@ -82,8 +82,7 @@ There are new functions that will be used in this project, `millis()` and `tone(
 
 `tone()` helps us make sound with the piezo buzzer. It takes **three arguments**: what **pin** to play the sound on (in this case pin 2), what **frequency** to play (determined by the pitch variable), and **how long** to play the note (let's try 20 milliseconds).
 
-See below for my code, or view it on [my GitHub](https://github.com/philectron/arduino/blob/master/light_theremin/light_theremin.ino).
-
+Here is the code: 
 <?prettify?>
 <pre class="prettyprint cpp-html linenums">
 /**
