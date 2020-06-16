@@ -29,6 +29,7 @@ Favorite Quote:
 8. "Premature Optimization is the root of all evil." --Knuth
 9. “世界上只有一种真正的英雄主义，那就是在认清生活的真相后依然热爱生活。” --罗曼·罗兰 《米开朗琪罗》
 10.  “When he talks, people listen” -- Warren Buffet
+11.  "运筹帷幄之中，决胜千里之外." -- 司马迁
 
 
 Favorite Question:

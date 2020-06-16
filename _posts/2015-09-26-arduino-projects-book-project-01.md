@@ -55,3 +55,7 @@ Back to the number 220 Ohms. The voltage which we are using is 5V. The maximum c
 ## **WRAP UP:**
 
 This is the first project of this book. It's truly easy. Beginners like me (when I first learned this project) will encounter some difficulties when playing around with electrical components. I hope things went well and you didn't blow up any LEDs!
+
+
+## **Reference:**
+Fitzgerald, S., & Shiloh, M. _Arduino Projects Book_. Arduino AG, 2017

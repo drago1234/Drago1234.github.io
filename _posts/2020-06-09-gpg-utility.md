@@ -1,5 +1,5 @@
 ---
-title: 'gpg utility"
+title: 'gpg utility'
 date: '2020-06-09  22:40:59'
 categories:
   - Cryptography
@@ -50,9 +50,9 @@ Encryption algorithm:
 
 ### Reference:
 
-GPG Tutorial, https://www.devdungeon.com/content/gpg-tutorial#intro
+- GPG Tutorial, https://www.devdungeon.com/content/gpg-tutorial#intro
 dCode, Caesar Cipher, https://www.dcode.fr/tools-list#cryptography
-VeraCrypt, tutorial, https://www.veracrypt.fr/en/Beginner%27s%20Tutorial.html
+- VeraCrypt, tutorial, https://www.veracrypt.fr/en/Beginner%27s%20Tutorial.html
 
 ### Q&A
 

@@ -31,7 +31,7 @@ Specifically, Here is the Morse code translation:
 
 In this example, I used 2 milisecond flash to represent ".", and 5 milisecond flash to represent "-".  Then, you just throw this into a loop, Power up the kits, Open a favoriate TV channel, and Waiting for the help!
 
-
+---
 ## **Lab Setup:**
 
 Supplies:
@@ -39,10 +39,19 @@ Supplies:
 - 3 LED light
 - 3 220-ohm Resistors
 - 1 10-kilohm Resistor
+---
+## **DESIGN THE CIRCUIT:**
 
-## **BUILDING THE CIRCUIT:**
+Circuit Diagrams and Schematic Diagrams:
+
+![schematic diagram](/images/arduino-projects-book-project-02/circuit_diagram_and_schematic_diagram.jpg)
+
+
+The actually setup:
+
 ![build](/images/arduino-projects-book-project-02/build.png)
 
+---
 ## **THE CODE:**
 
 <p align="center"><font face="consolas"><b>pinMode(pin, state);</b></font></p>
@@ -113,4 +122,11 @@ void flash(int delayPeriod){
 <div class="embedded-video">
   <iframe width="720" height="405" src="https://www.youtube.com/embed/4uTRCNTmnDw" frameborder="0" allowfullscreen></iframe>
 </div>
+
+## **Bonus: Resistor color code cheetsheet**
+![resistor_color_code](/images/arduino-projects-book-project-02/resistor_color_code.jpg
+)
+
+## **Reference:**
+Fitzgerald, S., & Shiloh, M. _Arduino Projects Book_. Arduino AG, 2017
 

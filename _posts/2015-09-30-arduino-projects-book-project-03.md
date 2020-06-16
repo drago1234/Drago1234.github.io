@@ -11,7 +11,7 @@ excerpt: >-
 
   In this project, we will use a temperature sensor to measure the temperature of a person's skin. The warmer your skin the more LED light indicator will be turn on. At the end, we will learn how TMP36 termperature sensor is used to reading off the degree from voltage.
 
-## **Equipment Setup:**
+## **Lab Setup:**
 
 - 1 x Arduino UNO
 
@@ -23,19 +23,22 @@ excerpt: >-
 - 1 x Temperature sensor
 - 3 x LEDs
 
-## **BUILDING THE CIRCUIT:**
+---
+## **DESIGN THE CIRCUIT:**
 
 Schematic view:
 
 ![schematic](/images/arduino-projects-book-project-03/schematic.png)
 
-Circuit illustration from [Fritzing](http://fritzing.org/home/):
+Circuit diagrame from [Fritzing](http://fritzing.org/home/):
 
 ![breadboard-layout](/images/arduino-projects-book-project-03/breadboard-layout.jpg)
-**POWER**:
+
+The actually setup:
 
 ![build](/images/arduino-projects-book-project-03/build.jpg)
 
+---
 ## **THE CODE:**
 
 <p align="center"><font face="consolas"><b>Serial.begin(baud_rate);</b></font></p>
@@ -146,7 +149,9 @@ void loop() {
 ## **Video Explanation:**
 
 Here is more detailed explanation of those electronic componenet that I used in this lab:
-<div class="embedded-video">
-  <iframe width="720" height="405" src="https://www.youtube.com/watch?v=tjamdT8UPZY" frameborder="0" allowfullscreen></iframe>
-</div>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/tjamdT8UPZY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+## **Reference:**
+Fitzgerald, S., & Shiloh, M. _Arduino Projects Book_. Arduino AG, 2017
+
 
