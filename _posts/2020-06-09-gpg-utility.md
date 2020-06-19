@@ -50,10 +50,11 @@ Encryption algorithm:
 
 ### Reference:
 
-- GPG Tutorial, https://www.devdungeon.com/content/gpg-tutorial#intro
+- [A very aswsome tutorial] GPG Tutorial, https://www.devdungeon.com/content/gpg-tutorial#intro
 dCode, Caesar Cipher, https://www.dcode.fr/tools-list#cryptography
 - VeraCrypt, tutorial, https://www.veracrypt.fr/en/Beginner%27s%20Tutorial.html
-
+- Introduction to PGP encryption and decryption, https://developer.rackspace.com/blog/introduction-to-pgp-encryption-and-decryption/
+- [Official tutorial] Tutorial for Beginners to PGP, http://www.pitt.edu/~poole/PGP.htm#intro
 ### Q&A
 
 * What tools ar available for File Encryption?
