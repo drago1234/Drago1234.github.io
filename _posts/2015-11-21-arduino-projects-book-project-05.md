@@ -6,9 +6,6 @@ categories:
 tags:
   - arduino_uno
   - arduino_projects_book
-  - breadboarding
-  - motor
-  - potentiometer
 excerpt: >-
   Good evening! Today, I'll continue the next project in the Arduino Projects
   Book, Mood Cue.

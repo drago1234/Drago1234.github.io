@@ -6,10 +6,6 @@ categories:
 tags:
   - arduino_projects_book
   - arduino_uno
-  - breadboarding
-  - diode
-  - mosfet
-  - motor
 excerpt: >-
   Welcome back! Today I'll get the Arduino to spin a colorful pinwheel using a
   **DC motor**. In this project, we will use the DC motor for the first time

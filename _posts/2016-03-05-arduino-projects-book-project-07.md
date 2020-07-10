@@ -6,10 +6,6 @@ categories:
 tags:
   - arduino_uno
   - arduino_projects_book
-  - breadboarding
-  - dac
-  - sound
-  - switch
 excerpt: >-
   Hi there! I'm back with a new project from the Arduino Projects Book -
   Keyboard Instrument. In this project, we will learn how to control a piezo

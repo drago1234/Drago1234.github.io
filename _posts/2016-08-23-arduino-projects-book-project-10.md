@@ -6,12 +6,6 @@ categories:
 tags:
   - arduino_projects_book
   - arduino_uno
-  - breadboarding
-  - ic
-  - motor
-  - potentiometer
-  - pwm
-  - switch
 excerpt: >-
   In the past when people had not yet invented the television, movie theaters
   used a very long ribbon of static images and rolled it very fast to create an

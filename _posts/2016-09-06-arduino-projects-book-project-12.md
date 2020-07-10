@@ -6,10 +6,6 @@ categories:
 tags:
   - arduino_projects_book
   - arduino_uno
-  - breadboarding
-  - motor
-  - sensor
-  - switch
 excerpt: >-
   People protect their property in many different ways. One way they can do that
   is to equip fancy security systems. Those things are expensive, though.

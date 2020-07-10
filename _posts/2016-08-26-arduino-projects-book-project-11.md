@@ -6,10 +6,6 @@ categories:
 tags:
   - arduino_projects_book
   - arduino_uno
-  - breadboarding
-  - lcd
-  - potentiometer
-  - switch
 excerpt: >-
   In this project, we will simulate how the crystal ball works. People say their
   wishes and shake the ball, then it will reveal the answer for the wish.

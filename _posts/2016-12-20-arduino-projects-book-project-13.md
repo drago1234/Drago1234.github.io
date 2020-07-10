@@ -6,9 +6,6 @@ categories:
 tags:
   - arduino_projects_book
   - arduino_uno
-  - breadboarding
-  - led
-  - sensor
 excerpt: >-
   I have been very busy for the last two months. But for now, I have more time
   to blog and do electronics projects. In this article, I'm going to fabricate a

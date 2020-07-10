@@ -6,10 +6,6 @@ categories:
 tags:
   - arduino_uno
   - arduino_projects_book
-  - breadboarding
-  - led
-  - switch
-  - timer
 excerpt: >-
   Once upon a time, people used hourglasses to measure elapsed time... Today,
   I'm coming back to Arduino, and I'll write about the eight project of the
