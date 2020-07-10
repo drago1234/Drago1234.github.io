@@ -15,7 +15,6 @@ excerpt: >-
 
   Extra things: Most of robotic designing procedures can be substituted by three module: Perceptor(What you can see, e.g GPS, ), Controller(How to do with those data and what action you want to take based on what you saw, e.g. some instruction to move the motor), and Actuator(what action you can take, e.g. Hammer, Wheel...)
 ### Introduction: 
-Reference: [reference](https://colab.research.google.com/github/lmoroney/dlaicourse/blob/master/Exercises/Exercise%201%20-%20House%20Prices/Exercise_1_House_Prices_Question.ipynb#scrollTo=PUNO2E6SeURH)
 
 ![housing-price](/assets/images/2020-06-20-housing-price/download.jpg
 )
@@ -72,7 +71,4 @@ print(model.predict([7])*100)
   - input_shape=[1]: input is 1 dimensional data
 - **loss functions and optimizers**: The nerual network has no idea of the relationship between X and Y, so it start with a guess, and it will then use the given data to measure how good or how bad its guess was. The loss function measures this. And then, the given data will pipe to optimizer, and it will generate a new and improved guess that expected to be better than before. As the guesses getting better and betterm, the accuracy will approach to 100%, and the term convergence is used, and it tell us when this training process should be stopped. 
 - **epochs**: epoch=500 means it will go through the training loop 500 times. The training loop is what we described eariler. Make a guess, measure how good or how bad the guesses with the loss function, then use the optimizer and the data to make another guess and repeat this. 
-
-### Reference:
-### Q&A: 
 
