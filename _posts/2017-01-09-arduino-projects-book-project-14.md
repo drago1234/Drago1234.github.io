@@ -6,9 +6,6 @@ categories:
 tags:
   - arduino_projects_book
   - arduino_uno
-  - breadboarding
-  - potentiometer
-  - uart
 excerpt: >-
   Happy new year! I ate and slept too much during the break. This time, I'll
   interact with the Arduino through computer application. I will also introduce
