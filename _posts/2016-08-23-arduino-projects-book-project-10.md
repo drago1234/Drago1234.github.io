@@ -167,10 +167,10 @@ void loop() {
 }
 </pre>
 
-## **USING:**
+<!-- ## **USING:**
 
 There should have been a colorful pinwheel with a black ribbon standing on it and a ribbon of static images inside, but I messed up the ribbons. So, I just wanted my project to be simple.
 
 <div class="embedded-video">
   <iframe width="720" height="405" src="https://www.youtube.com/embed/nnkOkdtcqCw?list=PLt_UZum7NVtmFEVMdv4XH8TgXzJvzd78x" frameborder="0" allowfullscreen></iframe>
-</div>
+</div> -->

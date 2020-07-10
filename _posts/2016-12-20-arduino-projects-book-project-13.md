@@ -131,10 +131,10 @@ void loop() {
 }
 </pre>
 
-## **USING:**
+<!-- ## **USING:**
 
-I fabricated the iPhone touchscreen!
+I fabricated the iPhone touchscreen! -->
 
-<div class="embedded-video">
+<!-- <div class="embedded-video">
   <iframe width="720" height="405" src="https://www.youtube.com/embed/tDmUxVn5jF8?list=PLt_UZum7NVtmFEVMdv4XH8TgXzJvzd78x" frameborder="0" allowfullscreen></iframe>
-</div>
+</div> -->

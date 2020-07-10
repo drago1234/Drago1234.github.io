@@ -124,12 +124,12 @@ void loop() {
     delay(15);
 }
 </pre>
-
+<!-- 
 ## **USING:**
 
 <div class="embedded-video">
   <iframe width="720" height="405" src="https://www.youtube.com/embed/AD3L59OoNMg?list=PLt_UZum7NVtmFEVMdv4XH8TgXzJvzd78x" frameborder="0" allowfullscreen=""></iframe>
-</div>
+</div> -->
 
 ## **WRAP UP:**
 

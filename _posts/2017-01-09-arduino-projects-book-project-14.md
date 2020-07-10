@@ -161,6 +161,6 @@ Once the program runs, it may be reacting slowly to the changing of the potentio
 
 I struggled to get the background change its color. It reacted so slowly. Despite the fact that we can use the combination of Processing and Arduino to do other interesting stuff, I don't think serial communication (UART) is the way to go since [it only has a certain number of bits on the register to operate]({{ site.url }}{{ site.baseurl }}/ti-launchpad/2016/04/06/ut-6-03x-lab-11/).
 
-<div class="embedded-video">
+<!-- <div class="embedded-video">
   <iframe width="720" height="405" src="https://www.youtube.com/embed/U1Zzf9SxN8w?list=PLt_UZum7NVtmFEVMdv4XH8TgXzJvzd78x" frameborder="0" allowfullscreen></iframe>
-</div>
+</div> -->

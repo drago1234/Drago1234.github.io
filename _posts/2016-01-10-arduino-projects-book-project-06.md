@@ -6,9 +6,6 @@ categories:
 tags:
   - arduino_uno
   - arduino_projects_book
-  - breadboarding
-  - sensor
-  - sound
 excerpt: >-
   Today, I become a musician! I'll use light to control the piezo buzzer. It's
   going to be a fun project since the piezo produces a little funny sound. The
@@ -140,8 +137,8 @@ void loop() {
 }
 </pre>
 
-## **USING:**
+<!-- ## **USING:**
 
 <div class="embedded-video">
   <iframe width="720" height="405" src="https://www.youtube.com/embed/9zhW252w_xg?list=PLt_UZum7NVtmFEVMdv4XH8TgXzJvzd78x" frameborder="0" allowfullscreen=""></iframe>
-</div>
+</div> -->
