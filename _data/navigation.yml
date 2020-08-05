@@ -1,9 +1,7 @@
-- name: Home
-  link: /home.html
-- name: About Me
-  link: /about(public)
-- resume:
+- name: Resume
   link: /Zhengqi_Dong_2020_DA_v2.0.pdf
+# - name: About Me
+#   link: /about(public)
 - name: Categories
   link: /categories
 - name: Tags
@@ -12,5 +10,7 @@
   link: /archive
 - name: Feed
   link: /atom.xml
+- name: OSU Portal
+  link: /home.html
 - name: FABENG 4999
   link: /fabeng4999/FABENG4999H.html
