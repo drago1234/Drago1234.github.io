@@ -2,6 +2,8 @@
   link: /home.html
 - name: About Me
   link: /about(public)
+- resume:
+  link: /Zhengqi_Dong_2020_DA_v2.0.pdf
 - name: Categories
   link: /categories
 - name: Tags
