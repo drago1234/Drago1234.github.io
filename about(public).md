@@ -30,10 +30,7 @@ Favorite Quote:
 9. “世界上只有一种真正的英雄主义，那就是在认清生活的真相后依然热爱生活。” --罗曼·罗兰 《米开朗琪罗》
 10.  “When he talks, people listen” -- Warren Buffet
 11.  "运筹帷幄之中，决胜千里之外." -- 司马迁
-
-
-Favorite Question:
-1. What can I do to make the future better? --A Entrepreneur
+12.  20% of your activitie will account for 80% of your results. -- Pareto principle
 
 ---
 More features?
