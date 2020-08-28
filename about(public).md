@@ -10,7 +10,7 @@ Welcome to my blog!
 I am a techie, a student, study CSE in OSU. This is a website created with Jekyll--a free, simple, blog-aware, static site generator. I started to use this blog website to share my idea, interesting porject, and anything that spark my thought!
 
 My toolbox:
-1. Personality: Passionate, curious about the world, self-motivated, independent, realistic, adaptable, punctuality, self-management, far-sighted, and ambitions.
+1. Personality: Passionate, curious, self-motivated, independent, realistic, adaptable, punctual, self-managed, far-sighted, and ambitions.
 2. Familiar Programming languages: Python, R, C, Ruby, Java, assembly languages, and Matlab.
 3. Familiar algorithms(BFS/DFS, UCS, DLS, A*, dijkstra, and bellman ford) and data structures(String, Array, Stack, Set, Dictionary, Tuple, Hash, Heap, BTree, LinkedList)
 4. Familiar AI topic: ML techniques(LR, SVM, DT, KNN, K-mean), DL techniques(NN, CNN, object recognization/detection), and NLP(Seq2Seq, RNN, GRU, LSTM)
