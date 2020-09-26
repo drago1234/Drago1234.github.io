@@ -24,7 +24,7 @@ title: "Categories"
   {% for category_name in category_list %}
     {% capture category_id %}{{ category_name | downcase | replace: "_", "-" }}{% endcapture %}
     <div class="archive-group" id="{{ category_id }}">
-      <h2 class="category-head">{{ category_name }}</h2>
+      <h5 class="category-head">{{ category_name }}</h5>
       <ul>
         {% for post in site.categories[category_name] %}
           <li>

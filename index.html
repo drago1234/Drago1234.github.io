@@ -7,7 +7,7 @@ comments: false
 <div class="posts">
   {% for post in paginator.posts %}
   <div class="post">
-    <h2 class="post-title">{{ post.title }}</h2>
+    <h5 class="post-title">{{ post.title }}</h5>
     <span class="post-metadata">{{ post.date | date: "%B %d, %Y" }}</span>
     {% if post.excerpt == 'status' %}
       {{ post.content }}

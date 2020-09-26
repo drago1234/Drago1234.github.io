@@ -9,7 +9,7 @@ title: "Archive"
     {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
     {% if forloop.first %}
       <div class="archive-group" id="{{ this_year }}">
-        <h2 class="year-head">{{ this_year }}</h2>
+        <h5 class="year-head">{{ this_year }}</h5>
         <ul>
     {% endif %}
     <li>
@@ -28,7 +28,7 @@ title: "Archive"
         </ul>
         </div>
         <div class="archive-group" id="{{ next_year }}">
-          <h2 class="year-head">{{ next_year }}</h2>
+          <h5 class="year-head">{{ next_year }}</h5>
           <ul>
       {% endif %}
     {% endif %}

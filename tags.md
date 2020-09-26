@@ -25,7 +25,7 @@ title: "Tags"
   {% for tag_name in tag_list %}
     {% capture tag_id %}{{ tag_name | downcase | replace: "_", "-" }}{% endcapture %}
     <div class="archive-group" id="{{ tag_id }}">
-      <h2 class="tag-head">{{ tag_name }}</h2>
+      <h5 class="tag-head">{{ tag_name }}</h5>
       <ul>
         {% for post in site.tags[tag_name] %}
           <li>
