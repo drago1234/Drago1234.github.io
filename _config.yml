@@ -13,7 +13,7 @@ author:
 
 # List of pages to include in the masthead of the website
 pages_list:
-  About:          '/about'
+  About:          '/about_me/about_me.html'
   Resume:         '/Zhengqi_Dong_2020_DA_v2.0.pdf'
   Categories:     '/categories'
   Tags:           '/tags'
