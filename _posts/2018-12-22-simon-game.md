@@ -80,6 +80,6 @@ This circuit design project is a very good study material. Throughout the entire
 
 ### Reference:
 
-Reference “Lab 7 – The Simon State Machine, Part 2”, ECE 2060 Lab,Department of Electrical & Computer Engineering
+Reference: “Lab 7 – The Simon State Machine, Part 2”, ECE 2060 Lab,Department of Electrical & Computer Engineering, https://u.osu.edu/ece2060labs/labs/lab-07/
 
 
