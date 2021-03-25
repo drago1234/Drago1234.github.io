@@ -9,7 +9,11 @@ group :jekyll_plugins do
     gem 'jekyll-sitemap'
     gem 'jekyll-gist'
     gem 'jekyll-feed'
+    gem "minimal-mistakes-jekyll"
+    gem "jekyll-remote-theme"
+    gem "jekyll-include-cache"
 end
+
 gem "activesupport", ">= 4.1.11"
 gem 'wdm', '>= 0.1.0'
 # gem 'minima'

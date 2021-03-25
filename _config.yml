@@ -5,7 +5,12 @@ giturl:           'https://drago1234.github.io'
 baseurl:          null
 paginate:         7
 rss:              'atom.xml'
-# theme: minima
+
+# Build settings (Reference for more theme: https://mmistakes.github.io/minimal-mistakes/docs/configuration/#theme)
+# theme: minima 
+# theme: minimal-mistakes-jekyll
+remote_theme: "mmistakes/minimal-mistakes@4.19.0"
+minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 
 # About
 author:           
@@ -65,3 +70,8 @@ permalink:        pretty
 paginate:         7                      # amount of posts to show per page
 paginate_path:    '/page:num'
 timezone:         'America/New_York'  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "G-MDGF2668GJ"
