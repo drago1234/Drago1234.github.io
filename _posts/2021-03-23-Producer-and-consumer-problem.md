@@ -25,6 +25,9 @@ Notice that the order in which items are produced and consumed is critical. We w
 
 ## Terminology:
 * **Thread-safe**: means that the program protects shared data, possibly through the use of mutual exclusion.
+* **Cirtical section**: In short, the code must be executed in sequential order, protected from multiple access at a same time. In other words, a critical section is a piece of code that accesses a shared variable (or more generally, a shared resource) and must not be concurrently executed by more than one thread. -- Textbook p306
+* **Mutual Exclusion**: This property guarantees that if one thread is executing within the critical section, the others will be prevented from doing so. -- Textbook p306
+* **Atomic operation**: In short, it means "all or nothing"; it should either perform all the actions/operations, or that none of them should occur, so no in-between state.
 
 ## Methods:
 * Approach 1: Use lock and condition variable
@@ -65,7 +68,7 @@ void bounded_buffer_destroy(struct bounded_buffer *buffer);
 #endif
 ```
 
-  * Why we need `#ifndef-#define-#endif`? ==>  If this .h file is not defined, we will define it for the first time. It helps to prevent the conflicted definition when you included the same .h file multiple times, which can cause error. So, it's always a good habit to do this for each .h file that you defined.
+* Why we need `#ifndef-#define-#endif`? ==>  If this .h file is not defined, we will define it for the first time. It helps to prevent the conflicted definition when you included the same .h file multiple times, which can cause error. So, it's always a good habit to do this for each .h file that you defined.
 
 * bounded_buffer.c: This file implemented all the abstract functions declared in the bounded_buffer.h file. 
 
@@ -136,9 +139,10 @@ void bounded_buffer_destroy(struct bounded_buffer *buffer){
 }
 ```
 
-* Why do we know when all threads have finished their jobs? ==> You don't, so you cannot simply use `pthread_join` because your might have producer thread that might never return. But, if you don't call `pthread_join`, main thread will terminate quickly and then all threads will be terminated/killed. Instead, in lab4, you can simply use `sleep(# sec)` to wait the thread to finish. ==> This might not a good solution, but we will learn a better solution in lab5.
+* How do we know when all threads have finished their jobs? ==> You don't, so you cannot simply use `pthread_join` because your might have producer thread that might never return. But, if you don't call `pthread_join`, main thread will terminate quickly and then all threads will be terminated/killed. Instead, in lab4, you can simply use `sleep(# sec)` to wait the thread to finish. ==> This might not a good solution, but we will learn a better solution in lab5.
   
 * main.c (producer() and consumer()):
+
 ``` C
 #include "bounded_buffer.h"
 #include <stdio.h>
@@ -190,10 +194,10 @@ int main() {
         pthread_create(&p_consum[j], NULL, consumer, &consum_num[j]);
     }
 
-    /* Sleep for while, waiting for all the thread finish their jobs */
+    /* Sleep for a while, waiting for all the thread finish their jobs */
     sleep(3);
 
-    /* Wait all the child thread to finish ==> Don’t call pthread_join, because some thread might never finish*/
+    /* Wait all the child thread to finish ==> Don’t call pthread_join, because some thread might never finish, e.g., we might have extra producer want to produce items when the buffer is full.*/
     // for (i = 0; i < num_producer; i++) {
 	//     pthread_join(p_prod[i], NULL); 
     // }
@@ -223,7 +227,7 @@ void *producer(void *ptr){
         item = rand() % 100;
         /* insert item into buffer */
         bounded_buffer_push(&queue, &item);
-        // Broadcast all sleeping consumer to consume item and unlock the conditional variable
+        // Broadcast(awake arbitrary sleeping threads if there's one) all sleeping consumer to consume item and unlock the conditional variable
         pthread_cond_broadcast(&queue.cond);
         pthread_mutex_unlock(&queue.mutex);
     }
