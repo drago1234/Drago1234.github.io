@@ -9,8 +9,8 @@ rss:              'atom.xml'
 # Build settings (Reference for more theme: https://mmistakes.github.io/minimal-mistakes/docs/configuration/#theme)
 # theme: minima 
 # theme: minimal-mistakes-jekyll
-remote_theme: "mmistakes/minimal-mistakes@4.19.0"
-minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
+# remote_theme: "mmistakes/minimal-mistakes@4.19.0"
+# minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 
 # About
 author:           
@@ -21,7 +21,8 @@ pages_list:
   About:          '/about_me/index.html'
   Resume:         '/Zhengqi_Dong_2020_DA_v2.0.pdf'
   Categories:     '/categories'
-  Tags:           '/tags'
+  # Tags:           '/tags'
+  Knowledge Base: '/Knowledge_Base\knowledge_base.html'
   Archive:        '/archive'
   Feed:           '/atom.xml'
 
