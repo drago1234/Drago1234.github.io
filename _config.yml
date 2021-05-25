@@ -25,12 +25,12 @@ favicon:     "/public/triple_spiral.jpg"
 # List of pages to include in the masthead of the website
 pages_list:
   About:          '/about_me/index.html'
-  Resume:         '/Zhengqi_Dong_Underg_OSU_CSE_2021.pdf'
-  Knowledge Bank: '/Knowledge_bank/Knowledge_bank_home.html'
   Categories:     '/categories'
   Tags:           '/tags'
   Archive:        '/archive'
   Feed:           '/atom.xml'
+  Resume:         '/Zhengqi_Dong_Underg_OSU_CSE_2021.pdf'
+  Knowledge Bank: './Knowledge_bank/index.html
 
 ### Site setting:
 ShowContactInfo: "True" # Personal Info (twitter,github,email) can be seen on aboutme-sidebar, those info only shown where ShowContactInfo == True
