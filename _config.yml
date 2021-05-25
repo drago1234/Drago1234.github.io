@@ -1,8 +1,9 @@
 # Setup
 title:            "Drago's Blog"
-url:              'https://drago1234.github.io'
-giturl:           'https://drago1234.github.io'
-baseurl:          null
+url:              'https://drago1234.github.io/About_me/index.html'
+giturl:           'https://drago1234.github.io/About_me/index.html'
+baseurl:          'https://drago1234.github.io'
+home_url:          '/About_me/index.html'
 paginate:         7
 rss:              'atom.xml'
 
@@ -15,15 +16,25 @@ minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon
 # About
 author:           
   name:           'Drago'
+email: dong.760@outlook.com
+github_username:  Drago1234
+disqus_shortname: zhengqi
+favicon:     "/public/triple_spiral.jpg"
 
 # List of pages to include in the masthead of the website
 pages_list:
-  About:          '/about_me/index.html'
-  Resume:         '/Zhengqi_Dong_2020_DA_v2.0.pdf'
+  About:          '/About_me/index.html'
+  Resume:         '/Zhengqi_Dong_Underg_OSU_CSE_2021.pdf'
+  Knowledge Bank: '/Knowledge_bank/Knowledge_bank_home.html'
   Categories:     '/categories'
   Tags:           '/tags'
   Archive:        '/archive'
   Feed:           '/atom.xml'
+
+### Site setting:
+ShowContactInfo: "True" # Personal Info (twitter,github,email) can be seen on aboutme-sidebar, those info only shown where ShowContactInfo == True
+default_column: "two" # blog style: two columns, if default_column != "two", you will see a one column blog.
+default_locale: "en" # blog sidebar language set, only include: English (en), Chinese (cn), Japanese (jp), Polish (pl), Korean (kr),  Russian (ru), Turkish (tr), and Indonesian (id).
 
 # YAML front matter defaults
 defaults:

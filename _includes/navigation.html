@@ -1,12 +1,52 @@
-<nav>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <!-- <img src="img/Ron.jpg" style="width: 48px; border-radius: 24px;"> -->
+    <a class="navbar-brand" href="{{ site.baseurl }}/" title="Home">
+      <h3>
+        <b>&nbsp;&nbsp; {{ site.title }}</b>
+      </h3>
+    </a>
+
+    <!-- Definition for the button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation menu -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        {% for item in site.data.navigation %}
+        <li class="nav-item">
+            &nbsp;
+            <a class="nav-link" href="{{ item.link }}">
+              <h4>&nbsp;&nbsp;{{ item.name }}</h4>
+            </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Search Bar -->
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+
+  </div>
+</nav>
+
+
+<!-- <nav>
   <div class="masthead">
     <div class="container">
       <h3 class="masthead-title">
-        <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+        <a href="{{ site.url }}/{{ site.home_url }}" title="Home">{{ site.title }}</a>
+
         {% for item in site.data.navigation %}
-        &nbsp;&nbsp;&nbsp;<small><a href="{{ item.link }}">{{ item.name }}</a></small>
+          &nbsp;&nbsp;&nbsp;<small><a href="{{ item.link }}">{{ item.name }}</a></small>
         {% endfor %}
       </h3>
     </div>
   </div>
-</nav>
+</nav> -->

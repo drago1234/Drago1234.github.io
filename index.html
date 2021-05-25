@@ -2,41 +2,45 @@
 layout: default
 title: Home
 comments: false
-<!-- toc: true -->
+toc: true
 ---
 
-
+<br>
 <div class="posts">
   {% for post in paginator.posts %}
   <div class="post">
-    <h5 class="post-title">{{ post.title }}</h5>
+  <h4 class="post-title"><b>{{ post.title }}</b></h4>
+
     <span class="post-metadata">{{ post.date | date: "%B %d, %Y" }}</span>
     {% if post.excerpt == 'status' %}
       {{ post.content }}
     {% else %}
       <p>{{ post.excerpt }}</p>
-      <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">
-        Read more...
-      </a>
+      <a href="{{ site.url }}{{ site.baseurl }}{{ post.url }}">Read more...</a>
     {% endif %}
   </div>
   {% endfor %}
 </div>
 
-
+<br>
 <div class="pagination">
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}/">Newer</a>
+  <div class="container" style="float: left;">
+    {% if paginator.previous_page %}
+      {% if paginator.page == 2 %}
+        <a class="pagination-item newer" href="{{ site.baseurl }}/">Newer</a>
+      {% else %}
+        <a class="pagination-item newer" href="{{ site.baseurl }}/page{{ paginator.previous_page }}">Newer</a>
+      {% endif %}
     {% else %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}/page{{ paginator.previous_page }}">Newer</a>
+      <span class="pagination-item newer">Newer</span>
     {% endif %}
-  {% else %}
-    <span class="pagination-item newer">Newer</span>
-  {% endif %}
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="{{ site.baseurl }}/page{{ paginator.next_page }}">Older</a>
-  {% else %}
-    <span class="pagination-item older">Older</span>
-  {% endif %}
+  </div>
+
+  <div style="float: right;">
+    {% if paginator.next_page %}
+      <a class="pagination-item older" href="{{ site.baseurl }}/page{{ paginator.next_page }}">&rarr;Older</a>
+    {% else %}
+      <span class="pagination-item older">&rarr;Older</span>
+    {% endif %}
+  </div>
 </div>

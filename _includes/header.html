@@ -1,0 +1,42 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">   <!-- Copy from Bootstrap -->
+    <meta name="author" content="Zhengqi Dong">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Google Tag Manager: Paste this code as high in the <head> of the page as possible:-->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PL3VB6N');</script>
+    <!-- End Google Tag Manager -->
+
+    
+    <!-- Setting up the title for each page/site -->
+    <title>
+        {% if page.title == "Home" %}
+        {{ site.title }} &middot; {{ site.tagline }}
+        {% else %}
+        {{ page.title }} &middot; {{ site.title }}
+        {% endif %}
+    </title>
+    
+    {% include head.html %}
+    
+    <link href="../assets/bootstrap/css/bootstrap.4.5.0.css" rel="stylesheet">
+    <link href="../assets/theme.css" rel="stylesheet">
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics: Copy the global site tag into the <head> section of your HTML. Or, if you use a website builder (e.g. WordPress, Shopify, etc). Note: Google Analytics Account-> Admit-> Property-> Data Stream -> Tagging Instruction -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MDGF2668GJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MDGF2668GJ');
+    </script>
+</head>

@@ -4,13 +4,12 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
   --red: #dc3545;
-  --scarlet: #A10000;
   --orange: #fd7e14;
   --yellow: #ffc107;
   --green: #28a745;
@@ -74,11 +73,11 @@ hr {
   overflow: visible;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
   margin-top: 0;
-  margin-bottom: 0;
-  color: var(--scarlet);
-  font-family: "Palatino", "Georgia",  serif;
+  margin-bottom: 0.5rem;
+  font-weight: 1000;
+  line-height: 1.2;
 }
 
 p {

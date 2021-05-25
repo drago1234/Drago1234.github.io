@@ -1,7 +1,11 @@
+- name: About Me
+  link: /About_me/index.html
 - name: Resume
   link: /Zhengqi_Dong_Underg_OSU_CSE_2021.pdf
-- name: About Me
-  link: /about_me/index.html
+- name: OSU Portal
+  link: /osu_html_home.html
+- name: Knowledge Bank
+  link: /Knowledge_bank/Knowledge_bank_home.html
 - name: Categories
   link: /categories
 - name: Tags
@@ -10,7 +14,3 @@
   link: /archive
 - name: Feed
   link: /atom.xml
-- name: OSU Portal
-  link: /home.html
-- name: 2021 Summer Plan
-  link: /fabeng4999/2021Summer_Plan.html
