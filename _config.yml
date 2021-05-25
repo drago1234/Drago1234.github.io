@@ -3,7 +3,7 @@ title:            "Drago's Blog"
 url:              'https://drago1234.github.io/'
 giturl:           'https://drago1234.github.io/'
 baseurl:          'https://drago1234.github.io/'
-home_url:          '/About_me/index.html'
+home_url:          '/about_me/index.html'
 paginate:         7
 rss:              'atom.xml'
 
@@ -23,7 +23,7 @@ favicon:     "/public/triple_spiral.jpg"
 
 # List of pages to include in the masthead of the website
 pages_list:
-  About:          '/About_me/index.html'
+  About:          '/about_me/index.html'
   Resume:         '/Zhengqi_Dong_Underg_OSU_CSE_2021.pdf'
   Knowledge Bank: '/Knowledge_bank/Knowledge_bank_home.html'
   Categories:     '/categories'
