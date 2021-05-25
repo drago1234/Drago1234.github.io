@@ -1,8 +1,8 @@
 # Setup
 title:            "Drago's Blog"
-url:              'https://drago1234.github.io/'
-giturl:           'https://drago1234.github.io/'
-baseurl:          'https://drago1234.github.io/'
+url:              'https://drago1234.github.io'
+giturl:           'https://drago1234.github.io'
+baseurl:          'https://drago1234.github.io'
 home_url:          '/about_me/index.html'
 paginate:         7
 rss:              'atom.xml'
