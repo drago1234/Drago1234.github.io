@@ -26,11 +26,12 @@ favicon:     "/public/triple_spiral.jpg"
 pages_list:
   About:          '/about_me/index.html'
   Resume:         '/Zhengqi_Dong_Underg_OSU_CSE_2021.pdf'
-  Knowledge Bank: '/Knowledge_bank/index.html'
   Categories:     '/categories'
   Tags:           '/tags'
   Archive:        '/archive'
   Feed:           '/atom.xml'
+  OSU Portal:     '/bootstrap_tutorial.html'
+  Knowledge Bank: '/Knowledge_bank/index.html'
 
 ### Site setting:
 ShowContactInfo: "True" # Personal Info (twitter,github,email) can be seen on aboutme-sidebar, those info only shown where ShowContactInfo == True

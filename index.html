@@ -23,6 +23,7 @@ toc: true
 </div>
 
 <br>
+<!-- The Newer and older Button -->
 <div class="pagination">
   <div class="container" style="float: left;">
     {% if paginator.previous_page %}
@@ -35,8 +36,7 @@ toc: true
       <span class="pagination-item newer">Newer</span>
     {% endif %}
   </div>
-
-  <div style="float: right;">
+  <div class="container" style="float: right;">
     {% if paginator.next_page %}
       <a class="pagination-item older" href="{{ site.baseurl }}/page{{ paginator.next_page }}">&rarr;Older</a>
     {% else %}
