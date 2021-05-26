@@ -64,6 +64,11 @@ highlighter:      rouge
 lsi:              false
 incremental:      false
 
+kramdown:
+  input: GFM
+  gfm_quirks: [paragraph_end]
+  syntax_highlighter: coderay
+
 plugins:
   - jekyll-paginate
   - jekyll-sitemap

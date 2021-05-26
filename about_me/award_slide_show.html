@@ -1,54 +1,65 @@
 <div id="carouselExampleCaptions" class="carousel slide table-bordered img-fluid rounded" data-bs-ride="carousel">
   <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true"
+      aria-label="Slide 1"></button>
+    {% assign num=9 %}
+    {% for i in (1..num) %}
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to={{i}} aria-label=Slide+{{i+1}} ></button>
+    {% endfor %}
+    <!-- <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
-    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button> -->
   </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="Award/Certified Diploma - Zhengqi Dong_Page_1.jpeg" class="d-block w-100" alt="Certified Diploma">
-      </div>
-      <div class="carousel-item">
-        <img src="Award/IEEE Service Award_Dong_2020.jpeg" class="d-block w-100" alt="IEEE Service Award_Dong_2020.jpeg">
-      </div>
-      <div class="carousel-item">
-        <img src="Award/IEEE Service Award_Dong_2021.jpeg" class="d-block w-100" alt="IEEE Service Award_Dong_2021.jpeg">
-      </div>
-
-      <!-- Course Certification -->
-      <div class="carousel-item">
-        <img src="Award/DeepLearning.AI Tensorflow Developer Certificate_Page_1.jpeg" class="d-block w-100" alt="DeepLearning.AI Tensorflow Developer Certificate">
-      </div>
-      <div class="carousel-item">
-        <img src="Award/Tensorflow Developer Certificate_Page_1.jpeg" class="d-block w-100" alt="Tensorflow Developer Certificate_Page">
-      </div>
-      <div class="carousel-item">
-        <img src="Award/IEEE-Sensors for Autonomous Vehicles_Page_1.jpeg" class="d-block w-100" alt="IEEE-Sensors for Autonomous Vehicles_Page">
-      </div>
-
-      <!-- Martial Art Course Certification -->
-      <div class="carousel-item">
-        <img src="Award/Martial_Art_Yellow_rank.jpg" class="d-block w-100" alt="Martial_Art_Yellow_rank">
-      </div>
-      <div class="carousel-item">
-        <img src="Award/Martial_Art_Yellow_rank.jpg" class="d-block w-100" alt="Martial_Art_Yellow_rank">
-      </div>
-      <div class="carousel-item">
-        <img src="Award/Martial_Art_Red_rank.jpg" class="d-block w-100" alt="Martial_Art_Red_rank">
-      </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="Award/Certified Diploma - Zhengqi Dong_Page_1.jpeg" class="d-block w-100" alt="Certified Diploma">
+    </div>
+    <div class="carousel-item">
+      <img src="Award/IEEE Service Award_Dong_2020.jpeg" class="d-block w-100" alt="IEEE Service Award_Dong_2020.jpeg">
+    </div>
+    <div class="carousel-item">
+      <img src="Award/IEEE Service Award_Dong_2021.jpeg" class="d-block w-100" alt="IEEE Service Award_Dong_2021.jpeg">
     </div>
 
-    <button class="carousel-control-prev btn btn-dark" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next btn btn-dark" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    <!-- Course Certification -->
+    <div class="carousel-item">
+      <img src="Award/DeepLearning.AI Tensorflow Developer Certificate_Page_1.jpeg" class="d-block w-100"
+        alt="DeepLearning.AI Tensorflow Developer Certificate">
+    </div>
+    <div class="carousel-item">
+      <img src="Award/Tensorflow Developer Certificate_Page_1.jpeg" class="d-block w-100"
+        alt="Tensorflow Developer Certificate_Page">
+    </div>
+    <div class="carousel-item">
+      <img src="Award/IEEE-Sensors for Autonomous Vehicles_Page_1.jpeg" class="d-block w-100"
+        alt="IEEE-Sensors for Autonomous Vehicles_Page">
+    </div>
+
+    <!-- Martial Art Course Certification -->
+    <div class="carousel-item">
+      <img src="Award/Martial_Art_Yellow_rank.jpg" class="d-block w-100" alt="Martial_Art_Yellow_rank">
+    </div>
+    <div class="carousel-item">
+      <img src="Award/Martial_Art_Yellow_rank.jpg" class="d-block w-100" alt="Martial_Art_Yellow_rank">
+    </div>
+    <div class="carousel-item">
+      <img src="Award/Martial_Art_Red_rank.jpg" class="d-block w-100" alt="Martial_Art_Red_rank">
+    </div>
   </div>
+
+  <button class="carousel-control-prev btn btn-dark" type="button" data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next btn btn-dark" type="button" data-bs-target="#carouselExampleCaptions"
+    data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 </br>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
