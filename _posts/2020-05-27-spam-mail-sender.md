@@ -20,16 +20,14 @@ Base on this motivation, I write a small python script to send the several spam 
 
 ### **Coode:**
 
-```python3
+{% highlight python %}
 import smtplib
 import getpass
-```
 
-`smtplib`is saying "we are using SMTP email protocol.
-`getpass` is for typing password in secret mode.
+# smtplibis saying "we are using SMTP email protocol."
+# getpass is for typing password in secret mode.
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+
 # Gmail Login
 # username = input("Your email: ")
 username = 
@@ -61,7 +59,7 @@ for i in range (total):
 	print("Mail "+str(i)+" send")
 
 server.quit()
-</pre>
+{% endhighlight %}
 
 `username`: your email address
 `password`: your email's password

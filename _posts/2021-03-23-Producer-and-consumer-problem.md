@@ -33,7 +33,7 @@ Notice that the order in which items are produced and consumed is critical. We w
 * Approach 1: Use lock and condition variable
     * bounded_buffer.h: This .h file serves as a contract between you and other developers.
 
-```C
+{% highlight C linenos %}
 #ifndef _BOUNDED_BUFFER_H 
 #define _BOUNDED_BUFFER_H 
 #include <pthread.h>
@@ -66,13 +66,13 @@ void* bounded_buffer_pop(struct bounded_buffer *buffer);
 void bounded_buffer_destroy(struct bounded_buffer *buffer);
 
 #endif
-```
+{% endhighlight %}
 
 * Why we need `#ifndef-#define-#endif`? ==>  If this .h file is not defined, we will define it for the first time. It helps to prevent the conflicted definition when you included the same .h file multiple times, which can cause error. So, it's always a good habit to do this for each .h file that you defined.
 
 * bounded_buffer.c: This file implemented all the abstract functions declared in the bounded_buffer.h file. 
 
-```C
+{% highlight C linenos %}
 #include "bounded_buffer.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -137,13 +137,13 @@ void bounded_buffer_destroy(struct bounded_buffer *buffer){
     int i;
     free(buffer->circular_buffer);
 }
-```
+{% endhighlight %}
 
 * How do we know when all threads have finished their jobs? ==> You don't, so you cannot simply use `pthread_join` because your might have producer thread that might never return. But, if you don't call `pthread_join`, main thread will terminate quickly and then all threads will be terminated/killed. Instead, in lab4, you can simply use `sleep(# sec)` to wait the thread to finish. ==> This might not a good solution, but we will learn a better solution in lab5.
   
 * main.c (producer() and consumer()):
 
-``` C
+{% highlight C linenos %}
 #include "bounded_buffer.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -255,7 +255,8 @@ void *consumer(void *ptr){
         pthread_mutex_unlock(&queue.mutex);
     }
 }
-```
+{% endhighlight %}
+
 * Why I prefer to use "broadcast" instead of "signal"? 
   ==> Comparing to "signal", "broadcast" is always correct, although it may be inefficient (If that's really the case, the bottleneck for the performance, then it would be the time to consider to use "signal"). ==> Consider the case of seller-buyer problem. We have a seller want to sell 3 tickets, and two buyers, one want to buy 2 tickets, and another one want to buy 5 tickets. In good result, the buyer who want to buyer 2 ticket should win. Because, we don't have enough tickets for the buyer with 5 ticket, and he need to wait. However, if we use signal here. It will just wakeup one thread, and we don't know which one will be wakeup. If the buyer with 5 ticket got wakeup, then the thread/buyer with 2 ticket will never get the tickets.
 * Why we should always use "while" instead of "if" for checking the conditional statement? 
