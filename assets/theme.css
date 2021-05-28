@@ -4,6 +4,13 @@ div.about_me h3{
 	color: #A10000;
   }
 
+.sidebar-module {
+    padding: 15px;
+    margin: 0 -15px 15px;
+    font-size: 15px;
+	box-sizing: border-box;
+
+}
 
 .title {
 	clear: right;

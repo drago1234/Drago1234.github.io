@@ -1,0 +1,15 @@
+<div class="sidebar-module">
+  <h4>Site Search</h4>
+  <form onsubmit="search_google()">
+    <input type="text" id="google-search" placeholder="Google search">
+    <input type="submit" name="sa" value="Go">
+  </form>
+  <script language="Javascript" type="text/javascript">
+    function search_google()
+    {
+      var query = document.getElementById("google-search").value;
+      window.open("http://google.com/search?q=" + query
+          + "%20site:" + "https://drago1234.github.io/");
+    }
+    </script>
+</div>
