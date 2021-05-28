@@ -15,13 +15,22 @@ layout: default
 
   <!-- page Navigation panel  -->
   {%include navigation.html %}
-  <br>
+  <!-- <hr> -->
 
   <!-- page Content -->
   <div class="container content">
-    <!-- <h1 class="page-title">{{ page.title }}</h1> -->
     {{ content }}
   </div>
+  <!-- <div class="container content">
+    <div class="row">
+      <div class="page-content col-sm-8">
+        {{ content }}
+      </div>
+      <div class="col-sm-2">
+        One of three columns
+      </div>
+    </div>
+  </div> -->
 
   <!-- page Footer -->
   {% include footer.html %}
