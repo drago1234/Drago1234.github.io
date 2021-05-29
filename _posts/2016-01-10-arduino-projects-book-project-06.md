@@ -80,8 +80,7 @@ There are new functions that will be used in this project, `millis()` and `tone(
 `tone()` helps us make sound with the piezo buzzer. It takes **three arguments**: what **pin** to play the sound on (in this case pin 2), what **frequency** to play (determined by the pitch variable), and **how long** to play the note (let's try 20 milliseconds).
 
 Here is the code: 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 06: Light Theremin
  *
@@ -135,7 +134,7 @@ void loop() {
     // wait 10ms for the sensor to stabilize
     delay(10);
 }
-</pre>
+{% endhighlight %}
 
 <!-- ## **USING:**
 

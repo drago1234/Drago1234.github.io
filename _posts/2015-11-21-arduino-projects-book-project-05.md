@@ -59,20 +59,18 @@ A value of `from_low` will be mapped to `to_low`. A value of `from_high` will be
 
 Next, we need to include the Servo library so that we can work on our servo motor easily. After we `#include <Servo.h>` and declare `Servo MyServo`, we provide the servo motor with `attach()` and `write()` methods.
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 #include <span><</span>Servo.h<span>></span>
 
 Servo MyServo;
 
 MyServo.attach(SERVO_PIN);  // the Arduino pin that controls the servo
 MyServo.write(90);          // write the angle
-</pre>
+{% endhighlight %}
 
 Here is the code: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 05: Mood Cue
  *
@@ -120,7 +118,8 @@ void loop() {
     // delay to stabilize
     delay(15);
 }
-</pre>
+{% endhighlight %}
+
 <!-- 
 ## **USING:**
 

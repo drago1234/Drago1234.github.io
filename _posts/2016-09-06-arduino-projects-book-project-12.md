@@ -65,8 +65,7 @@ We first encounter function in this project. Instead of writing our code repetit
 
 Here is the code: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 12: Knock Lock
  *
@@ -81,7 +80,7 @@ Here is the code:
  * Updated: June 22, 2017
  */
 
-#include <span><</span>Servo.h<span>></span>
+#include Servo.h
 
 Servo ServoMotor;
 
@@ -201,7 +200,7 @@ boolean CheckForKnock(byte a_knock_val) {
         return false;
     }
 }
-</pre>
+{% endhighlight %}
 
 <!-- ## **USING:**
 

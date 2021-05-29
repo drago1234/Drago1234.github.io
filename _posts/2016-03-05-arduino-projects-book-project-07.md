@@ -68,8 +68,7 @@ This is my real board layout:
 
 Here is the code: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 07: Keyboard Instrument
  *
@@ -118,7 +117,7 @@ void loop() {
         noTone(PIEZO_PIN);         // no switch ~ no sound
     }
 }
-</pre>
+{% endhighlight %}
 
 <!-- ## **USING:**
 

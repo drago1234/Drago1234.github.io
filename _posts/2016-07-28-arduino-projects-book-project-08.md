@@ -71,8 +71,7 @@ And this is my real board circuit:
 
 Here is the code: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 08: Digital Hourglass
  *
@@ -161,7 +160,8 @@ void loop() {
     // store the current switch state
     prev_switch_state = switch_state;
 }
-</pre>
+{% endhighlight %}
+
 <!-- 
 ## **USING:**
 

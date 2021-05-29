@@ -74,8 +74,7 @@ The author, Paul Badger, makes things easier for us in the `CapcitiveSensor.h` l
 
 Here is the code: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 13: Touchy-feely Lamp
  *
@@ -90,7 +89,7 @@ Here is the code:
  * Updated: June 22, 2017
  */
 
-#include <span><</span>CapacitiveSensor.h<span>></span>
+#include CapacitiveSensor.h
 
 // Required hardware I/O connections
 const byte RECEIVING_PIN = 2;  // capacitance receiving pin connected to 2
@@ -126,7 +125,7 @@ void loop() {
     // delay helps stabilize the sensor
     delay(10);
 }
-</pre>
+{% endhighlight %}
 
 <!-- ## **USING:**
 

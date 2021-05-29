@@ -66,8 +66,7 @@ Telling Arduino which pin you want to turn on/off? Ex. `digitalWrite(3, HIGH)`, 
 
 Here are the entire code that I used: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 02: SOS -- Morse Code Emergence Distress Singal
  * File Name: Project2_SOS_LED_version.ino
@@ -116,7 +115,7 @@ void flash(int delayPeriod){
   digitalWrite(ledPin, LOW);
   delay(delayPeriod);
 }
-</pre>
+{% endhighlight %}
 
 ## Video Showcase
 <div class="embedded-video">

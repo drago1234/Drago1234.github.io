@@ -65,8 +65,8 @@ For this TMP36 temperature sensor, every 10mV equals 1 degree Celsius.
 
 Here is the code that I used(I modified from original code to have 5 LED. Each degree increase in your skin temperature, one more LED will be turn on. It has more precise indication to measure your skin temerature, which usually range from 32–35 °C, https://hypertextbook.com/facts/2001/AbantyFarzana.shtml)
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 03: Love-O-Meter
  *
@@ -144,7 +144,7 @@ void loop() {
     digitalWrite(6, HIGH); 
   }
 }
-</pre>
+{% endhighlight %}
 
 ## **Video Explanation:**
 

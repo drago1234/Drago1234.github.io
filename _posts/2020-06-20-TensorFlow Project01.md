@@ -30,8 +30,7 @@ Hint: Your network might work better if you scale the house price down. You don'
 ### Code Explanation:
 
 Define the true function:
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 import tensorflow as tf
 import numpy as np
 
@@ -41,11 +40,10 @@ def true_fun(x):
     return x*5000.0 + 5000.0
 
 print(true_fun(1))
-</pre>
+{% endhighlight %}
 
 Define the model and train the neural network:
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 import tensorflow as tf
 import numpy as np
 
@@ -60,7 +58,7 @@ model.fit(xs, ys, epochs=1000)
 print(model.predict([7])*100)
 
 # Note: scale down the number could make the training process easie
-</pre>
+{% endhighlight %}
 
 
 * **Sequential**: successive layers are defined as sequence, hence the word for sequential.

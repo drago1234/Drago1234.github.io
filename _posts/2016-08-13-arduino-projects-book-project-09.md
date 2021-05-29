@@ -76,8 +76,7 @@ Here is my circuit layout:
 
 Here is the code: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 09: Motorized Pinwheel
  *
@@ -110,7 +109,8 @@ void loop() {
         digitalWrite(MOTOR_PIN, LOW);
     }
 }
-</pre>
+{% endhighlight %}
+
 <!-- 
 ## **USING:**
 

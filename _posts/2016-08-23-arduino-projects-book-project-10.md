@@ -78,8 +78,7 @@ Finally, this is how I wired my circuit:
 
 Here is the code: 
 
-<?prettify?>
-<pre class="prettyprint cpp-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 10: Zoetrope
  *
@@ -159,7 +158,7 @@ void loop() {
     prev_state_switch_val     = state_switch_val;
     prev_direction_switch_val = direction_switch_val;
 }
-</pre>
+{% endhighlight %}
 
 <!-- ## **USING:**
 

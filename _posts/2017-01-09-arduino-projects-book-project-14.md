@@ -51,8 +51,7 @@ We only need to know how to connect a potentiometer to an analog pin of the Ardu
 
 Basically, we only need to write a program that read values from the potentiometer and then convert that value (which ranges from 0 to 1024) to right values for the Serial Monitor (0-255).
 
-<?prettify?>
-<pre class="prettyprint c-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 14: Tweak the Arduino Logo
  *
@@ -82,7 +81,7 @@ void loop() {
     Serial.write(analogRead(POT_PIN) / 4);
     delay(1); // stabilize the pot
 }
-</pre>
+{% endhighlight %}
 
 This time, I used `Serial.write()`, not `Serial.println()`. `Serial.println()` is to write the value after being formatted by the Arduino. The `Serial.write()` function returns the **raw** value from what the Arduino **actually reads**. We will want it to be raw so that our code in Processing can "cook" it :)
 
@@ -90,8 +89,7 @@ This time, I used `Serial.write()`, not `Serial.println()`. `Serial.println()` i
 
 That's what I uploaded to my Arduino. Next step is to write a program on the computer so that my Arduino can communicate with it.
 
-<?prettify?>
-<pre class="prettyprint java-html linenums">
+{% highlight c linenos %}
 /**
  * Project Name: Arduino Projects Book - Project 14: Tweak the Arduino Logo
  *
@@ -150,7 +148,7 @@ void draw() {
         image(logo, 0, 0);
     }
 }
-</pre>
+{% endhighlight %}
 
 Once the program runs, it may be reacting slowly to the changing of the potentiometer value. Be patient.
 
