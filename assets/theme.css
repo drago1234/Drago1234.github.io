@@ -11,6 +11,10 @@ div.about_me h3{
 	box-sizing: border-box;
 
 }
+img {
+    max-width: 100%;
+    vertical-align: middle;
+}
 
 .title {
 	clear: right;
