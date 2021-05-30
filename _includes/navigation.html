@@ -10,11 +10,11 @@
     <!-- Definition for the button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <span class="caret"></span>
     </button>
 
     <!-- Navigation menu -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
         {% for item in site.data.navigation %}
         <li class="nav-item">
@@ -23,6 +23,38 @@
               <h4 style="color: white;">&nbsp;&nbsp;{{ item.name }}</h4>
             </a>
         </li>
+        {% endfor %}
+      </ul>
+    </div> -->
+
+    <!-- TO-DO: New feature--Adding a dropdown menu  -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav" >
+        {% for item in site.data.navigation %}
+          {% if item.name == "School Portal" %}
+          <li class="nav-item">
+            &nbsp;<a class="nav-link" href="#">
+              <h4 style="color: white;">&nbsp;&nbsp;{{item.name}}</h4>
+            </a>
+          </li>
+          <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;"><br></a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for subitem in item.link %}
+                <li><a class="dropdown-item" href="{{ subitem.sublink }}">{{ subitem.subname}}</a></li>
+                {% endfor %}
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Action</a></li>
+              </ul>
+            </li>
+          {%else %}
+            <li class="nav-item">
+                &nbsp;
+                <a class="nav-link" href="{{ item.link }}">
+                  <h4 style="color: white;">&nbsp;&nbsp;{{ item.name }}</h4>
+                </a>
+            </li>
+          ## {% endif %}
         {% endfor %}
       </ul>
     </div>

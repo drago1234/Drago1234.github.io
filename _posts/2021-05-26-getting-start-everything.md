@@ -1,4 +1,5 @@
 ---
+layout: post
 title: 'Getting start everything'
 date: '2021-05-26'
 categories:
@@ -37,4 +38,14 @@ excerpt: >-
 
 FYI: Remeber the "learn enough to be dangerous principle" (Read the <a href="https://www.learnenough.com/our-philosophy">learning philosophy</a> here, if you don't know what I am taling about.). Don't try to master everything that I write down here. I am sure you can, but that won't worth your time, and I bet you have something more important to do with your time and effort. 
 
+## Kramdown Syntax cheatsheet
+* If you don't want to add extra blank linke, then you can include two backslash(\\) or two space between two consecutive sentences, e.g., \\
+Line 1 \\
+Line 2.
 
+* Reference:
+  - Kramdown Quick Reference: [https://kramdown.gettalong.org/quickref.html](https://kramdown.gettalong.org/quickref.html)
+  - Markdown cheatsheet: [https://www.markdownguide.org/basic-syntax/#headings](https://www.markdownguide.org/basic-syntax/#headings)
+  - TOC:
+    - jekyll-table-of-contents(TOC): [https://sourabhbajaj.com/js/toc/](https://sourabhbajaj.com/js/toc/)
+    - Table of Contents jQuery Plugin: [https://ndabas.github.io/toc/](https://ndabas.github.io/toc/)

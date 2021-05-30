@@ -1,41 +1,186 @@
-    <!-- Core CSS -->
-    <!-- <link rel="stylesheet" href="/public/css/poole.css">
+<!-- Core CSS -->
+<!-- <link rel="stylesheet" href="/public/css/poole.css">
     <link rel="stylesheet" href="/public/css/lanyon.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
 
-    <!-- Favicon -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/triple_spiral.jpg">
-    <link rel="shortcut icon" href="/public/triple_spiral.jpg">
+<!-- Favicon -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/triple_spiral.jpg">
+<link rel="shortcut icon" href="/public/triple_spiral.jpg">
 
-    <!-- RSS -->
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+<!-- RSS -->
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 
 
-    <!-- Font Awesome -->
-    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
-    <!-- <script src="https://use.fontawesome.com/4036a2809a.js"></script> -->
-    <!-- <link rel="stylesheet" href="/assets\fonts\icofont\icofont.min.css"> -->
+<!-- Font Awesome -->
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
+<!-- <script src="https://use.fontawesome.com/4036a2809a.js"></script> -->
+<!-- <link rel="stylesheet" href="/assets\fonts\icofont\icofont.min.css"> -->
 
-    <!-- MathJax -->
-    <!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!-- MathJax -->
+<!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-    <!-- Google Prettify -->
-        <!-- <link rel="stylesheet" type="text/css" href="/public/css/prettify-tomorrow.css">
+<!-- Google Prettify -->
+<!-- <link rel="stylesheet" type="text/css" href="/public/css/prettify-tomorrow.css">
         <script type="text/javascript" src="/public/js/prettify.js"></script> -->
 
-    <!-- Self scripts -->
-        <!-- <script src="/public/js/scripts.js"></script> -->
+<!-- Self scripts -->
+<!-- <script src="/public/js/scripts.js"></script> -->
 
-     <!-- Bootstrap -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"> <!-- With this, you don't have to download the  whole Bootstrap folder and include to your repo -->
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<!-- With this, you don't have to download the  whole Bootstrap folder and include to your repo -->
 
-     <link href="/assets/bootstrap/css/bootstrap.4.5.0.css" rel="stylesheet">
-     <link href="/assets/theme.css" rel="stylesheet">
- 
-       <!-- Core CSS -->
-       <!-- <link rel="stylesheet" href="/public/css/poole.css">
+<link href="/assets/bootstrap/css/bootstrap.4.5.0.css" rel="stylesheet">
+<link href="/assets/theme.css" rel="stylesheet">
+
+<!-- Core CSS -->
+<!-- <link rel="stylesheet" href="/public/css/poole.css">
        <link rel="stylesheet" href="/public/css/lanyon.css">
        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400"> -->
 
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- 
+<script>
+    // https://github.com/ghiculescu/jekyll-table-of-contents
+    (function($) {
+        $.fn.toc = function(options) {
+            var defaults = {
+                    title: '',
+                    minimumHeaders: 3,
+                    headers: 'h1, h2, h3, h4, h5, h6',
+                    listType: 'ol', // values: [ol|ul]
+
+                    linkHeader: true,
+                    linkHere: false,
+                    linkHereText: '',
+                    linkHereTitle: 'Link here',
+                    backToTop: false,
+                    backToTopId: '',
+                    backToTopText: '',
+                    backToTopTitle: 'Back to top',
+                    backToTopDisplay: 'always', // values: [always|highest] 
+                },
+                settings = $.extend(defaults, options);
+
+            var headers = $(settings.headers).filter(function() {
+                    // get all headers with an ID
+                    var previousSiblingName = $(this).prev().attr("name");
+                    if (!this.id && previousSiblingName) {
+                        this.id = $(this).attr("id", previousSiblingName.replace(/\./g, "-"));
+                    }
+                    return this.id;
+                }),
+                output = $(this);
+
+            if (!headers.length || headers.length < settings.minimumHeaders || !output.length) {
+                return;
+            }
+
+            var get_level = function(ele) {
+                return parseInt(ele.nodeName.replace("H", ""), 10);
+            }
+            var highest_level = headers.map(function(_, ele) {
+                return get_level(ele);
+            }).get().sort()[0];
+
+            var level = get_level(headers[0]),
+                this_level,
+                html = settings.title + ' <' + settings.listType + ' class="jekyll-toc">';
+
+            var back_to_top = function(id) {
+                return '<a href="#' + fixedEncodeURIComponent(id) + '" title="' + settings.backToTopTitle + '" class="jekyll-toc-anchor jekyll-toc-back-to-top"><span class="jekyll-toc-icon">' + settings.backToTopText + '</span></a>';
+            }
+
+            var link_here = function(id) {
+                return '<a href="#' + fixedEncodeURIComponent(id) + '" title="' + settings.linkHereTitle + '" class="jekyll-toc-anchor jekyll-toc-link-here"><span class="jekyll-toc-icon">' + settings.linkHereText + '</span></a>';
+            }
+
+            function fixedEncodeURIComponent(str) {
+                return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+                    return '%' + c.charCodeAt(0).toString(16);
+                });
+            }
+
+            function force_update_hash(hash) {
+                if (window.location.hash == hash) {
+                    window.location.hash = '';
+                }
+                window.location.hash = hash;
+
+            }
+
+            $(headers).each(function(_, header) {
+                this_level = get_level(header);
+                var header_id = $(header).attr('id');
+                if (this_level === level) // same level as before; same indenting
+                    html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+                else if (this_level <= level) { // higher level than before; end parent ol
+                    for (i = this_level; i < level; i++) {
+                        html += "</li></" + settings.listType + ">"
+                    }
+                    html += "<li><a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+                } else if (this_level > level) { // lower level than before; expand the previous to contain a ol
+                    for (i = this_level; i > level; i--) {
+                        html += "<" + settings.listType + "><li>"
+                    }
+                    html += "<a href='#" + fixedEncodeURIComponent(header.id) + "'>" + header.innerHTML + "</a>";
+                }
+                level = this_level; // update for the next one
+
+                // add links at the end (so we don't pulute header.innerHTML)
+                $(header).addClass('jekyll-toc-top-level-header').wrapInner('<span class="jekyll-toc-wrapper"></span>').append(link_here(header_id));
+                if (settings.backToTop) {
+                    switch (settings.backToTopDisplay) {
+                        case 'highest':
+                            if (this_level === highest_level) {
+                                $(header).append(back_to_top(settings.backToTopId));
+                            }
+                            break;
+                        case 'always':
+                        default:
+                            $(header).append(back_to_top(settings.backToTopId));
+                    }
+                }
+
+                if (settings.linkHeader) {
+                    $(header).addClass('jekyll-toc-header');
+                    $(header).children('span.jekyll-toc-wrapper').on('click', function() {
+                        force_update_hash(fixedEncodeURIComponent(header_id));
+                    });
+                }
+            });
+
+            html += "</" + settings.listType + ">";
+
+            output.html(html)
+        };
+    })(jQuery);
+</script> -->
+
 <!-- Note: CSS order matters, the latest one overwrites the previous -->
+
+
+<script>
+
+    $(document).ready(function() {
+        // Handler for .ready() called.
+        // $('#toc').toc({
+        //     minimumHeaders: 0,
+        //     listType: 'ul',
+        //     showSpeed: 0,
+        //     headers: 'h1, h2, h3, h4, h5, h6'
+        // });
+        /* this offset helps account for the space taken up by the floating toolbar. */
+        $('#toc').on('click', function() {
+            alert("The paragraph was clicked.");
+            var target = $(this.getAttribute('href')),
+                scroll_target = target.offset().top
+
+            $(window).scrollTop(scroll_target - 10);
+            return false
+        })
+    });
+</script>

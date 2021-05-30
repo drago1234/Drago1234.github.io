@@ -1,3 +1,4 @@
+# If you are not familiar with YAML syntax, go to here, https://idratherbewriting.com/documentation-theme-jekyll/mydoc_yaml_tutorial.html, for more details about how to use YAML + liquid together
 - name: About Me
   link: /about_me/index.html
 - name: Resume
@@ -12,7 +13,11 @@
   link: /atom.xml
 - name: Knowledge Bank
   link: /Knowledge_bank/index.html 
-- name: OSU Portal
-  link: /osu_html_home.html
-  
-    # /Knowledge_bank/knowledge_bank_index.html
+# - name:  OSU Portal
+#   link:  /osu_html_home.html
+- name: School Portal
+  link:
+    - subname:  OSU Portal
+      sublink:  /osu_html_home.html
+    - subname:  Test Portal
+      sublink:  /FABENG4999H.html
