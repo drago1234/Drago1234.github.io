@@ -37,8 +37,23 @@ layout: default
     crossorigin="anonymous">
   </script>
 
+<!-- Why should JS being put just before the closing </body> tag rather than in the <head> section? ==> Because JS often will need to take some effect, such as altering the HTML. Plus, it can visiblly slow down the browser and slower web response time if you have a lot of JS but at front. More details here: https://levelup.gitconnected.com/all-about-script-87fea475b976#:~:text=The%20best%20practice%20is%20to,then%20everything%20inside%20the%20body. -->
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+<!-- Font Awesome -->
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
+<!-- <script src="https://use.fontawesome.com/4036a2809a.js"></script> -->
+<!-- <link rel="stylesheet" href="/assets\fonts\icofont\icofont.min.css"> -->
+
+<!-- MathJax -->
+<!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Custom or Local JS  -->
+<script src="/assets/js/customscripts.js"></script>
+
 </body>
 
 </html>
