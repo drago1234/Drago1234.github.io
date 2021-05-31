@@ -16,7 +16,7 @@
 # - name:  OSU Portal
 #   link:  /osu_html_home.html
 - name: School Portal
-  link:
+  link: 
     - subname:  OSU Portal
       sublink:  /osu_html_home.html
     - subname:  Test Portal

@@ -1,16 +1,14 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <!-- <img src="img/Ron.jpg" style="width: 48px; border-radius: 24px;"> -->
     <a class="navbar-brand" href="{{ site.url }}/" title="Home">
       <h3 style="color: white;">
-        <b>&nbsp;&nbsp; {{ site.title }}</b>
+        <b>{{ site.title }}</b>
       </h3>
     </a>
 
     <!-- Definition for the button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="caret"></span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Navigation menu -->
@@ -31,30 +29,33 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav" >
         {% for item in site.data.navigation %}
+          <!-- For the Dropdown Menu -->
           {% if item.name == "School Portal" %}
-          <li class="nav-item">
-            &nbsp;<a class="nav-link" href="#">
-              <h4 style="color: white;">&nbsp;&nbsp;{{item.name}}</h4>
-            </a>
-          </li>
-          <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;"><br></a>
+            <!-- Dropdown Menu Header -->
+            <li class="nav-item">
+              &nbsp;<a class="nav-link" href="/osu_html_home.html"><h4 style="color: white;">&nbsp;&nbsp;{{ item.name }}</h4>
+              </a>
+            </li>
+            <!-- Dropdown Menu Items -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><br></a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for subitem in item.link %}
-                <li><a class="dropdown-item" href="{{ subitem.sublink }}">{{ subitem.subname}}</a></li>
-                {% endfor %}
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Action</a></li>
+                  {% for subitem in item.link %}
+                  <li><a class="dropdown-item" href="{{ subitem.sublink }}">{{ subitem.subname}}</a></li>
+                  {% endfor %}
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Action</a></li>
               </ul>
             </li>
           {%else %}
+            <!-- Other Normal Items -->
             <li class="nav-item">
                 &nbsp;
                 <a class="nav-link" href="{{ item.link }}">
                   <h4 style="color: white;">&nbsp;&nbsp;{{ item.name }}</h4>
                 </a>
             </li>
-          ## {% endif %}
+          {% endif %}
         {% endfor %}
       </ul>
     </div>

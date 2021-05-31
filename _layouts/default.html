@@ -8,7 +8,7 @@ layout: default
 {% include header.html %}
 
 
-<body class="theme-base-08">
+<body>
   <!-- Google Tag Manager (noscript): Additionally, paste this code immediately after the opening <body> tag: -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PL3VB6N" 
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -28,6 +28,7 @@ layout: default
       </div>
     </div>
 </div>
+
   <!-- page Footer -->
   {% include footer.html %}
 
@@ -37,8 +38,44 @@ layout: default
     crossorigin="anonymous">
   </script>
 
+<!-- Why should JS being put just before the closing </body> tag rather than in the <head> section? ==> Because JS often will need to take some effect, such as altering the HTML. Plus, it can visiblly slow down the browser and slower web response time if you have a lot of JS but at front. More details here: https://levelup.gitconnected.com/all-about-script-87fea475b976#:~:text=The%20best%20practice%20is%20to,then%20everything%20inside%20the%20body. -->
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+<!-- Font Awesome -->
+<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" data-auto-a11y="true"></script>
+<!-- <script src="https://use.fontawesome.com/4036a2809a.js"></script> -->
+<!-- <link rel="stylesheet" href="/assets\fonts\icofont\icofont.min.css"> -->
+
+<!-- MathJax -->
+<!-- <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<!-- Custom or Local JS  -->
+<script type="assets/js/jquery.toc.js"></script>
+
+<!-- Note: CSS order matters, the latest one overwrites the previous -->
+<script>
+    $(document).ready(function() {
+        // Handler for .ready() called.
+        $('#toc').toc({
+            minimumHeaders: 0,
+            listType: 'ul',
+            showSpeed: 0,
+            headers: 'h1, h2, h3, h4, h5, h6'
+        });
+        /* this offset helps account for the space taken up by the floating toolbar. */
+        $('#toc').on('click', function() {
+            alert("The paragraph was clicked.");
+            var target = $(this.getAttribute('href')),
+                scroll_target = target.offset().top
+
+            $(window).scrollTop(scroll_target - 10);
+            return false
+        })
+    });
+</script>
 </body>
 
 </html>
