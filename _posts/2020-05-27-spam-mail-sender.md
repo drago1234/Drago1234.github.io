@@ -2,7 +2,7 @@
 title: 'The Spam Email Sender'
 date: '2020-05-27'
 categories:
-  - Others
+  - "Other thing"
 tags:
   - spam-email
   - python

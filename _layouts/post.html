@@ -30,6 +30,10 @@ layout: default
       {% endfor %}
     {% endif %}
 
+    <!-- The Table of Contents -->
+    <h4>Table of Contents</h4>
+    {% include toc.html %}
+
     <!-- post tags -->
     {% if page.tags.size > 0 %}
       <br/>
