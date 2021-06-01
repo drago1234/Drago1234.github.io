@@ -12,16 +12,16 @@ title: Knowledge Bank
 
 Note: Knowledge Bank will contains all knowledge that I had learn in the class, and each course will link to somewhere that you might not expect!!
 
-Template: [Test](./learn_robotic.html) | [Another test](./udacity.html)
+Template: [Test](./learn_robotic.html) | [Another test](https://learn-udacity.top/udre540712/)
 <br>
 
-### OSU Results Final report
+<!-- ### OSU Results Final report
 <small>Note: Having some bad time during my sophomore to junior year at OSU, but I didn't give up, instead I fought back at the last year, for winning back my honor!! </small>
 
 - [Audit-Course History](/Knowledge_bank/data/osu_data/(Final_version)Audit_Course%20History.pdf)
 - [Audit Course Report](/Knowledge_bank/data/osu_data/(Final_version)Audit-Report.pdf)
 - [OSU Advising Report](/Knowledge_bank/data/osu_data/(Final_version)OSR_ADVISING.pdf)
-- [OSU CSE Diploma](/Knowledge_bank/data/osu_data/Certified%20Diploma%20-%20Zhengqi%20Dong.pdf)
+- [OSU CSE Diploma](/Knowledge_bank/data/osu_data/Certified%20Diploma%20-%20Zhengqi%20Dong.pdf) -->
 
 ## All Normal Course Taken in OSU
 
