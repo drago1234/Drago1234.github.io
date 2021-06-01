@@ -1,9 +1,7 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ site.url }}/" title="Home">
-      <h3 style="color: white;">
-        <b>{{ site.title }}</b>
-      </h3>
+      <h4 style="color: white;"><b>{{ site.title }}</b></h4>
     </a>
 
     <!-- Definition for the button -->
@@ -34,8 +32,7 @@
         {% if item.name == "Surviving Kits" %}
         <li class="nav-item dropdown">
           <!-- Dropdown Menu Header -->
-          <h4 class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false" style="color: white;"><a><br>{{ item.name }}</a></h4>
+          <h5 class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;"><a><br>{{ item.name }}</a></h5>
           <!-- Dropdown Menu Items -->
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             {% for subitem in item.link %}
@@ -52,9 +49,9 @@
         {%else %}
         <!-- Other Normal Items -->
         <li class="nav-item">
-          &nbsp;
+          <!-- &nbsp; -->
           <a class="nav-link" href="{{ item.link }}">
-            <h4 style="color: white;">&nbsp;&nbsp;{{ item.name }}</h4>
+            <h5 style="color: white;"><br>{{ item.name }}</h5>
           </a>
         </li>
         {% endif %}
