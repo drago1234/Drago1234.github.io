@@ -54,8 +54,10 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1.1rem; */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1.2em;
+  font-size: 1.1em;
   line-height: 1.5;
   color: #333;
   text-align: left;
@@ -179,7 +181,7 @@ pre,
 code,
 kbd,
 samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: monospace, monospace;
   font-size: 1em;
 }
 
@@ -5272,18 +5274,9 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .jumbotron {
-  padding-top: 10px;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-bottom: 10px;
-	margin-top: 15px;
-	margin-bottom: 15px;
-  background-color: #eee;
-  
-  /* padding: 2rem 1rem;
+  padding: 2rem 1rem;
   margin-bottom: 2rem;
-  background-color: #e9ecef; */
-  
+  background-color: #e9ecef;
   border-radius: 0.3rem;
 }
 

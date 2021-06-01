@@ -10,9 +10,9 @@ rss:              'atom.xml'
 
 # Build settings (Reference for more theme: https://mmistakes.github.io/minimal-mistakes/docs/configuration/#theme)
 # theme: minima 
-# remote_theme: "mmistakes/minimal-mistakes@4.19.0"
-# theme: minimal-mistakes-jekyll
-theme: minima
+remote_theme: "mmistakes/minimal-mistakes@4.19.0"
+theme: minimal-mistakes-jekyll
+# theme: minima
 # minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 
 # About
@@ -39,23 +39,6 @@ ShowContactInfo: "True" # Personal Info (twitter,github,email) can be seen on ab
 default_column: "two" # blog style: two columns, if default_column != "two", you will see a one column blog.
 default_locale: "en" # blog sidebar language set, only include: English (en), Chinese (cn), Japanese (jp), Polish (pl), Korean (kr),  Russian (ru), Turkish (tr), and Indonesian (id).
 
-# YAML front matter defaults
-defaults:
-  - scope:
-      path:       ''
-      type:       posts
-    values:
-      layout:     post
-      related:    true
-      comments:   true
-  - scope:
-      path:       ""
-      type:       default
-    values:
-      layout:     default
-      related:    true
-      comments:   true
-
 # Comments
 disqus:           'zhengqi'
 
@@ -67,7 +50,10 @@ incremental:      false
 
 kramdown:
   input: GFM
+  syntax_highlighter: rouge
   hard_wrap: false
+  auto_ids:       true
+  toc_levels:     1..3
   
 
 plugins:
@@ -95,6 +81,23 @@ analytics:
   google:
     tracking_id: "G-MDGF2668GJ"
 
+
+# YAML front matter defaults
+defaults:
+  - scope:
+      path:       ''
+      type:       posts
+    values:
+      layout:     post
+      related:    true
+      comments:   true
+  - scope:
+      path:       ""
+      type:       default
+    values:
+      layout:     default
+      related:    true
+      comments:   true
 
 
 # Other Custome Parameters

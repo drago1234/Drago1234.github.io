@@ -16,4 +16,5 @@ end
 
 gem "activesupport", ">= 4.1.11"
 gem 'wdm', '>= 0.1.0'
+gem 'jemoji'
 # gem 'minima'

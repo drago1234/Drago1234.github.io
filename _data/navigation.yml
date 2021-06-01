@@ -15,9 +15,9 @@
   link: /Knowledge_bank/index.html 
 # - name:  OSU Portal
 #   link:  /osu_html_home.html
-- name: School Portal
+- name: Surviving Kits
   link: 
-    - subname:  OSU Portal
-      sublink:  /osu_html_home.html
-    - subname:  Test Portal
+    - subname:  OSU 2021 Summer
+      sublink:  /Surviving_kits/index.html
+    - subname:  OSU 2021 Spring
       sublink:  /FABENG4999H.html

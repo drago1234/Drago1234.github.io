@@ -10,6 +10,13 @@ excerpt: >-
 
 ---
 
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{: toc }
+
+
 ## Problem Statement: 
 * **Background:**
 In operating systems, certain synchronization problems are well known, and are considered to present the synchronization issues which must be solved effectively in any system for correct operation. One of these is the bounded buffer problem. 

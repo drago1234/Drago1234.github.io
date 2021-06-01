@@ -30,10 +30,6 @@ layout: default
       {% endfor %}
     {% endif %}
 
-    <!-- The Table of Contents -->
-    <h4>Table of Contents</h4>
-    {% include toc.html %}
-
     <!-- post tags -->
     {% if page.tags.size > 0 %}
       <br/>
@@ -52,8 +48,17 @@ layout: default
       {% endfor %}
     {% endif %}
   </span>
-  {{ content }}
 </div>
+
+<!-- Breadcrumbs (就是文件路径) -->
+Breadcrumbs: {% include breadcrumbs.html %}
+
+<!-- The Table of Contents -->
+<!-- <h4>Table of Contents</h4> -->
+<!-- <div id="toc"></div> -->
+<hr>    
+
+{{ content }}
 
 <div class="related">
   <h4>Related Posts</h4>

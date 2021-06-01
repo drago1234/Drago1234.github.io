@@ -5,9 +5,16 @@ date: '2021-05-26'
 categories:
   - Hacking Skills, Starter
 tags:
+permalink:
 excerpt: >-
   Getting start something new can be uncomfortable and even timidating sometime. So for reducing the anxious and easing the stress, I provide some guildance here that I feel useful when I started picking up those Hacking Techs in the school.
 ---
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{: toc }
 
 ## Introduction
   Getting start something new can be uncomfortable and even timidating sometime. So for reducing the anxious and easing the stress for anyone who has passion to learn and grow, I shared some guildance here that I feel can be useful when I started picking up those Hacking Techs in the college.
