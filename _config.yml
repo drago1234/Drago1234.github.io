@@ -11,7 +11,7 @@ rss:              'atom.xml'
 # Build settings (Reference for more theme: https://mmistakes.github.io/minimal-mistakes/docs/configuration/#theme)
 # theme: minima 
 remote_theme: "mmistakes/minimal-mistakes@4.19.0"
-theme: jekyll-theme-cayman
+theme: jekyll-theme-minimal
 # theme: minima
 # minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 
