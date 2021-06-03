@@ -1,3 +1,4 @@
+# Reference: to learn more about YAML formats, https://idratherbewriting.com/documentation-theme-jekyll
 # Setup
 title:            "Drago's Blog"
 url:              'https://drago1234.github.io'
@@ -5,15 +6,21 @@ baseurl:          null
 # Don't change above two url, otherwise many things can get wrong
 giturl:           'https://drago1234.github.io'
 home_url:          '/about_me/index.html'
-paginate:         7
+paginate:         7   # amount of posts to show per page
 rss:              'atom.xml'
+permalink:        pretty  # Name to use in domain, e.g., Drago1234.github.io/pretty
+paginate_path:    '/page:num'
+timezone:         'America/New_York'  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
 
 # Build settings (Reference for more theme: https://mmistakes.github.io/minimal-mistakes/docs/configuration/#theme)
 # theme: minima 
-remote_theme: "mmistakes/minimal-mistakes@4.19.0"
-theme: minimal-mistakes-jekyll
-# theme: minima
+# remote_theme: "mmistakes/minimal-mistakes@4.19.0"
+remote_theme: pmarsceill/just-the-docs
+# theme: minimal-mistakes-jekyll
 # minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
+# theme: just-the-docs
+# theme: minima
 
 # About
 author:           
@@ -44,16 +51,15 @@ disqus:           'zhengqi'
 
 # Dependencies
 markdown:         kramdown
-highlighter:      rouge
-lsi:              false
-incremental:      false
-
 kramdown:
   input: GFM
   syntax_highlighter: rouge
   hard_wrap: false
   auto_ids:       true
-  toc_levels:     1..3
+  toc_levels:     1..6
+highlighter:      rouge
+lsi:              false
+incremental:      false
   
 
 plugins:
@@ -70,22 +76,19 @@ whitelist:
   - jekyll-feed
   - jemoji
 
-# Outputting
-permalink:        pretty
-paginate:         7                      # amount of posts to show per page
-paginate_path:    '/page:num'
-timezone:         'America/New_York'  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
 analytics:
   provider: "google-gtag"
   google:
     tracking_id: "G-MDGF2668GJ"
 
+# Collections for website data
+collections:
+  courses:
 
 # YAML front matter defaults
 defaults:
   - scope:
-      path:       ''
+      path:       ""
       type:       posts
     values:
       layout:     post
@@ -99,6 +102,8 @@ defaults:
       related:    true
       comments:   true
 
+# Things you don't want to process
+exclude: ["filename.md", "subfolder_name/", "*.gitignore"]
 
 # Other Custome Parameters
 locales:
