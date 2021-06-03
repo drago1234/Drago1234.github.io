@@ -72,7 +72,7 @@ Template: [Test](./learn_robotic.html) | [Another test](https://learn-udacity.to
 
 | Course - Nickname |	Term |	Grade   |
 |-------|--------|---------|
-| AU19 CSE 2331 - Fndns 2: DS & Alg (10623)		| Autumn 2019 |	
+| [AU19 CSE 2331 - Fndns 2: DS & Alg (10623)](https://drago1234.github.io/Knowledge_Bank/docs/osu-cse2331)		| Autumn 2019 |	
 | AU19 CSE 2431 - Sys 2: Oper Sys (34040)		| Autumn 2019 |	
 | AU19 CSE 4256 - Programming Python (35257)	| Autumn 2019 |	
 | AU19 STAT 3301 - Stat Model Disc 1 (33014)	| Autumn 2019 |	
