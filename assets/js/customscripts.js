@@ -13,7 +13,8 @@ $("#testJS").on("click", function(){
 	            history.go(-1);
 	        if (pass1.toLowerCase() == "drago") {
 	            alert('You Got it!');
-	            window.open("2020 Spring Key.html");
+	            // window.location.assign("");
+              window.open("https://drago1234.github.io/Knowledge_bank/index.html");
 	            // window.location.replace("2019 Summer Key.html");
 	        }
 	        // else if (pass1.toLowerCase() == "key2019"){

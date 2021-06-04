@@ -46,6 +46,14 @@
             
           </ul>
         </li>
+        {% elsif item.name == "Knowledge Bank" %}
+          <!-- Other Normal Items -->
+          <li class="nav-item">
+            <!-- &nbsp; -->
+            <a class="nav-link" type="button" onClick="passWord()" href="#">
+              <h5 style="color: white;"><br>{{ item.name }}</h5>
+            </a>
+          </li>
         {%else %}
         <!-- Other Normal Items -->
         <li class="nav-item">
