@@ -12,6 +12,7 @@
 - name: Feed
   link: /atom.xml
 - name: Knowledge Bank
+  # link: https://drago1234.github.io/Knowledge_Bank/
   link: /Knowledge_bank/index.html 
 # - name:  OSU Portal
 #   link:  /osu_html_home.html

@@ -1,12 +1,12 @@
 ---
-layout: post
-title: 'Getting start everything'
-date: '2021-05-26'
-categories:
-  - Hacking Skills, Starter
-tags:
-permalink:
-excerpt: >-
+layout: post  # Required
+title: 'Getting start everything' # Required
+date: 2021-05-26  # Required
+categories: [Hacking Skills, Starter] # Option
+tags: []  # Option
+permalink: getting_start_everything.html
+toc: false # Option
+excerpt: >- # Option
   Getting start something new can be uncomfortable and even timidating sometime. So for reducing the anxious and easing the stress, I provide some guildance here that I feel useful when I started picking up those Hacking Techs in the school.
 ---
 
@@ -19,6 +19,34 @@ excerpt: >-
 ## Introduction
   Getting start something new can be uncomfortable and even timidating sometime. So for reducing the anxious and easing the stress for anyone who has passion to learn and grow, I shared some guildance here that I feel can be useful when I started picking up those Hacking Techs in the college.
 ![Comfort Zone](/assets/images/2021-05-26-getting-start-everything/Leaving-the-Comfort-Zone-Appendix.png)
+
+## Getting Start with Jekyll
+Here I will share a collection of link that I think useful that I was building my site。
+### TOC: Table of Content
+
+Here are some reference that might work to look at
+- [Rendering table of contents in Jekyll](https://ouyi.github.io/post/2017/12/31/jekyll-table-of-contents.html)
+### Jekyll theme
+- [Customizing Jekyll theme](https://ouyi.github.io/post/2017/12/23/jekyll-customization.html)
+- [Memory Spills](https://github.com/ouyi/ouyi.github.io)
+- And all open source Jekyll-theme in github -- [https://github.com/topics/jekyll-theme](https://github.com/topics/jekyll-theme)
+
+
+### Data Table 
+
+- [CloudTable -- DataTables](https://www.datatables.net/download/)
+
+### Markdown 
+- [Basic Markdown Usage](https://www.markdownguide.org/basic-syntax/#headings)
+- Jekyll-Markdown-Cheat-Sheet, [https://itopaloglu83.github.io/Jekyll-Markdown-Cheat-Sheet/](https://itopaloglu83.github.io/Jekyll-Markdown-Cheat-Sheet/)
+- markdown-cheatsheet-online, [https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
+
+### Emoji
+
+### Other bugs that you might encounter:
+- Fix "GitHub Metadata: No GitHub API authentication could be found" error:
+    1. For Max OS user, [https://idratherbewriting.com/documentation-theme-jekyll/mydoc_install_jekyll_on_mac.html#githuberror](https://idratherbewriting.com/documentation-theme-jekyll/mydoc_install_jekyll_on_mac.html#githuberror)
+    2. For Windows User, [Knight Codes Doc](https://knightcodes.com/miscellaneous/2016/09/13/fix-github-metadata-error.html)
 
 
 ## Getting start with Github

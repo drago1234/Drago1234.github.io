@@ -10,10 +10,16 @@ So, in order to run this site, 1) You either can put the whole file in the Githu
 You would need the following code to run:
 
 ``` ruby
-gem install jekyll
-bundle update
-bundle install
-bundle exec jekyll serve
+gem install jekyll  # Update jekyll gem (Yes, jekyll is a gem as well)
+bundle update   # Update all gem packages
+bundle install  # Install newly added gem packages
+bundle exec jekyll serve    # Start the server and running
 # Note: you can use jekyll serve, which means run it without generating the Gemfile.lock
 ```
 
+
+You might also want to update Github gem frequently, this can help to seamlessly synchronize the reflection that you build on Github server match your local build
+
+``` bash
+gem update github-pages
+```
