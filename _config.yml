@@ -15,15 +15,9 @@ timezone:         'America/New_York'  # http://en.wikipedia.org/wiki/List_of_tz_
 
 # Build settings (Reference for more theme: https://mmistakes.github.io/minimal-mistakes/docs/configuration/#theme)
 # theme: minima 
-<<<<<<< HEAD
 # remote_theme: "mmistakes/minimal-mistakes@4.19.0"
 remote_theme: pmarsceill/just-the-docs
 # theme: minimal-mistakes-jekyll
-=======
-remote_theme: "mmistakes/minimal-mistakes@4.19.0"
-theme: jekyll-theme-minimal
-# theme: minima
->>>>>>> df6e0a6960963f4b1cd4f8dc018261898decea40
 # minimal_mistakes_skin : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 # theme: just-the-docs
 # theme: minima
