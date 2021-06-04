@@ -12,7 +12,7 @@ title: Knowledge Bank
 
 Note: Knowledge Bank will contains all knowledge that I had learn in the class, and each course will link to somewhere that you might not expect!!
 
-Template: [Test](./learn_robotic.html) | [Another test](https://learn-udacity.top/udre540712/)
+
 <br>
 
 <!-- ### OSU Results Final report

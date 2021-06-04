@@ -14,7 +14,7 @@ $("#testJS").on("click", function(){
 	        if (pass1.toLowerCase() == "drago") {
 	            alert('You Got it!');
 	            // window.location.assign("");
-              window.open("https://drago1234.github.io/Knowledge_bank/index.html");
+              window.open("https://drago1234.github.io/Knowledge_Bank/");
 	            // window.location.replace("2019 Summer Key.html");
 	        }
 	        // else if (pass1.toLowerCase() == "key2019"){
