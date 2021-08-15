@@ -2,7 +2,21 @@
 - name: About Me
   link: /about_me/index.html
 - name: Resume
-  link: /Zhengqi_Dong_Resume_Underg_OSU_CSE_2021.pdf
+  link:
+    - subname:  CV
+      sublink:  /Zhengqi_Dong_CV_2021-2022.pdf
+    - subname:  SDE Resume
+      sublink:  /Zhengqi_Dong_Resume_Underg_OSU_CSE_2021.pdf
+    # - subname:  Front-End Resume
+    #   sublink:  /FABENG4999H.html
+    # - subname:  Robotic Engineer Resume
+    #   sublink:  /FABENG4999H.html
+    # - subname:  ML Engineer Resume
+    #   sublink:  /FABENG4999H.html
+    # - subname:  Data Science Resume
+    #   sublink:  /FABENG4999H.html
+    # - subname: Old resume resume
+    #   sublink:  /Zhengqi_Dong_Resume_Underg_OSU_CSE_2021.pdf
 - name: Categories
   link: /categories
 - name: Tags

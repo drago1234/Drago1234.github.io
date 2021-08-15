@@ -29,18 +29,18 @@
       <ul class="navbar-nav">
         {% for item in site.data.navigation %}
 
-          {% if item.name == "Resume" %}
+          {% if item.name == "About Me" %}
           <li class="nav-item dropdown">
-            <!-- Dropdown Menu Header -->
-            <h5 class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;"><a><br>{{ item.name }}</a></h5>
-            <ul class="dropdown-menu"aria-labelledby="navbarDarkDropdownMenuLink">
-              {% for subitem in item.link %}
-              <li><a class="dropdown-item" href="{{ subitem.sublink }}">{{ subitem.subname}}</a></li>
-              {% endfor %}
-              <!-- <li><a class="dropdown-item" href="/Zhengqi_Dong_CV_2021-2022.pdf">CV</a></li>
-              <li><a class="dropdown-item" href="/Zhengqi_Dong_Resume_Underg_OSU_CSE_2021.pdf">SDE Resume</a></li> -->
-            </ul>
-          </li>
+            <div class="btn-group">
+              <a href="{{ item.link }}" class="btn btn-link nav-link"><h5 style="color: white;"><br>{{ item.name }}</h5></a>
+              <a class="nav-link dropdown-toggle dropdown-toggle-split" href="#" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;"><br></h5></a>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
+                <li><a class="dropdown-item" href="/Zhengqi_Dong_CV_2021-2022.pdf">CV</a></li>
+                <li><a class="dropdown-item" href="/Zhengqi_Dong_Resume_Underg_OSU_CSE_2021.pdf">SDE Resume</a></li>
+              </ul>
+            </div>
+        </li>
 
           {% elsif item.name == "Surviving Kits" %}
           <li class="nav-item dropdown">
