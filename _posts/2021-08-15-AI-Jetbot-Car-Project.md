@@ -1,24 +1,26 @@
 ---
 layout: post  # Required
-title: 'Getting started with NVIDIA AI Jetbot Project' # Required
+title: 'Completed Tutorial to NVIDIA Jetson AI JetBot Robot Car Project' # Required
 date: 2021-08-15  # Required
 categories: [JetBot, JetSon Nano] # Option
 tags: []  # Option
 permalink: getting_start_everything.html
-toc: false # Option
+toc: true# Option
 excerpt: >- # Option
-  Getting start something new can be uncomfortable and even timidating sometime. So for reducing the anxious and easing the stress, I provide some guildance here that I feel useful when I started picking up those Hacking Techs in the school.
+  I was first inspired by the Jetson Nano Developer kit that Nvidia has released on March 18th, 2019 (Check out this post, [NVIDIA Announces Jetson Nano: $99 Tiny, Yet Mighty NVIDIA CUDA-X AI Computer That Runs All AI Models](https://nvidianews.nvidia.com/news/nvidia-announces-jetson-nano-99-tiny-yet-mighty-nvidia-cuda-x-ai-computer-that-runs-all-ai-models)). As there are more and more supporting resource published (There are many and many [Jetson AI project](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#next) had been created since then, such as [JetBot](https://jetbot.org/master/), [JetRacer](https://github.com/NVIDIA-AI-IOT/jetracer). Check out this link to read more, [link](https://developer.nvidia.com/embedded/community/jetson-projects#jetracer)). I also started to get more interested and thinking to build one for myself as a hobby. 
 ---
 
+## Table of contents
+{: .no_toc .text-delta }
 
+1. TOC
+{: toc }
 
-[TOC]
-
-
+# Completed Tutorial to NVIDIA Jetson AI JetBot Robot Car Project
 
 # Introduction:
 
-I was first inspired by the Jetson Nano Developer kit that Nvidia has released on March 18th, 2019 (Check out this post, [NVIDIA Announces Jetson Nano: $99 Tiny, Yet Mighty NVIDIA CUDA-X AI Computer That Runs All AI Models](https://nvidianews.nvidia.com/news/nvidia-announces-jetson-nano-99-tiny-yet-mighty-nvidia-cuda-x-ai-computer-that-runs-all-ai-models)). As there are more and more supporting resource published (There are many and many [Jetson AI project](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#next) had been created since then, such as [JetBot](https://jetbot.org/master/), [JetRacer](https://github.com/NVIDIA-AI-IOT/jetracer). Check out this link to read more, [link](https://developer.nvidia.com/embedded/community/jetson-projects#jetracer)). I also started to get more interested and thinking to build one for myself as a hobby. 
+I was first inspired by the Jetson Nano Developer kit that Nvidia has released on March 18th, 2019 (Check out this post, [NVIDIA Announces Jetson Nano: $99 Tiny, Yet Mighty NVIDIA CUDA-X AI Computer That Runs All AI Models](https://nvidianews.nvidia.com/news/nvidia-announces-jetson-nano-99-tiny-yet-mighty-nvidia-cuda-x-ai-computer-that-runs-all-ai-models)). As there are more and more supporting resource published, such as [JetsonHack channel](https://www.youtube.com/channel/UCQs0lwV6E4p7LQaGJ6fgy5Q) – I’ve been following for a year. Also, here are many and many [Jetson AI project](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#next) had been created since then, such as [JetBot](https://jetbot.org/master/), [JetRacer](https://github.com/NVIDIA-AI-IOT/jetracer) (Check out this link to read more, [link](https://developer.nvidia.com/embedded/community/jetson-projects#jetracer)). Therefore, I also want to build one for myself as a electronic hobbyist. 
 
 ![Jetson_product_tiles_Devkit_pages-Jetson_Nano_2GB](../images/2021-05-26-AI-Jetbot/Jetson_product_tiles_Devkit_pages-Jetson_Nano_2GB.jpg)
 
@@ -33,22 +35,6 @@ I was first inspired by the Jetson Nano Developer kit that Nvidia has released o
 Without further ado, let’s start the journey. The following article is everything you need to begin from nothing to fully running JetBot. 
 
 
-
-# Getting Started With NVIDIA Jetson Nano Developer Kit
-
-
-
-The NVIDIA Jetson Nano Developer Kit is a small edge computer for AI development.
-
-In this article, you'll learn how to get started with the Jetson Nano, including:
-
-- Jetson Nano Overview
-- Requirements
-- Setup
-- Installing prerequisites and configuring your Python environment
-- Installing deep learning libraries
-- Compiling and installing Jetson Inference
-- Running the Jetson Inference demos
 
 # Hardware
 
@@ -193,7 +179,7 @@ Note: If you don’t get the camera right, you might get into some troble when r
 
 Get this, [Noctua NF-A4x10 5V, Premium Quiet Fan, 3-Pin, 5V Version](https://www.amazon.com/Noctua-Cooling-Bearing-NF-A4X10-FLX-5V/dp/B00NEMGCIA?ref_=ast_slp_dp&th=1&psc=1), if you don’t have one
 
-![img](https://m.media-amazon.com/images/I/81uQzxhzsdL._AC_SX480_SY360_.jpg)
+![img](../images/2021-05-26-AI-Jetbot/81uQzxhzsdL._AC_SX480_SY360_.jpg)
 
 ### Ethernet cable or WiFi Adapter
 
@@ -201,7 +187,9 @@ Lastly, you'll need an ethernet cable or a WiFi Adapter since the Jetson Nano do
 
 For me, I have this one, [Wireless-AC8265 Dual Mode Intel AC8265 Wireless NIC Module for Jetson Nano Developer Kit B01/A02, Support 2.4GHz/5GHz 300Mbps/867Mbps Dual Band WiFi and Bluetooth 4.2](https://www.amazon.com/dp/B07V9B5C6M/ref=sspa_dk_detail_9?psc=1&pd_rd_i=B07V9B5C6M&pd_rd_w=msL8R&pf_rd_p=887084a2-5c34-4113-a4f8-b7947847c308&pd_rd_wg=KLBmG&pf_rd_r=T7DNQPVT44YR60JTGK10&pd_rd_r=c00dd53c-b60b-4b7d-ae40-f60e02b57dfd&smid=A3B0XDFTVR980O&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEzVjdUVlFVOTVaVlROJmVuY3J5cHRlZElkPUEwMDU0MDk3M1BRRk5DNTA3TEZYUyZlbmNyeXB0ZWRBZElkPUExMDM4NDE4MkZQM09YOTJIQ0hYMiZ3aWRnZXROYW1lPXNwX2RldGFpbCZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU=)
 
-### **Reference:** 
+![image-20210815233633780](../images/2021-05-26-AI-Jetbot/image-20210815233633780.png)
+
+### Reference:
 
 - Jetson Nano B01 vs A02: What’s New for the Compute on Module (CoM) and Carrier Board, https://www.arducam.com/nvidia-jetson-nano-b01-update-dual-camera/
 - Nvidia Jetson Nano Developer Kit A02 vs B01 vs 2GB, https://tutorial.cytron.io/2020/10/14/nvidia-jetson-nano-developer-kit-a02-vs-b01-vs-2gb/
@@ -216,7 +204,7 @@ Before we can get started setting up a Python environment and running some deep 
 
 After that is done you need to insert the microSD card into the microSD slot as shown in the following image:
 
-![Insert microSD card](https://cms.gilberttanner.com/content/images/size/w1000/2020/08/insert_sd_card.png)Figure 3: Insert microSD card ([Source](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup))
+![Insert microSD card](../images/2021-05-26-AI-Jetbot/insert_sd_card.png)Figure 3: Insert microSD card ([Source](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup))
 
 After inserting the microSD card, you can connect the power supply, which will automatically boot up the system.
 
@@ -229,7 +217,7 @@ When you boot the system for the first time, you'll be taken through some initia
 
 After the initial setup, you should see the following screen:
 
-![Jetson Nano Desktop](https://cms.gilberttanner.com/content/images/size/w1000/2020/08/initial_screen.png)
+![Jetson Nano Desktop](../images/2021-05-26-AI-Jetbot/initial_screen.png)
 
 Figure 4: Desktop
 
@@ -316,9 +304,9 @@ cat ~/.ssh/id_rsa.pub | ssh user@hostname 'cat >> .ssh/authorized_keys'
 
 Now you only need to add the SSH Host. Ctrl + Shift + P -> Remote SSH: Connect to Host.
 
-![img](https://cms.gilberttanner.com/content/images/size/w1000/2020/03/grafik-5.png)Figure 5: Added new host.
+![img](../images/2021-05-26-AI-Jetbot/grafik-5.png)Figure 5: Added new host.
 
-![img](https://cms.gilberttanner.com/content/images/size/w1000/2020/08/vscode_remote_control.PNG)Figure 6: VSCode Remote Controll
+![img](../images/2021-05-26-AI-Jetbot/vscode_remote_control.PNG)Figure 6: VSCode Remote Controll
 
 ## Installing deep learning libraries
 
@@ -443,7 +431,7 @@ $ ./imagenet-console --network=resnet-18 images/jellyfish.jpg output_jellyfish.j
 $ ./imagenet-console.py --network=resnet-18 images/jellyfish.jpg output_jellyfish.jpg
 ```
 
-![Image Classification Example](https://cms.gilberttanner.com/content/images/size/w1000/2020/08/imagenet_jellyfish.jpg)Figure 7: Image Classification Example
+![Image Classification Example](../images/2021-05-26-AI-Jetbot/imagenet_jellyfish.jpg)Figure 7: Image Classification Example
 
 ### Object Detection
 
@@ -460,7 +448,7 @@ $ ./detectnet-console --network=ssd-mobilenet-v2 images/peds_0.jpg output.jpg   
 $ ./detectnet-console.py --network=ssd-mobilenet-v2 images/peds_0.jpg output.jpg  # --network flag is optional
 ```
 
-![Object Detection Example](https://cms.gilberttanner.com/content/images/size/w1000/2021/04/detectnet-ssd-peds-0.jpg)Figure 8: Object Detection Example
+![Object Detection Example](../images/2021-05-26-AI-Jetbot/detectnet-ssd-peds-0.jpg)Figure 8: Object Detection Example
 
 ### Semantic Segmentation
 
@@ -477,7 +465,7 @@ $ ./segnet-console --network=fcn-resnet18-cityscapes images/city_0.jpg output.jp
 $ ./segnet-console.py --network=fcn-resnet18-cityscapes images/city_0.jpg output.jpg
 ```
 
-![Semantic Segmentation](https://cms.gilberttanner.com/content/images/size/w1000/2020/08/output_segmentation.jpg)Figure 9: Semantic Segmentation
+![Semantic Segmentation](../images/2021-05-26-AI-Jetbot/output_segmentation.jpg)Figure 9: Semantic Segmentation
 
 ## JetPack 4.5.1 CUDA and VisionWorks samples
 
@@ -582,8 +570,20 @@ If you have any questions or just want to chat with me, feel free to leave a com
 
 ## Reference:
 
-- Embedded Linux Wiki, Jetson/Performance, https://elinux.org/Jetson/Performance ==> (For how to control CPU performance)
-- Getting a Running Start with the NVIDIA Jetson Nano, https://www.farsightsecurity.com/blog/txt-record/nvidia-20200124/ ==> Software Intro
+- 
+- [Blog] Getting a Running Start with the NVIDIA Jetson Nano, [https://www.farsightsecurity.com/blog/txt-record/nvidia-20200124/](https://www.farsightsecurity.com/blog/txt-record/nvidia-20200124/) ==> Software Intro
+- [Blog] Getting Started with the NVIDIA Jetson Nano Developer Kit, [https://dronebotworkshop.com/nvidia-jetson-developer-kit/](https://dronebotworkshop.com/nvidia-jetson-developer-kit/)
+- [NVIDIA Site] Getting Started with Jetson Nano Developer Kit, [https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit)
+- [Github] Hello AI World, jetson-inference, [https://github.com/dusty-nv/jetson-inference](https://github.com/dusty-nv/jetson-inference)
+- [Blog] 深入使用NVIDIA Jetson Inference机器学习项目 - 计算机视觉图片分类任务, [https://www.rs-online.com/designspark/nvidia-jetson-inference-1-cn](https://www.rs-online.com/designspark/nvidia-jetson-inference-1-cn)
+- [Blog], Getting Started With NVIDIA Jetson Nano Developer Kit, [https://gilberttanner.com/blog/jetson-nano-getting-started#overview](https://gilberttanner.com/blog/jetson-nano-getting-started#overview)
+- [JetBot] Getting Started, [https://jetbot.org/master/getting_started.html](https://jetbot.org/master/getting_started.html)
+- Yahboom Documentation, [http://www.yahboom.net/study/JETBOT](http://www.yahboom.net/study/JETBOT)
+- Embedded Linux Wiki, Jetson/Performance, [https://elinux.org/Jetson/Performance](https://elinux.org/Jetson/Performance) ==> (For how to control CPU performance)
+- Jetson Nano Wiki – A wiki for the NVIDIA Jetson Nano, [https://elinux.org/Jetson_Nano](https://elinux.org/Jetson_Nano)
+- How to Establish Remote Desktop Access to Ubuntu From Windows, [https://www.makeuseof.com/tag/how-to-establish-simple-remote-desktop-access-between-ubuntu-and-windows/](https://www.makeuseof.com/tag/how-to-establish-simple-remote-desktop-access-between-ubuntu-and-windows/)
+- How To Set Up a Firewall with UFW on Ubuntu 18.04, [https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-18-04)
+- What are the risks of running 'sudo pip'?, [https://stackoverflow.com/questions/21055859/what-are-the-risks-of-running-sudo-pip](https://stackoverflow.com/questions/21055859/what-are-the-risks-of-running-sudo-pip)
 
 
 
