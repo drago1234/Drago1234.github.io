@@ -4,13 +4,16 @@ title: 'Completed Tutorial to NVIDIA Jetson AI JetBot Robot Car Project' # Requi
 date: 2021-08-15  # Required
 categories: [JetBot, JetSon Nano] # Option
 tags: []  # Option
-permalink: getting_start_everything.html
+permalink: ai-Jetbot-car-project.html
 toc: true# Option
 excerpt: >- # Option
-  I was first inspired by the Jetson Nano Developer kit that Nvidia has released on March 18th, 2019 (Check out this post, [NVIDIA Announces Jetson Nano: $99 Tiny, Yet Mighty NVIDIA CUDA-X AI Computer That Runs All AI Models](https://nvidianews.nvidia.com/news/nvidia-announces-jetson-nano-99-tiny-yet-mighty-nvidia-cuda-x-ai-computer-that-runs-all-ai-models)). As there are more and more supporting resource published (There are many and many [Jetson AI project](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#next) had been created since then, such as [JetBot](https://jetbot.org/master/), [JetRacer](https://github.com/NVIDIA-AI-IOT/jetracer). Check out this link to read more, [link](https://developer.nvidia.com/embedded/community/jetson-projects#jetracer)). I also started to get more interested and thinking to build one for myself as a hobby. 
+      I was first inspired by the Jetson Nano Developer kit that Nvidia has released on March 18th, 2019 (Check out this post, [NVIDIA Announces Jetson Nano: $99 Tiny, Yet Mighty NVIDIA CUDA-X AI Computer That Runs All AI Models](https://nvidianews.nvidia.com/news/nvidia-announces-jetson-nano-99-tiny-yet-mighty-nvidia-cuda-x-ai-computer-that-runs-all-ai-models)). As there are more and more supporting resource published, such as [JetsonHack channel](https://www.youtube.com/channel/UCQs0lwV6E4p7LQaGJ6fgy5Q) – I’ve been following for a year. Also, here are many and many [Jetson AI project](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#next) had been created since then, such as [JetBot](https://jetbot.org/master/), [JetRacer](https://github.com/NVIDIA-AI-IOT/jetracer) (Check out this link to read more, [link](https://developer.nvidia.com/embedded/community/jetson-projects#jetracer)). Therefore, I also want to build one for myself as a electronic hobbyist. 
 ---
 
+
+
 ## Table of contents
+
 {: .no_toc .text-delta }
 
 1. TOC
