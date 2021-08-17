@@ -2,7 +2,7 @@
 layout: post  # Required
 title: 'Completed Tutorial to NVIDIA Jetson AI JetBot Robot Car Project' # Required
 date: 2021-08-15  # Required
-categories: [JetBot, JetSon Nano] # Option
+categories: [JetBot, Jetson Nano] # Option
 tags: []  # Option
 permalink: ai-Jetbot-car-project.html
 toc: true# Option
