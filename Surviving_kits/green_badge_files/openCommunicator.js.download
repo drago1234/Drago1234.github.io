@@ -1,0 +1,622 @@
+﻿document.cookie = 'localTimeZoneOffset=' + (new Date().getTimezoneOffset() * -1);
+
+var debounce = function (fn, delay) {
+    var timeout;
+    return function () {
+        var self = this;
+        var args = arguments;
+        window.clearTimeout(timeout);
+        timeout = window.setTimeout(function () {
+            fn.apply(self, args);
+        }, delay);
+    };
+};
+
+function checkAuth() {
+    if (!$('head link[href$="logout.css"]').length) {
+        $$.get('Student/Ping/Auth', null, function(res) {
+          if (!res || !res.active) logout(true, 'Expired');
+        }, function () {
+           logout(true, 'Expired'); 
+        });
+    }
+}
+
+var $$ = {
+    post: function(url, data, success, error) {
+        return $$.ajax({
+            type: 'post',
+            url: url,
+            data: data,
+            suppressGlobalErrorHandler: true,
+            success: success,
+            error: error
+        });
+    },
+
+    get: function(url, data, success, error) {
+        return $$.ajax({
+            type: 'get',
+            url: url,
+            data: data,
+            suppressGlobalErrorHandler: true,
+            success: success,
+            error: error
+        });
+    },
+
+    ajax: function(o) {
+        o = o || {};
+
+        if (typeof o.data === 'function') {
+            o.success = o.data;
+            o.error = o.success;
+            o.data = null;
+        }
+
+        return $.ajax({
+            type: o.type,
+            url: o.url,
+            data: o.data,
+            suppressGlobalErrorHandler: true,
+            success: o.success,
+            error: o.error
+        });
+    }
+};
+
+if (typeof Object.assign != 'function') {
+// Must be writable: true, enumerable: false, configurable: true
+    Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) { // .length of function is 2
+            'use strict';
+            if (target == null) { // TypeError if undefined or null
+                throw new TypeError('Cannot convert undefined or null to object');
+            }
+
+            var to = Object(target);
+
+            for (var index = 1; index < arguments.length; index++) {
+                var nextSource = arguments[index];
+
+                if (nextSource != null) { // Skip over if undefined or null
+                    for (var nextKey in nextSource) {
+                        // Avoid bugs when hasOwnProperty is shadowed
+                        if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                            to[nextKey] = nextSource[nextKey];
+                        }
+                    }
+                }
+            }
+            return to;
+        },
+        writable: true,
+        configurable: true
+    });
+}
+
+$(function() {
+    if (window.moment && moment.locale) {
+        moment.locale(config.locale);
+    } 
+});
+
+window.addEventListener("hashchange", function(event) {
+    var element = document.getElementById(location.hash.substring(1));
+    if (element) {
+        if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
+            element.tabIndex = -1;
+        }
+        element.focus();
+    }
+
+}, false);
+
+$(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+    if (settings.suppressGlobalErrorHandler || thrownError === 'abort') return;
+    hideProgressHUD();
+
+    var msg = jqxhr.statusText;
+    if (jqxhr.responseText && !jqxhr.responseText.includes('<html')) {
+        msg = jqxhr.responseText.replace(/\r\n/g, '<br/>');
+    }
+
+    bootbox.alert(msg || 'An unexpected error has occurred.');
+});
+
+$(function() {
+    window.config.dateFormatDisplay = window.config.dateFormat.replace('M', 'MM').replace('d', 'DD').toUpperCase();
+	window.config.dateFormatDisplay = window.config.dateFormatDisplay.replace('MMM', 'MM').replace('DDD', 'DD');
+	window.config.dateFormatDisplay = window.config.dateFormatDisplay.replace('MMMM', 'MM').replace('DDDD', 'DD');
+	window.config.dateFormatDisplay = window.config.dateFormatDisplay.replaceAll('.','/');
+	window.config.dateFormatDisplay = window.config.dateFormatDisplay.replaceAll('-','/');
+	//console.log('3: ' + window.config.dateFormatDisplay);
+
+    $(':text').attr('autocomplete', 'off');
+
+    $(document).on('shown.bs.modal', function (e) {
+        var modal = $(e.target);
+        $(':text', modal).attr('autocomplete', 'off');
+        var modalBody = $('.modal-body', modal);
+
+        if (('.modal-footer', modal).length) {
+            var gotoLink = '<a class="sr-only modal-goto-buttons">Go to Buttons</a>';
+            modalBody.append(gotoLink);
+            modalBody.prepend(gotoLink);
+        }
+    });
+
+    $(document).on('click', 'a.modal-goto-buttons', function() {
+        $(this).closest('.modal-content').find('.modal-footer .btn:first').focus();
+    });
+
+    if ($('ul.nav:visible').length) {
+        $.get(config.basePath + 'Mvc/Patients/Todo', function(result) {
+            for (var key in result) {
+                $('ul.nav a[href="' + key + '"]').append('<label class="label label-xs label-warning">' + result[key] + '</label>');
+            }
+            if (!$.isEmptyObject(result) && $('body').is('.home') && !$('#quicklinks').length) {
+                $('#side-toggle:visible').click();
+            }
+        });
+    }
+
+    if ($.validator) {
+        $.validator.addMethod('dobmask', function (val, element) {
+            var regex = /^[0-9]{2}?\/[0-9]{2}\/[0-9]{4}$/;
+            return regex.test(val);
+        }, 'Enter in ' + config.dateFormatDisplay + ' format');
+        
+        $.validator.addMethod('ptdob', function (val, element) {
+            if (!window.patient || !patient.dob) return true;
+            
+            var dob = parseDate(patient.dob);
+            var d = parseDate(val);
+            return val == '' || d >= dob;
+        }, 'Must be on or after DOB');
+
+        $.validator.addMethod('cleandate', function (val, element) {
+            return val == '' || /\d{1,2}\/\d{1,2}\/\d{2,4}/.test(val);
+        }, 'Must be a valid date');
+
+        $.validator.addMethod('notfuture', function (val, element) {
+            var d = parseDate(val);
+            var n = parseDate();
+            return val == '' || n > d;
+        }, 'Cannot be in the future');
+
+        $.validator.addMethod("requiredIfVisible", function (val, el) {
+            var $el = $(el);
+            if ($el.is(':hidden')) return true;
+
+            if ($el.is(':radio')) {
+                val = $('input[name="' + $el.attr('name') + '"]:checked').val();
+            }
+
+            return val && val.trim() !== '';
+        }, "This field is required");
+
+        $.extend($.validator.methods, {
+            date: function (value, element) {
+                return this.optional(element) || parseDate(value).isValid();
+            }
+        });
+        
+        $.validator.messages.date = 'Please enter a valid ' + config.dateFormatDisplay + ' date'
+    }
+});
+
+(function () {
+    if (typeof jQuery != 'undefined') {
+        if (typeof $.datepicker != 'undefined') {
+            wcagDatepicker();
+        }
+
+        newWindowTooltip();
+    }
+})();
+
+function newWindowTooltip() {
+    $('a[target]:not(.infol)').each(function () {
+        var $this = $(this);
+        if (!$('span', $this).length) {
+            $this.addClass('infol').append('<span>' + lang.OpensNewWindow + '</span>');
+        }
+    });
+}
+
+function wcagDatepicker() {
+    $.datepicker._updateDatepicker_original = $.datepicker._updateDatepicker;
+    $.datepicker._updateDatepicker = function (inst) {
+        $.datepicker._updateDatepicker_original(inst);
+
+        var month = $('.ui-datepicker-month');
+        var year = $('.ui-datepicker-year');
+        var id;
+
+        if (!month.is('[id]')) {
+            id = simpleGuid();
+            month.attr('id', id);
+            month.before("<label for='" + id + "' class='hidden'>Month:</label>");
+        }
+
+        if (!year.is('[id]')) {
+            id = simpleGuid();
+            year.attr('id', id);
+            year.before("<label for='" + id + "' class='hidden'>Year:</label>");
+        }
+    }
+}
+
+function simpleGuid() {
+    return Math.random().toString(36).slice(2, 10);
+}
+
+function skipToContent() {
+    if ($('#container').length) {
+        window.location = '#container';
+    } else {
+        window.location = '#mainbody';
+    }
+}
+
+function showValidationDialog(title, msg) {
+    $("#validationmDialog").remove();
+    $("body").append("<div id='validationDialog' style='display: none;'>" +
+        "<h2>" + lang.FormNotSubmitted + "</h2>" +
+        "<span class='message'></span></div>");
+
+    $("#validationDialog .message").html(msg);
+    $("#validationDialog").dialog({
+        title: title,
+        modal: true,
+        buttons: { OK: closeValidationDialog },
+        width: 450
+    });
+}
+
+function closeValidationDialog() {
+    $("#validationDialog").dialog("close");
+}
+
+// Validation helpers...
+
+function invalidHandler(e, validator) {
+    var errors = validator.numberOfInvalids();
+    if (errors) {
+        var message = errors == 1 ? 'You missed 1 field. It has been highlighted.' : 'You missed ' + errors + ' fields.  They have been highlighted.';
+        $("div.validation-summary .message").html(message);
+        $("div.validation-summary").show();
+        setTimeout(function () { showValidationDialog('Validation Errors', message); }, 10);
+    } else {
+        $("div.validation-summary").hide();
+    }
+}
+
+function errorPlacement(error, element) {
+    var parent = element.parent();
+    if (parent.is('td')) parent.append(error);
+    else element.closest('div').append(error);
+}
+
+$(function () {
+    if ($('.pncCommand').length) {
+        $('a[data-commandname]').click(function (evt) {
+            (evt || window.event).preventDefault();
+            var cmd = $('.pncCommand:first');
+            cmd.val($(this).data('commandname')).click();
+        });
+    }
+
+    if (typeof pncIdlePeriodSec !== 'undefined' && 
+            !location.pathname.match(/login|confirm\.aspx/)) {
+        startIdleTimer(pncIdlePeriodSec);
+    }
+});
+
+function startIdleTimer(idle) {
+    if (navigator.userAgent.includes('PncCommunicator')) return;
+    
+    $.idleTimeout('#idletimeout', '#idletimeout a', {
+        idleAfter: idle,
+        pollingInterval: 15,
+        keepAliveURL: config.basePath + 'Student/Ping',
+        serverResponseEquals: 'OK',
+        AJAXTimeout: 0,
+        failedRequests: 1,
+        onAbort: function () {
+            logout(true);
+        },
+        onTimeout: function () {
+            $(this).slideUp();
+            location.replace('/logout.aspx');
+        },
+        onIdle: function () {
+            $(this).slideDown(); // show the warning bar
+        },
+        onCountdown: function (counter) {
+            $(this).find("span").html(counter); // update the counter
+        },
+        onResume: function () {
+            $(this).slideUp(); // hide the warning bar
+        }
+    });
+}
+
+function ifValidSession(f) {
+    $.get(config.basePath + 'Student/Ping', function (result) {
+        if (result === 'OK') f();
+        else logout(true);
+    }).fail(function () {
+        logout(true);
+    });
+}
+
+function scrollReload() {
+    $(document).scrollTop(0);
+    showProgressHUD();
+    location.reload();
+}
+
+function logout(show, reason) {
+    if (show) {
+        var msg = 'Your session has expired. You will now be redirected to the login page.';
+        if (reason) msg += ' Reason: ' + reason;
+        showOverlay(msg);
+        setTimeout(function () { location.replace('/logout.aspx'); }, 3000);
+    }
+    else location.replace('/logout.aspx');
+}
+
+function showOverlay(msg) {
+    $('div.overlay').remove();
+    $('body').append('<div class="overlay"><h2>' + msg + '</h2></div>');
+}
+
+$(document).on('shown.bs.modal', resizeModals);
+
+var modalResizeTimer;
+$(window).resize(function () {
+    clearTimeout(modalResizeTimer);
+    modalResizeTimer = setTimeout(resizeModals, 250);
+});
+
+function resizeModals() {
+    $(document).trigger('modal.willResize');
+
+    $('.modal-scrollpane').each(function() {
+        var $elt = $(this);
+        var $dlg = $elt.parents('.modal-dialog');
+        if($dlg==null) return;
+        var h1 = $elt.height();
+        var h2 = $dlg.outerHeight(true);
+        $elt.css({'max-height':($(window).height()-(h2-h1))+'px', 'overflow-y':'auto'});
+
+        /* Need to adjustBackdrop after we modify our scrollpane */
+        /* Tweaked from bootstrap Modal.prototype.adjustBackdrop */
+        var $backdrop = $dlg.parents('.modal').children('.modal-backdrop');
+        $backdrop.css('height', 0).css('height', '100%');
+    });
+
+    $(document).trigger('modal.didResize');    
+}
+
+$(document).on('click', '.documentContainer.viewer li a', function () {
+    var div = $(this).closest('.viewer');
+    var params = {id:div.data('id'), sequenceID:$(this).data('seq')};
+    showProgressHUD();
+    $.get(config.basePath + 'Mvc/PatientDocuments/Document', params,  function (html) {
+        hideProgressHUD();
+        div.replaceWith(html);
+        resizeModals();
+    });
+});
+
+function escapeHtml(unsafe) {
+    if (!unsafe) return unsafe;
+    return unsafe.toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function unescapeHtml(unsafe) {
+    if (!unsafe) return unsafe;
+    return unsafe.toString()
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#039;/g, "'");
+}
+
+function getWindowCenter(w, h) {
+    w = w || 800;
+    h = h || 600;
+
+    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+    return {left:left,top:top};
+}
+
+function parseDate(str) {
+    var df = config.dateFormat.toUpperCase();
+    var m = moment(str, [
+        df,
+        df + ' h:mm A',
+        df + ' h:mm a',
+        df + ' hh:mm A',
+        df + ' hh:mm a',
+        df + ' hh:mm:ss A',
+        df + ' hh:mm:ss a'
+    ]);
+
+    if (!m.isValid()) m = moment(str);
+
+    return m;
+}
+
+function parseTime(str) {
+    var m = moment(str, [
+        'h:mmA',
+        'hh:mmA',
+        'h:mm A',
+        'hh:mm A'
+    ]);
+
+    if (!m.isValid()) m = moment(str);
+
+    return m;
+}
+
+window.antiForgeryToken = function (data) {
+    data = data || {};
+    data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+    return data;
+};
+
+$(document).on('keydown', function(ev) {
+    if (ev.keyCode === 13) {
+        var fld = $(document.activeElement);
+        if (!fld.is('[type=submit],textarea,[contenteditable=true],#txtPassWord')) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            return false;
+        }
+    }
+});
+
+function viewLetterPdf(id) {
+    var li = $('li[data-hid=' + id + ']');
+    $('.label-success', li).remove();
+    li.css('font-weight', 'normal');
+
+    var url = config.basePath + 'Student/Letters/Read/' + id + '?iframe=True';
+    var html = '<iframe id="pdfFrame" style="width: 100%; min-height: 600px;" src="' + url + '"></iframe>';
+    var modal = bootbox.dialog({
+        size: 'large', title: 'Letter', message: html,
+        buttons: {
+            Print: {
+                className: 'btn-primary',
+                callback: function () {
+                    document.getElementById('pdfFrame').focus();
+                    document.getElementById('pdfFrame').contentWindow.print();
+                    return false;
+                }
+            },
+            Close: {
+                className: 'btn-default'
+            }
+        }
+    });
+}
+
+function viewAccessPlan(id) {
+    var li = $('li[data-hid=' + id + ']');
+    $('.label-success', li).remove();
+    li.css('font-weight', 'normal');
+    var isSigned = $('strong.signed', li).length;
+
+    var url = config.basePath + 'Student/Letters/Read/' + id + '?iframe=True';
+    var html = '<iframe id="pdfFrame" style="width: 100%; min-height: 600px;" src="' + url + '"></iframe>';
+    var modal = bootbox.dialog({
+        size: 'large', title: 'Letter', message: html,
+        buttons: {
+            Sign: {
+                className: 'btn btn-success left' + (isSigned ? ' hidden disabled' : ''),
+                callback: function () {
+                    bootbox.prompt({
+                        title: 'Sign Access Plan',
+                        placeholder: 'Enter your full name to sign off on this access plan',
+                        callback: function (name) {
+                            if (name) {
+                                var payload = antiForgeryToken({ id: id, name: name });
+                                showProgressHUD();
+                                $.post('/Student/Letters/Sign', payload, function () {
+                                    hideProgressHUD();
+                                    toastr.success('Access plan signed');
+                                    li.append('<strong class="signed">[Signed at ' + moment().format('l LT') + ' by ' + name + ']</strong>');
+                                    modal.modal('hide');
+                                });
+                            }
+                        }
+                    }); 
+                    return false;
+                }
+            },  
+            Print: {
+                className: 'btn-primary',
+                callback: function () {
+                    document.getElementById('pdfFrame').focus();
+                    document.getElementById('pdfFrame').contentWindow.print();
+                    return false;
+                }
+            },
+            Close: {
+                className: 'btn-default'
+            }
+        }
+    });
+}
+
+$(document).on('click', 'a.appt-barcode', function () {
+    var $this = $(this);
+
+    var img = $(this).find('img').clone();
+    img.addClass('barcode-fit').show();
+    var info = $this.data('apptinfo') || '';
+    var id = $this.data('apptid');
+
+    bootbox.dialog({
+        title: 'Barcode',
+        message: '<div id="barcode-modal-msg" style="text-align: center;">' + img[0].outerHTML + '<div>' + info +'</div></div>',
+        buttons: {
+            Close: {}
+        }
+    }).on('hidden.bs.modal', function () {
+        if (window.onBarcodeClosed) onBarcodeClosed(id);
+    });
+});
+
+$(document).on('click', '#showQuarantineBadge', function () {
+    showProgressHUD();
+    $.get(config.basePath + 'Mvc/Patients/QuarantineBadge', function (html) {
+        hideProgressHUD();
+        $('body').addClass('has-badge').append(html);
+    });
+});
+
+$(document).on('click', '#quarantineBadge .exit', function () {
+    $('#quarantineBadge').remove();
+    $('body').removeClass('has-badge');
+});
+
+$(document).on('click', 'a.modalres', function (e) {
+    e.preventDefault();
+    showProgressHUD();
+    var a = $(this);
+    $.get(a.attr('href'), function (html) {
+        bootbox.dialog({
+            title: a.attr('title'),
+            size: 'large',
+            message: html,
+            buttons: { OK: {} }
+        });
+        hideProgressHUD();
+    });
+});
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}

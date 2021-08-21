@@ -1,0 +1,99 @@
+var builtIn = {
+    covid19: function(mode) {
+        if (mode !== 'Test' && mode !== 'Vaccine') mode = '';
+        showProgressHUD();
+        $.get(config.basePath + 'Mvc/BuiltIn/Covid19' + mode, function(html) {
+            hideProgressHUD();
+            var modal = bootbox.dialog({
+                title: 'COVID 19',
+                size: 'large',
+                message: html,
+                buttons: {
+                    /*History: {
+                        className: 'history left btn btn-default',
+                        callback: function() {
+                            var code = $('#ComplianceCode').val();
+                            showHistory(code);
+                            return false;
+                        }
+                    },*/
+                    Cancel: {},
+                    Done: {
+                        callback: function() {
+                            var form = $('#editForm');
+                            if (!form.valid()) return false;
+                            
+                            var action = form.attr('action');
+                            var payload = form.serialize();
+
+                            showProgressHUD();
+                            $.post(config.basePath + action, payload, function(msg) {
+                                hideProgressHUD();
+                                modal.modal('hide');
+                                if (msg) bootbox.alert(msg);
+                            });
+                            
+                            return false;
+                        }
+                    }
+                }
+            }).on('shown.bs.modal', function() {
+                $('[data-verified]', modal).each(function() {
+                    var $this = $(this);
+                    if ($this.data('verified')) {
+                        $(':input, select', $this).prop('disabled', true);
+                        var panel = $this.closest('.panel');
+                        $('.radioclear', panel).hide();
+                    }
+                });
+
+                var form = $('#editForm', modal);
+                $('.date', form).addClass('ptdob notfuture cleandate').attr('placeholder', config.dateFormatDisplay);
+                form.validate();
+
+                $('.uploadContainer', modal).each(function () {
+                    var type = $(this).data('type');
+                    if (type) fetchUploads(type, modal);
+                });
+
+                builtIn._fetchExistingUploads();
+            });
+        });
+    },
+
+    _fetchExistingUploads: function (container) {
+        $('.dlform').each(function () {
+            var $this = $(this);
+            var id = $this.data('formid');
+            fetchUploads('form-' + id, container);
+    
+            if ($('.imgContainer', $this).length) {
+                $('.additionalUploads', $this).show();
+            }
+        })
+    }
+};
+
+var wehealth = {
+    getCode: function(testID) {
+        var params = antiForgeryToken({ testID: testID });
+        showProgressHUD();
+        $.post(config.basePath + 'Student/Results/GetCode', params,  function (res) {
+            if (res && res.code) {
+                var msg = 'Your code is: <strong style="font-size: 1.4em; font-family: courier, serif;">' + res.code + '</strong>';
+                bootbox.alert(msg);
+            } else if (res) {
+                bootbox.alert(res);
+            } else {
+                bootbox.alert('An unexpected error has occurred.');
+            }
+        }).fail(function (res) {
+            var json = JSON.parse(res.responseText);
+            if (json && json.error) {
+                bootbox.alert(json.error);
+            }
+        }).always(function () {
+            hideProgressHUD();
+        });
+    }
+};

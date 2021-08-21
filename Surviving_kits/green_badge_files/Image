@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <title>Boston University | Login</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="/idp/css/login.css" />
+  <script type='text/javascript' src='/idp/js/autofocus.js'></script>
+  <script type='text/javascript' src='/idp/js/modernizr-custom.min.js'></script>
+  <script type='text/javascript'>
+	  if (!Modernizr.input.placeholder){
+		  document.documentElement.className += ' no-placeholder';	
+	  }
+  </script>
+  <link rel="icon" type="image/x-icon" href="/idp/images/bu-icon.ico" />
+  <meta name="viewport" content="minimum-scale=1,initial-scale=1,maximum-scale=1,user-scalable=0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body>
+
+    <div id="wrapper">
+      <div class="container">
+        <h1>BU Login</h1>
+        
+        
+        <form action="/idp/profile/SAML2/Redirect/SSO;jsessionid=6qs9w36evy6b1it2b88xxtphi?execution=e1s1" method="post">
+
+                <fieldset>
+					<label for="j_username">BU login name</label>
+					<input class="input-text" autocapitalize="off" placeholder="BU login name" id="j_username" name="j_username" type="text" autofocus />
+					<label for="j_password">Password</label>
+					<input class="input-text" placeholder="password" value="" id="j_password" name="j_password" type="password">
+        </fieldset>
+        
+                        <button class="input-submit" type="submit" name="_eventId_proceed"
+              onClick="this.childNodes[0].nodeValue='Logging in, please wait...'"
+              >Continue</button>
+            
+            </form>
+        			  <div class="description">
+			  	<p><idpui:serviceDescription>You have asked to login to patientconnect.bu.edu</p>
+			  </div>
+
+        </div>
+      </div>
+
+	<div id="footer">
+		<ul>
+		  <li><a href="https://weblogin.bu.edu/accounts/forgot">Forgot Password</a></li>
+		  <li><a href="https://weblogin.bu.edu/accounts/update">Update Your Account</a></li>
+		  <li><a href="http://www.bu.edu/tech/desktop/desktop-support/software/troubleshooting/" >Login Help</a></li>
+		</ul>
+	</div>
+    
+ 	</body>
+</html>

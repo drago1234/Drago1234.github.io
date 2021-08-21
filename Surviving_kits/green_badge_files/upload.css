@@ -1,0 +1,85 @@
+﻿.uploadContainer { margin: 8px 0px 8px 0px; }
+.immun.uploadContainer { margin-bottom: 24px; }
+
+.fileWrapper input[type=file] { display: none; }
+
+.imgContainer {
+	display: inline-block;
+	position: relative;
+    vertical-align: top;
+	margin: 4px;
+}
+
+.imgContainer .img {
+	width: 100px;
+    height: auto;
+    min-height: 50px;
+	margin: 4px;
+	margin-top: 4px !important;
+	padding: 4px;
+	background-color: #222;
+}
+
+.imgContainer .img:hover, .imgContainer .img.selected {
+	background-color: #3498db;
+	cursor: pointer;
+}
+
+.imgContainer span.comment, .imgContainer span.sequence {
+	color: White;
+	background-color: #222;
+	position: absolute;
+	text-align: center;
+	width: 100px;
+	opacity: 0.8;
+	white-space: nowrap;
+	overflow: hidden;
+	font-size: 12px;
+	text-overflow: ellipsis;
+	line-height: initial;
+}
+
+.imgContainer span.comment, .imgContainer span.sequence {
+	left: 4px;
+}
+
+html:not(.responsive) .imgContainer span.comment,
+html:not(.responsive) .imgContainer span.sequence {
+	left: 14px;
+}
+
+.imgContainer span.comment {
+	top: 8px;
+}
+
+.imgContainer span.sequence {
+    display: none;
+}
+
+.nivo-lightbox-nav {
+	width: 20% !important;
+}
+
+.nivo-lightbox-wrap {
+	top: 2% !important;
+}
+
+.nivo-lightbox-nav:hover {
+	background-color: #000\9 !important;
+  	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" !important;
+}
+
+.nivo-lightbox-overlay {
+    background:rgb(34,34,34) !important;
+	background: url(about:blank)\9 !important;
+	background:rgba(34,34,34,0.8) !important;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#cc222222,endColorstr=#cc222222) !important;
+	zoom: 1 !important;
+}
+
+.niv-lightbox-overlay:nth-child(n) {
+	filter: none !important;
+}
+
+.uploadContainer a.button { width: 100%; margin-bottom: 6px; }
+.button:hover { color: black !important; text-decoration: none !important; }

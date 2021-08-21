@@ -1,0 +1,259 @@
+﻿// Avoid `console` errors in browsers that lack a console.
+(function () {
+    var method;
+    var noop = function () { };
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+$.validAjax = function (opts) {
+    ifValidSession(function() {
+        $.ajax(opts);
+    });
+};
+
+$.fn.flash = function (ms) {
+    ms = ms || 200;
+    this.each(function () {
+        $(this).fadeOut(ms).fadeIn(ms).fadeOut(ms).fadeIn(ms).fadeOut(ms).fadeIn(ms);
+    });
+    return this;
+};
+
+$.fn.prepareGrids = function(opts) {
+    this.each(function () {
+        var $this = $(this);
+        prepareGrids($this);
+    });
+    return this;
+};
+
+$.fn.datepicker2 = function(opts) {
+    var o = opts || {};
+    if (!o.format) o.format = 'L';
+    o.pickTime = (opts && opts.pickTime) || false;
+    o.language = config.locale;
+
+    if (o.pickTime) o.format = 'L h:mm a';
+
+    return this.each(function() {
+        $(this).datetimepicker(o);
+    });
+};
+
+
+$.fn.preventDoubleClick = function (opts) {
+    return this;
+    this.each(function () {
+        var $this = $(this);
+        $this.off('click.preventDouble').on('click.preventDouble', function (e) {
+            if (!e) return;
+            if ($this.is('.dblclick, [data-toggle], .btn-box-tool, .disabled, :disabled')) return;
+
+            if ($this.data('noclick')) {
+                e.stopImmediatePropagation();
+                return false;
+            }
+
+            var stop = $this.data('noclick');
+
+            clearTimeout($this.data('noclick'));
+            var timeout = setTimeout(function () {
+                $this.data('noclick', false);
+                if (!$this.is(':hidden')) $this.fadeTo(250, 1);
+                else $this.css('opacity', 1);
+            }, 1500);
+            $this.data('noclick', timeout).fadeTo(50, 0.5);
+
+            if (stop) {
+                e.stopImmediatePropagation();
+                return false;
+            }
+        });
+    });
+    return this;
+};
+
+$.fn.pncGrid = function(opts) {
+    this.each(function () {
+        var $this = $(this);
+        $this.data('pncGridOptions', opts);
+        prepareGrids($this);
+    });
+    return this;
+};
+
+
+// http://stackoverflow.com/questions/1184624/convert-form-data-to-javascript-object-with-jquery?page=1&tab=votes#tab-top
+$.fn.serializeObject = function () {
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function () {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+
+$.fn.clearHide = function() {
+    this.each(function() {
+        var $this = $(this);
+        $(':text, select', $this).val(null);
+        $(':radio, :checkbox', $this).prop('checked', false);
+        $this.hide();
+    });
+    return this;
+};
+
+$.fn.spin = function (opts) {
+    this.each(function () {
+        var $this = $(this),
+        data = $this.data();
+
+        if (data.spinner) {
+            data.spinner.stop();
+            delete data.spinner;
+        }
+        if (opts !== false) {
+            data.spinner = new Spinner($.extend({ color: $this.css('color') }, opts)).spin(this);
+        }
+    });
+    return this;
+};
+
+$.support.touch = 'ontouchend' in document;
+
+(function ($) {
+    $.fn.mobileselect = function () {
+        return this.each(function () {
+            var elem = $(this);
+
+            var height = elem.outerHeight();
+            var overlay = $("<div class='mobileselect overlay'>").css({
+                width: elem.outerWidth(),
+                height: elem.outerHeight(),
+                top: height * -1,
+                "margin-bottom": height * -1
+            });
+            elem.after(overlay);
+
+            overlay.click(function () {
+                showModal(elem);
+            });
+        });
+    };
+
+    function showModal(elem, selectButton) {
+        var multiple = elem.is("[multiple]");
+        var modal = $("<div class='mobileselect modal fade'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button><input type='text' class='filter form-control' placeholder='Search...'  /></div><div class='modal-body'></div></div></div></div>");
+        var modalBody = $('.modal-body', modal);
+
+        $("option", elem).each(function () {
+            var option = $(this);
+            var val = option.attr('value');
+
+            if (val) {
+                var div = $("<div class='mobileselect-item'><button ");
+                var button = $("<button type='button' class='btn btn-default btn-sm btn-primary btn-block'>")
+                    .data("mobileselect-value", val)
+                    .html(option.html());
+
+                if (elem.val() == val || (multiple && $.inArray(val, elem.val()) != -1)) {
+                    button.addClass("selected").prepend("<span class='glyphicon glyphicon-ok'></span>");
+                } else {
+                    button.removeClass("selected");
+                }
+
+                button.click(function () {
+                    if (!multiple) {
+                        elem.val($(this).data('mobileselect-value'));
+                        $('.modal.mobileselect').modal('hide');
+                    } else {
+                        var arr = elem.val() || [];
+                        button.toggleClass("selected");
+
+                        if (button.is(".selected")) {
+                            arr.push($(this).data('mobileselect-value'));
+                            button.prepend("<span class='glyphicon glyphicon-ok'></span>");
+                        } else {
+                            var index = arr.indexOf($(this).data('mobileselect-value'));
+                            arr.splice(index, 1);
+                            $("span.glyphicon-ok", button).remove();
+                        }
+
+                        elem.val(arr);
+                    }
+                });
+
+                div.append(button);
+                modalBody.append(div);
+            }
+        });
+
+
+        $('.modal-body', modal).css('max-height',
+            $(window).height() - 80);
+
+        $('input.filter', modal).keyup(function () {
+            var filter = $(this).val().toLowerCase();
+
+            $('.mobileselect-item', modal).each(function () {
+                var item = $(this);
+                item.toggle(item.text().toLowerCase().indexOf(filter) != -1);
+            });
+        });
+
+        modal.on('hidden.bs.modal', function () {
+            $('.modal.mobileselect').remove();
+        }).on('shown.bs.modal', function () {
+            //$('.filter', modal).focus();
+        }).modal('show');
+    }
+} (jQuery));
+
+(function($) {
+    $.xhrPool = [];
+    $(document).ajaxSend(function(e, jqXHR, options){
+        $.xhrPool.push(jqXHR);
+    });
+    $(document).ajaxComplete(function(e, jqXHR, options) {
+        $.xhrPool = $.grep($.xhrPool, function(x){return x!=jqXHR});
+    });
+    $.xhrAbort = function() {
+        $.each($.xhrPool, function(idx, jqXHR) {
+            jqXHR.abort();
+        });
+    };
+
+    var _onbeforeunload = window.onbeforeunload;
+    window.onbeforeunload = function() {
+        var r = _onbeforeunload ? _onbeforeunload() : undefined;
+        if (r == undefined) {
+            // only cancel requests if there is no prompt to stay on the page
+            // if there is a prompt, it will likely give the requests enough time to finish
+            $.xhrAbort();
+        }
+        return r;
+    }
+})(jQuery);

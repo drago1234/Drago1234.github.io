@@ -1,0 +1,971 @@
+﻿/* Site customizations */
+/*:root {
+    --pnc-banner-color: #FFC627;
+    --pnc-banner-text-color: white;
+    --pnc-button-color: #8c1d40;
+    --pnc-button-hover-color: #701633;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a {
+    color: var(--pnc-banner-text-color);
+}
+
+a {
+    color: var(--pnc-button-color); 
+}
+a:hover, a:focus {
+    color: var(--pnc-button-hover-color);
+}
+.btn-primary {
+    background-color: var(--pnc-button-color) !important;
+    background-image: none;
+    border-color: var(--pnc-button-hover-color) !important;
+}
+.btn-primary:hover, .btn-primary:active {
+    background-color: var(--pnc-button-hover-color) !important;
+    background-image: none;
+}
+.navbar-default {
+    background-color: var(--pnc-banner-color);
+    border-color: var(--pnc-button-color);
+    background-image: none;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus,
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus,
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    background-color: var(--pnc-button-color);
+}*/
+
+/* Center brand image, but left calc is custom based on image dimensions */
+/*@media screen and (max-width: 768px) {
+    .navbar-brand img {
+        position: absolute;
+        left: calc(50vw - 146px);
+    }
+}*/
+
+html.interop h1 {
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+
+legend { font-weight: bold; font-size: 1em; }
+
+.navbar {
+    min-height: 60px;
+}
+
+.navbar-brand {
+    height: 60px;
+}
+
+.navbar-brand img {
+    margin-left: 20px;
+    max-height: 60px;
+}
+
+.navbar-nav > li > a {
+    line-height: 31px;
+}
+
+.navbar-toggle {
+    margin-top: 12px;
+}
+
+/**********************************/
+table label:not(.input) {
+    color: #555 !important;
+}
+
+.toast {
+    opacity: 0.95 !important;
+    padding: 5px 15px 5px 50px !important;
+}
+
+div.overlay { 
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    padding-top: 25px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+div.overlay h2 {
+    text-align: center;
+    z-index: 999999;
+    font-weight: bold;
+}
+
+table.full {
+    width: 100%;
+}
+
+ul.nav a label {
+    margin-left: 4px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    top: -3px;
+}
+
+.mb20 { margin-bottom: 20px; }
+
+table td {
+    padding: 2px;   
+}
+
+.form-group label.input { font-weight: normal; }
+
+body.branch input[type=radio][name=rbgBranchingPage] { vertical-align: top; }
+body.branch input[type=radio][name=rbgBranchingPage] + label { display: inline; }
+
+.clear {
+    clear: both;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input[type=checkbox] + label { 
+    margin-left: 5px;
+}
+input[type=radio] + label { 
+    margin-left: 5px;
+}
+
+.bootbox h4.modal-title {
+    font-size: 2em;
+    font-weight: bolder;
+}
+
+.bold {
+    font-weight: bold;
+}
+.red { color: red; }
+.orange { color: darkorange; }
+.green { color: green; }
+
+table.fill {
+    width: 100%;
+}
+
+table.appt-list span.appt-provider {
+    margin-left: 10px;
+}
+
+table.buttons { margin: 20px 0px 20px 0px; }
+
+.StrongText { font-weight: bold; }
+.StandardText:not(label) { font-weight: normal; }
+.btn:disabled { opacity: 0.5; }
+
+input[type=radio] + label, label.input {
+    font-weight: normal;
+}
+
+.hidden { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+
+.sidebar {
+    z-index: 4;
+    min-height: initial;
+}
+
+.documentContainer { clear: both; }
+.documentContainer.viewer { overflow: auto; }
+
+textarea {
+    width: 100%;
+}
+
+.center {
+    text-align: center;
+}
+
+.navbar-header button.navbar-toggle i.fa-user {
+    display:  block;
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+
+.navbar-brand div {
+    padding: 20px 15px 25px 15px;
+}
+.navbar-brand>img {
+  height: 100%;
+  width: auto;
+}
+
+@media screen and (max-width: 667px) {
+    .navbar-brand span, .navbar-brand div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 215px;
+        display: inline-block;
+        margin-bottom: -5px;
+    }
+
+    #side-toggle, .navbar-brand img {
+        margin-right: 0;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .navbar-brand>img {
+        padding: 7px 15px;
+    }
+    div.studenthealth {
+        float: right;
+    }
+}
+
+div.studenthealth {
+     width: 260px;
+     color: black;
+     padding: 3px;
+     background-color: bisque;
+     font-weight: bold;
+     border: coral 1px solid;
+}    
+
+div.studenthealth img {
+    float: right;
+}
+
+/* this is only to style the sidebar - you can make the sidebar look any way you want */
+.sidebar {
+  padding: 20px;
+  /*background-color: #f5f5f5;*/
+  border-right: 1px solid #eee;
+}
+
+.sidebar li.active {
+    /*background-color: #2fa4e7;*/
+    border-radius: 2px;
+}
+
+.ui-dialog {
+    z-index: 1001 !important;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  /*background-color: #f5f5f5;*/
+  border-top: 1px solid #eee;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+.modal {
+	background: rgba(0, 0, 0, 0.3);
+}
+.modal-dialog {
+	z-index: 100000;
+}
+
+.modal-scrollpane.outer { margin-right: -20px; margin-bottom: -20px; margin-top: -20px; padding-top: 20px; padding-right: 20px; padding-bottom: 20px; }
+
+body > .container-fluid, body > .container {
+  padding: 70px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+
+
+.pncCommand {
+    display: none;
+}
+
+#nlcmessagegrid {
+    width: 100%;
+}
+
+#progressHUD 
+{
+    color: White;
+    background-color: Black;
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+    filter: alpha(opacity=85);
+    -moz-opacity: 0.85;
+    opacity: 0.85;
+    z-index: 99999;
+}
+#progressMessage { margin-top: 100px; }
+
+.CriticalText, span.warning, span.error, label.error {
+    color: red;
+    font-weight: bold;
+}
+
+span.error {
+    display: block;
+    font-size: 1.2em;
+}
+
+input.error, select.error, textarea.error {
+    border: 1px solid red;
+    background-color: #ffeeee;
+}
+
+#validationDialog {
+    color: red;
+}
+#validationDialog h2 {
+    font-size: 1.2em;
+    padding: 0px 0px 6px 0px;
+    margin: 0px;
+    color: red;
+    font-weight: bold;
+}
+
+.validation-summary .header {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+div.warning, .validation-summary {
+    color: red;
+    border:red 2px solid;
+    background-color: #ffeeee;
+    padding: 15px;
+    margin: 12px 0px 12px 0px;
+    color: red;
+}
+
+table.validation-summary td {
+    padding: 20px;
+}
+    
+table.validation-summary span {
+    font-size: 1.4em !important;
+}
+
+.left { 
+    float: left; 
+}
+.right {
+    float: right;
+}
+.invisible {
+    display: none;
+}
+
+#hack { display: none; }
+
+#overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: black;
+    background-color: rgba(0,0,0, 0.35);
+    overflow-x: hidden;
+    display: none;
+}
+
+.hcenter { text-align: center; }
+.hleft { text-align: left; }
+.hright { text-align: right; }
+.vtop { vertical-align: top; }
+.vbottom { vertical-align: bottom; }
+.vmiddle { vertical-align: middle; }
+.center { text-align: center; }
+.pad-left { padding-left: 10px; }
+.pad-right { padding-right: 10px; }
+.margin-left { margin-left: 10px; }
+.margin-right { margin-right: 10px; }
+
+.mb15 { margin-bottom: 15px; }
+.mb10 { margin-bottom: 10px; }
+.bold { font-weight: bold; }
+
+a.infol {
+    position:relative;
+}
+a.infol:hover, a.infol:focus, a.infol:active {
+    z-index:99;
+    background-color:#ff0
+}
+a.infol span {
+    position: absolute;
+    left: -9000px;
+    width: 0;
+    overflow: hidden;
+}
+a.infol:hover span, a.infol:focus span, a.infol:active span {
+    display:block;
+    position:absolute;
+    top:1.2em; left:1em; width:12em;
+    border:1px solid #0cf;
+    background-color:#cff;
+    color:#000;
+    text-align: center;
+    height: auto;
+    font-weight: normal;
+}
+
+#navlist a.infol:hover span 
+{
+    top:1.5em;
+}
+
+#ocommbypass { position:absolute; left:-10000px; top:auto; width:1px; height:1px; overflow:hidden; }
+#ocommbypass:focus { position:absolute; left:0px; top:0px; width:auto; height:auto; overflow:visible; z-index: 9999; padding: 4px; background-color: white; }
+
+/* Page-specifc styles */
+
+table.immheading {
+    width: 100%;
+}
+
+body.messages_send_compose table.recipient td.hright {
+    padding-right: 10px;
+}
+
+#idletimeout { background:#CC5100; border:3px solid #FF6500; color:#fff; text-align:center; font-size:1.2em; padding:25px; position:fixed; top:0px; left:0; right:0; z-index:100000; display:none; }
+#idletimeout a { color:#fff; font-weight:bold }
+#idletimeout span { font-weight:bold }
+
+/* Implement selected classes from bootstrap 4 while actually on bootstrap 3 */
+/* Delete this file when we upgrade to the real bootstrap 4 */
+
+.mb-0 { margin-bottom: 0rem !important;}
+.mb-1 { margin-bottom: .25rem !important;}
+.mb-2 { margin-bottom: .5rem !important;}
+.mb-3 { margin-bottom: 1rem !important;}
+.mb-4 { margin-bottom: 1.5rem !important;}
+.mb-5 { margin-bottom: 3rem !important;}
+
+.mt-0 { margin-top: 0rem !important;}
+.mt-1 { margin-top: .25rem !important;}
+.mt-2 { margin-top: .5rem !important;}
+.mt-3 { margin-top: 1rem !important;}
+.mt-4 { margin-top: 1.5rem !important;}
+.mt-5 { margin-top: 3rem !important;}
+
+.ml-0 { margin-left: 0rem !important;}
+.ml-1 { margin-left: .25rem !important;}
+.ml-2 { margin-left: .5rem !important;}
+.ml-3 { margin-left: 1rem !important;}
+.ml-4 { margin-left: 1.5rem !important;}
+.ml-5 { margin-left: 3rem !important;}
+
+.mr-0 { margin-right: 0rem !important;}
+.mr-1 { margin-right: .25rem !important;}
+.mr-2 { margin-right: .5rem !important;}
+.mr-3 { margin-right: 1rem !important;}
+.mr-4 { margin-right: 1.5rem !important;}
+.mr-5 { margin-right: 3rem !important;}
+
+.m-0 { margin: 0rem !important;}
+.m-1 { margin: .25rem !important;}
+.m-2 { margin: .5rem !important;}
+.m-3 { margin: 1rem !important;}
+.m-4 { margin: 1.5rem !important;}
+.m-5 { margin: 3rem !important;}
+
+.pb-0 { padding-bottom: 0rem !important;}
+.pb-1 { padding-bottom: .25rem !important;}
+.pb-2 { padding-bottom: .5rem !important;}
+.pb-3 { padding-bottom: 1rem !important;}
+.pb-4 { padding-bottom: 1.5rem !important;}
+.pb-5 { padding-bottom: 3rem !important;}
+
+.pl-0 { padding-left: 0rem !important;}
+.pl-1 { padding-left: .25rem !important;}
+.pl-2 { padding-left: .5rem !important;}
+.pl-3 { padding-left: 1rem !important;}
+.pl-4 { padding-left: 1.5rem !important;}
+.pl-5 { padding-left: 3rem !important;}
+
+.pt-0 { padding-top: 0rem !important;}
+.pt-1 { padding-top: .25rem !important;}
+.pt-2 { padding-top: .5rem !important;}
+.pt-3 { padding-top: 1rem !important;}
+.pt-4 { padding-top: 1.5rem !important;}
+.pt-5 { padding-top: 3rem !important;}
+
+.p-0 { padding: 0rem !important;}
+.p-1 { padding: .25rem !important;}
+.p-2 { padding: .5rem !important;}
+.p-3 { padding: 1rem !important;}
+.p-4 { padding: 1.5rem !important;}
+.p-5 { padding: 3rem !important;}
+
+.text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.table-sm th, td { padding: 0.3rem; }
+
+.form-text { display: block; margin-top: 0.25rem; }
+
+/*Make file inputs better match text inputs by forcing them to new lines.*/
+.form-control-file, .form-control-range {  display: block; }
+
+@media print {
+    .d-print-none {
+        display: none !important;
+    }
+
+    .print {
+        display: block !important;
+    }
+
+    .no-print {
+        display: none;
+    }
+}
+
+/* Alternative to modal-sm, and modal-lg */
+.modal-max {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.modal-max .modal-dialog {
+    margin: 10px auto;
+    width: 99%;
+}
+
+input, textarea, select, select:focus {
+    font-size: 16px !important;
+}
+
+.modal-body iframe {
+    border: 0;
+    width: calc(100% + 40px);
+    margin: -20px -20px -25px -20px;
+    height: calc(100vh - 310px);
+}
+
+img.inscard {
+    max-height: 500px;
+    border: 1px solid gray;
+}
+
+.ta-right {
+    text-align: right;
+}
+
+/* Implement selected classes from bootstrap 4 */
+/* This is used as a lightweight replacement to bootstrap 4 when printing */
+
+.mb-0 {
+    margin-bottom: 0rem !important;
+}
+
+.mb-1 {
+    margin-bottom: .25rem !important;
+}
+
+.mb-2 {
+    margin-bottom: .5rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mb-5 {
+    margin-bottom: 3rem !important;
+}
+
+.mt-0 {
+    margin-top: 0rem !important;
+}
+
+.mt-1 {
+    margin-top: .25rem !important;
+}
+
+.mt-2 {
+    margin-top: .5rem !important;
+}
+
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.ml-0 {
+    margin-left: 0rem !important;
+}
+
+.ml-1 {
+    margin-left: .25rem !important;
+}
+
+.ml-2 {
+    margin-left: .5rem !important;
+}
+
+.ml-3 {
+    margin-left: 1rem !important;
+}
+
+.ml-4 {
+    margin-left: 1.5rem !important;
+}
+
+.ml-5 {
+    margin-left: 3rem !important;
+}
+
+.mr-0 {
+    margin-right: 0rem !important;
+}
+
+.mr-1 {
+    margin-right: .25rem !important;
+}
+
+.mr-2 {
+    margin-right: .5rem !important;
+}
+
+.mr-3 {
+    margin-right: 1rem !important;
+}
+
+.mr-4 {
+    margin-right: 1.5rem !important;
+}
+
+.mr-5 {
+    margin-right: 3rem !important;
+}
+
+.m-0 {
+    margin: 0rem !important;
+}
+
+.m-1 {
+    margin: .25rem !important;
+}
+
+.m-2 {
+    margin: .5rem !important;
+}
+
+.m-3 {
+    margin: 1rem !important;
+}
+
+.m-4 {
+    margin: 1.5rem !important;
+}
+
+.m-5 {
+    margin: 3rem !important;
+}
+
+.pb-0 {
+    padding-bottom: 0rem !important;
+}
+
+.pb-1 {
+    padding-bottom: .25rem !important;
+}
+
+.pb-2 {
+    padding-bottom: .5rem !important;
+}
+
+.pb-3 {
+    padding-bottom: 1rem !important;
+}
+
+.pb-4 {
+    padding-bottom: 1.5rem !important;
+}
+
+.pb-5 {
+    padding-bottom: 3rem !important;
+}
+
+.pl-0 {
+    padding-left: 0rem !important;
+}
+
+.pl-1 {
+    padding-left: .25rem !important;
+}
+
+.pl-2 {
+    padding-left: .5rem !important;
+}
+
+.pl-3 {
+    padding-left: 1rem !important;
+}
+
+.pl-4 {
+    padding-left: 1.5rem !important;
+}
+
+.pl-5 {
+    padding-left: 3rem !important;
+}
+
+.pt-0 {
+    padding-top: 0rem !important;
+}
+
+.pt-1 {
+    padding-top: .25rem !important;
+}
+
+.pt-2 {
+    padding-top: .5rem !important;
+}
+
+.pt-3 {
+    padding-top: 1rem !important;
+}
+
+.pt-4 {
+    padding-top: 1.5rem !important;
+}
+
+.pt-5 {
+    padding-top: 3rem !important;
+}
+
+.p-0 {
+    padding: 0rem !important;
+}
+
+.p-1 {
+    padding: .25rem !important;
+}
+
+.p-2 {
+    padding: .5rem !important;
+}
+
+.p-3 {
+    padding: 1rem !important;
+}
+
+.p-4 {
+    padding: 1.5rem !important;
+}
+
+.p-5 {
+    padding: 3rem !important;
+}
+
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table-sm th,
+.table-sm td {
+    padding: 0.3rem;
+}
+
+.form-text {
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/*Make file inputs better match text inputs by forcing them to new lines.*/
+.form-control-file, .form-control-range {
+    display: block;
+}
+
+@media print {
+    .d-print-none {
+        display: none !important;
+    }
+}
+
+.float-right {
+    float: right;
+}
+
+.appt-barcode img {
+    margin-top: 5px;
+    max-width: 500px;
+    height: auto;
+}
+
+.barcode-fit {
+    max-width: 100%;
+}
+
+#quarantineBadge {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: red;
+    color: white;
+    z-index: 99999;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+
+#quarantineBadge .carousel {
+    height: 100vh;
+}
+
+#quarantineBadge h1 {
+    font-weight: bold;
+    font-size: 4em;
+    margin-bottom: 0;
+}
+
+#quarantineBadge a {
+    color: white;
+    text-decoration: underline;
+}
+
+.bootbox-prompt button {
+    display: none;
+}
+
+#quarantineBadge .carousel-control {
+    background: none !important;
+    opacity: 0.75;
+}
+
+#quarantineBadge .carousel-control:hover {
+    opacity: 1;
+}
+
+#quarantineBadge, #quarantineBadge h1, #quarantineBadge h3 {
+    color: white !important;
+}
+
+    #quarantineBadge.badge-Green {
+        background-color: limegreen;
+    }
+
+    #quarantineBadge.badge-Red {
+        background-color: red;
+    }
+
+    #quarantineBadge.badge-Orange {
+        background-color: orange;
+    }
+
+    #quarantineBadge.badge-Blue {
+        background-color: cornflowerblue;
+    }
+
+    #quarantineBadge.badge-Purple {
+        background-color: blueviolet;
+    }
+
+    #quarantineBadge.badge-Yellow {
+        background-color: yellow;
+    }
+
+        #quarantineBadge.badge-Yellow, #quarantineBadge.badge-Yellow h1, #quarantineBadge.badge-Yellow h3 {
+            color: black !important;
+        }
+
+            #quarantineBadge.badge-Yellow .carousel-indicators li {
+                border: 1px solid black;
+            }
+
+                #quarantineBadge.badge-Yellow .carousel-indicators li.active {
+                    background-color: black !important;
+                }
+
+#quarantineBadge .exit {
+    margin: 2px;
+    font-size: 1em;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.white, .white:hover, .white:active, .white:focus {
+    color: white;
+}
+
+#quicklinks {
+    margin-top: 20px;
+    text-align: center;
+    margin: 0px auto;
+}
+
+#quicklinks .btn {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 15px;
+}
+
+body.has-badge .container-fluid, body.has-badge footer {
+    display: none;
+}
+
+.checkbox {
+    font-weight: normal;
+    display: inline-block;
+}

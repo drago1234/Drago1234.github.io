@@ -224,7 +224,7 @@ After the initial setup, you should see the following screen:
 
 Figure 4: Desktop
 
-### Increasing swap memory
+### Increasing swap memory (optional)
 
 Recent releases of JetPack enable swap memory as part of the default distribution using the [zram module](https://en.wikipedia.org/wiki/Zram). By default, 2GB of swap memory is enabled. To change the amount of swap memory, you can either edit the /etc/systemd/nvzramconfig.sh file directly, or you can use the [resizeSwapMemory repository](https://github.com/JetsonHacksNano/resizeSwapMemory) from [JetsonNanoHacks](https://www.jetsonhacks.com/2019/11/28/jetson-nano-even-more-swap/).
 
@@ -253,7 +253,16 @@ sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip li
 
 ### Configuring your Python environment
 
-Next we will configure our Python environment. This includes downloading pip3 and virtualenv.
+Next we will configure our Python environment. There are three way for configuring the Python environment. 1) pip + virtualenv; 2)Conda (or miniconda)
+
+- pip: a package manager
+- virtualenv: an environemnt manage (And required sudo priority to use it) ==> **Choose Virtualenv only when you have sudo access** to the machine you are working on. It is much easier to setup *conda* rather than virtualenv for a regular (i.e., non sudo/root) user on a linux/Mac machine.
+- conda: a environemnt manager and package installer ==> **Choose Anaconda if you: **Have the time and disk space (a few minutes and 3 GB), and/or Don’t want to install each of the packages you want to use individually.
+- conda vs miniconda: Both *Anaconda* and *Miniconda* uses [*Conda*](https://conda.io/docs/index.html) as the package manager. The difference among *Anaconda* and *Miniconda* is that *Miniconda* only comes the package management system. So when you install it, there is just the management system and not coming with a bundle of pre-installed packages like *Anaconda* does. Once *Conda* is installed, you can then install whatever package you need from scratch along with any desired version of Python. ==> **Choose Miniconda** if you don’t have time or disk space (about 3 GB) to install over 720+ packages (many of the packages are never used and could be easily installed when needed)
+
+If you want to learn more about their difference, check this article, [Anaconda vs. Miniconda vs. Virtualenv](https://deeplearning.lipingyang.org/2018/12/23/anaconda-vs-miniconda-vs-virtualenv/)
+
+**Method 1: pip3 and virtualenv**
 
 Install pip:
 
@@ -286,9 +295,96 @@ source ~/.bashrc
 Now we can create a virtual environment using the *mkvirtualenv* command.
 
 ```bash
-mkvirtualenv ml -p python3
-workon ml
+mkvirtualenv latest_tf -p python3
+workon latest_tf
 ```
+
+
+
+**Method 2: Miniconda(not completed)**
+
+Step1: Decide what miniconda version to download, 
+
+Go to this website, and find the [Latest Miniconda Installer Links](https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh)。
+
+Before that, we need to figure out the system architecture of our machine, for linux, you can do:
+
+```bash
+jetbot@jetbot-desktop:~$ lscpu
+Architecture:        aarch64
+Byte Order:          Little Endian
+CPU(s):              4
+On-line CPU(s) list: 0-3
+Thread(s) per core:  1
+Core(s) per socket:  4
+Socket(s):           1
+Vendor ID:           ARM
+Model:               1
+Model name:          Cortex-A57
+Stepping:            r1p1
+CPU max MHz:         1479.0000
+CPU min MHz:         102.0000
+BogoMIPS:            38.40
+L1d cache:           32K
+L1i cache:           48K
+L2 cache:            2048K
+Flags:               fp asimd evtstrm aes pmull sha1 sha2 crc32
+```
+
+==> So, we need to download the latest miniconda with aarch64 architecture:
+
+```bash
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $PWD/miniconda3
+#  -b,  --background                go to background after startup
+# -d,  --debug                     print lots of debugging information
+```
+
+Above command will create “miniconda3” directory. From now on, we will refer the path to “miniconda3” directory as “/PATH/TO” 
+
+Activate Conda 
+
+```bash
+-bash-4.2$ source /PATH/TO/miniconda3/bin/activate 
+-bash-4.2$ export PYTHONNOUSERSITE=true
+```
+
+Create new environment and activate it
+
+```bash
+-bash-4.2$ conda create -n tf_latest python=3.6.9
+-bash-4.2$ conda activate tf_latest
+# You can list all discoverable environments with `conda info --envs`.
+```
+
+
+
+Verify pip points to correct library.
+
+```bash
+-bash-4.2$ which pip
+Expected Outcome: /PATH/TO/miniconda3/envs/tf_latest/bin/pip
+Install latest TensorFlow
+-bash-4.2$ pip install tensorflow-gpu==2.3.0
+```
+
+Install latest TensorFlow 
+
+```bash
+-bash-4.2$ pip install tensorflow-gpu==2.3.0
+```
+
+
+
+**Reference**： 
+
+- https://deeplearning.lipingyang.org/2018/12/23/anaconda-vs-miniconda-vs-virtualenv/
+- [Miniconda](https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh)
+- [10 Useful Commands to Collect System and Hardware Information in Linux](https://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/)
+
+
+
+
 
 ### Coding remote with Visual Studio Code (optional)
 
@@ -323,19 +419,33 @@ Note: TensorFlow 2.0 is problematic, check out this website, https://forums.deve
 # install prerequisites
 $ sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
 
+# User virtual env, instead of using root privilege(sudo)
+workon latest_tf
+
 # install and upgrade pip3
 $ sudo apt-get install python3-pip
-$ sudo pip3 install -U pip testresources setuptools==49.6.0 
+$ pip3 install -U pip testresources setuptools==49.6.0 
 
 # install the following python packages
-$ sudo pip3 install -U numpy==1.16.1 future==0.18.2 mock==3.0.5 h5py==2.10.0 keras_preprocessing==1.1.1 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
+$ pip3 install -U numpy==1.16.1 future==0.18.2 mock==3.0.5 h5py==2.10.0 keras_preprocessing==1.1.1 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
+$ pip3 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta setuptools testresources
+# Note Use this if you got error with h5pf (refers to, https://stackoverflow.com/questions/64942239/unable-to-install-h5py-on-windows-using-pip)
+$pip install versioned-hdf5
 
 # to install TensorFlow 1.15 for JetPack 4.4:
 $ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 ‘tensorflow<2’
 
 # or install the latest version of TensorFlow (2.3) for JetPack 4.4:
 $ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow
+
+sudo pip3 install -U pip==20.2.4
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 tensorflow-gpu==1.15.0+nv19.12
 ```
+
+Reference:
+
+- [Installing TensorFlow For Jetson Platform - NVIDIA](https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html) 
+- [Upgrade Jetson Jetpack to 4.4 (From 4.3)](https://code.luasoftware.com/tutorials/jetson-nano/upgrade-jetson-jetpack-to-44/)
 
 ### Keras
 
@@ -395,7 +505,7 @@ Installing OpenCV on the Jetson Nano can be a bit more complicated, but frankly,
 
 NVIDIA's Jetson Inference repository includes lots of great scripts that allow you to perform image classification, object detection, and semantic segmentation on both images and a live video stream. In this article, we will go through how to compile and install the Jetson Inference repository and how to run some of the provided demos. Maybe I will go through the repository in more detail in an upcoming article.
 
-To install Jetson Inference, you need to run the following commands:
+To install Jetson Inference, you need to run the following commands(Or following this instruction, [Building the Project from Source](https://github.com/dusty-nv/jetson-inference/blob/master/docs/building-repo-2.md) ):
 
 ```bash
 # download the repo
