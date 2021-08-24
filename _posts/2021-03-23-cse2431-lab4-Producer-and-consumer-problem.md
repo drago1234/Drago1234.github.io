@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Lab 4: Producer and Consumer Problem in Multi-threaded Programming'
+title: 'OS Lab 4: Producer and Consumer Problem in Multi-threaded Programming'
 date: '2021-03-23'
 categories: ["Operating System"]
 tags:
@@ -59,7 +59,7 @@ struct bounded_buffer{
 };
 
 /* do not change the following function definitions */
- 
+
 /* Initialize a buffer; size is the max number of items in the buffer*/
 void bounded_buffer_init(struct bounded_buffer *buffer, int size);
 
@@ -131,7 +131,7 @@ void* bounded_buffer_pop(struct bounded_buffer *buffer){
         printf("\tConsumer consumed :%d at %d\n", *item_ptr, buffer->consum_idx);
         buffer->consum_idx = (buffer->consum_idx+1) % buffer->BUFFER_SIZE;
     }
-
+    
     return item_ptr;
 }
 
@@ -177,7 +177,7 @@ int main() {
     int num_consumer = 5;
     pthread_t p_prod[num_producer];
     pthread_t p_consum[num_consumer];
-
+    
     /* Initialize the number of items that producer want to produce and consumer want to consume*/
     int prod_num[num_producer];
     int consum_num[num_consumer];
@@ -188,33 +188,33 @@ int main() {
     for(j=0;j<num_consumer;j++){
         consum_num[j]=10;
     }
-
+    
     /* Create producer thread */
     for(i=0; i<num_producer; i++){
         printf("==> Producer %d created!\n", i);
         pthread_create(&p_prod[i], NULL, producer, &prod_num[i]);
     }
-
+    
     /* Create consumer thread */
     for(j=0; j<num_consumer; j++){
         printf("==> Consumer %d created!\n", j);
         pthread_create(&p_consum[j], NULL, consumer, &consum_num[j]);
     }
-
+    
     /* Sleep for a while, waiting for all the thread finish their jobs */
     sleep(3);
-
+    
     /* Wait all the child thread to finish ==> Don’t call pthread_join, because some thread might never finish, e.g., we might have extra producer want to produce items when the buffer is full.*/
     // for (i = 0; i < num_producer; i++) {
-	//     pthread_join(p_prod[i], NULL); 
+    //     pthread_join(p_prod[i], NULL); 
     // }
     // for (j = 0; j < num_consumer; j++) {
-	//     pthread_join(p_consum[j], NULL); 
+    //     pthread_join(p_consum[j], NULL); 
     // }
     
     /* Destroy all the shared objects that need to be removed */
     bounded_buffer_destroy(&queue);
-
+    
     return 0;
 }
 
