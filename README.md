@@ -19,7 +19,7 @@ bundle exec jekyll serve    # Start the server and running
 
 
 You might also want to update Github gem frequently, this can help to seamlessly synchronize the reflection that you build on Github server match your local build
-
+ 
 ``` bash
 gem update github-pages
 ```
