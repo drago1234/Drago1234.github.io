@@ -33,7 +33,7 @@ favicon:     "./public/triple_spiral.jpg"
 # List of pages to include in the masthead of the website
 pages_list:
   About:          '/about_me/index.html'
-  Resume:         '/Zhengqi_Dong_Underg_OSU_CSE_2021.pdf'
+  Resume:         '/Zhengqi_Dong_Resume_SDE_2021-2022.pdf'
   Categories:     '/categories'
   Tags:           '/tags'
   Archive:        '/archive'
