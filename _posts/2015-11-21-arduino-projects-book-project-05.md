@@ -137,3 +137,6 @@ void loop() {
 ## **WRAP UP:**
 
 `map()` is a great function which helps mapping a value from one range to another. The `<Servo.h>` is also a useful library as it makes servo control much easier. I didn't simulate the door's mood indicator because it was hard to glue the servo on the door with the Arduino controlling it from the inside (I would possibly have to drill a hole on the door for wiring). But anyways, it's been the fifth project of the Arduino Projects Book - Mood Cue.
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ybG6TLamn_I?start=44" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
