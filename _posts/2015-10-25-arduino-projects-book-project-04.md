@@ -47,17 +47,14 @@ Schematic view:
 Wire up your breadboaord so you have power and ground on both sides.
 
 Circuit diagrame from [Fritzing](http://fritzing.org/home/):
-
 ![breadboard-layout](/images/arduino-projects-book-project-04/breadboard-layout.jpg)
 
 
-
 The actually setup:
+![build](../images/arduino-projects-book-project-04/build1.jpg)
 
-![build](/images/arduino-projects-book-project-04/build1.jpg)
-
----
 ## **THE CODE:**
+---
 
 ```c
 /**
@@ -152,7 +149,7 @@ void loop() {
 
 Here is more detailed explanation of those electronic componenet that I used in this lab:
 
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/Xq8EYTnCiiY?start=44" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/Xq8EYTnCiiY?start=44" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## **Reference:**
 - Fitzgerald, S., & Shiloh, M. _Arduino Projects Book_. Arduino AG, 2017
