@@ -51,10 +51,34 @@ Circuit diagrame from [Fritzing](http://fritzing.org/home/):
 
 
 The actually setup:
-![build](../images/arduino-projects-book-project-04/build1.jpg)
+![build](/images/arduino-projects-book-project-04/build1.jpg)
 
 ## **THE CODE:**
+
 ---
+
+
+
+- Reading the value of each light sensor: 
+
+<p align="center"><font face="consolas"><b>redSensorValue = analogRead(redSensorPin);</b></font></p>
+<p align="center"><font face="consolas"><b>delay(5);</b></font></p>
+
+
+Similarly to `digitalRead(pin)`, `analogRead(pin)` will get the value from the particular pin number (from A0 to A5), and it indicates the voltage of that pin, which varies between 0 and 1023. 
+
+In the loop(), we’ll read the sensor values on A0, A1, and A2 with analogRead() and store the value in the appropriate variables. Put a small 
+
+
+- Converting the sensor reading: 
+<p align="center"><font face="consolas"><b>analogWrite(pin, value);</b></font></p>
+
+The function to change the LED's brightness via PWM is called analogWrite(). It needs two arguments: the pin to write to, and a value between 0-255. To convert the sensor reading from a value between 0-1023 to a value between 0-255 for analogWrite(), we need to divide the sensor reading by 4.
+
+The second number represents the duty cycle the Arduino will output on the specified pin. A value of 255 will set the pin HIGH all the time, making the attached LED as bright as it can be. A value of 127 wil set the pin IGH half the time, and dimmer half the time. 0 would set the pin LOW all the time. 
+
+
+
 
 ```c
 /**
