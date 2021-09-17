@@ -17,11 +17,11 @@ Good evening! Today, I'll continue the next project in the Arduino Projects Book
 
 - 1 x Arduino
 
-![arduino-uno](/images/arduino-uno.jpg)
+![arduino-uno](../images/arduino-uno.jpg)
 
 - 1 x Breadboard
 
-![breadboard](/images/breadboard.jpg)
+![breadboard](../images/breadboard.jpg)
 
 - 8 x Jumper wires
 - 2 x 100-microFarad capacitors
@@ -29,7 +29,7 @@ Good evening! Today, I'll continue the next project in the Arduino Projects Book
 - 1 x Servo motor
 - 3 x Male headers (sticking together)
 
-![parts](/images/arduino-projects-book-project-05/parts.jpg)
+![parts](../images/arduino-projects-book-project-05/parts.jpg)
 
 The headers that come with the Arduino Starter Kit are a bit short on one side and too long on the other. So, I had to use my fingers to push the plastic cover down to the middle of the headers so that the headers would fit the female socket of the servo.
 
@@ -39,15 +39,15 @@ The servo motor draws more current when it is in motion. This will cause a dip i
 
 Here is my schematic:
 
-![schematic](/images/arduino-projects-book-project-05/schematic.png)
+![schematic](../images/arduino-projects-book-project-05/schematic.png)
 
 Here is my breadboard layout from [Fritzing](http://fritzing.org/home/):
 
-![breadboard-layout](/images/arduino-projects-book-project-05/breadboard-layout.jpg)
+![breadboard-layout](../images/arduino-projects-book-project-05/breadboard-layout.jpg)
 
 Lastly, this is my circuit board:
 
-![build](/images/arduino-projects-book-project-05/build.jpg)
+![build](../images/arduino-projects-book-project-05/build.jpg)
 
 ## **THE CODE:**
 

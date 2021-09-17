@@ -12,7 +12,7 @@ excerpt: >-
 
 ## **Motivation**
 Imagine a situation where the Flash floods swept through your hometown, and your house was surrounded by the water, What to do? 
-![flood](/images/arduino-projects-book-project-02/flood.jpg)
+![flood](../images/arduino-projects-book-project-02/flood.jpg)
 
 What might be a easy way to send a helping message? ==> S.O.S
 
@@ -29,7 +29,7 @@ Specifically, Here is the Morse code translation:
 - S --> "..." --> 2 milisecond flash
 - O --> "- - -" --> 5 milisecond flash
 
-In this example, I used 2 milisecond flash to represent ".", and 5 milisecond flash to represent "-".  Then, you just throw this into a loop, Power up the kits, Open a favoriate TV channel, and Waiting for the help!
+In this example, I used 2 milisecond flash to represent ".", and 5 milisecond flash to represent "-".  Then, you just throw this into a loop, Power up the kits, Open a favorite TV channel, and Waiting for the help!
 
 ---
 ## **Lab Setup:**
@@ -44,12 +44,12 @@ Supplies:
 
 Circuit Diagrams and Schematic Diagrams:
 
-![schematic diagram](/images/arduino-projects-book-project-02/circuit_diagram_and_schematic_diagram.jpg)
+![schematic diagram](../images/arduino-projects-book-project-02/circuit_diagram_and_schematic_diagram.jpg)
 
 
 The actually setup:
 
-![build](/images/arduino-projects-book-project-02/build.png)
+![build](../images/arduino-projects-book-project-02/build.png)
 
 ---
 ## **THE CODE:**
@@ -75,7 +75,7 @@ Here are the entire code that I used:
  * Created:
  * Updated:
  */
-#define ledPin 4
+ #define ledPin 4
 
 int duration[] = {200, 200, 200, 500, 500, 500, 200, 200, 200};
 int swtichState = 0;
@@ -123,7 +123,7 @@ void flash(int delayPeriod){
 </div>
 
 ## **Bonus: Resistor color code cheetsheet**
-![resistor_color_code](/images/arduino-projects-book-project-02/resistor_color_code.jpg
+![resistor_color_code](../images/arduino-projects-book-project-02/resistor_color_code.jpg
 )
 
 ## **Reference:**
