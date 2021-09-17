@@ -11,27 +11,26 @@ excerpt: >-
   Book, Mood Cue.
 ---
 
-Good evening! Today, I'll continue the next project in the Arduino Projects Book, Mood Cue. In this project, we will learn how to control a servo motor using a potentiometer. By assembling a small indicator on the rotor of the servo, we can get the servo to point to different angles.
+This project, we will use a servo motor to mak a mechanical gauge to point out what sort of mood you're in that day!
+- Time: 1 hour
+- Level: 2 (1-5)
+- Build on Projects: 1, 2, 3, 4
 
 ## **PREPARATION:**
 
 - 1 x Arduino
-
-![arduino-uno](../images/arduino-uno.jpg)
-
 - 1 x Breadboard
-
-![breadboard](../images/breadboard.jpg)
-
 - 8 x Jumper wires
 - 2 x 100-microFarad capacitors
 - 1 x Potentiometer
 - 1 x Servo motor
 - 3 x Male headers (sticking together)
 
+**Servo motor**: 
+
+![breadboard](../images/breadboard.jpg)
 ![parts](../images/arduino-projects-book-project-05/parts.jpg)
 
-The headers that come with the Arduino Starter Kit are a bit short on one side and too long on the other. So, I had to use my fingers to push the plastic cover down to the middle of the headers so that the headers would fit the female socket of the servo.
 
 ## **BUILDING THE CIRCUIT:**
 
@@ -70,17 +69,20 @@ MyServo.write(90);          // write the angle
 
 Here is the code: 
 
-{% highlight c linenos %}
+
+
+```C
 /**
+
  * Project Name: Arduino Projects Book - Project 05: Mood Cue
- *
+   *
  * File Name: mood_cue.ino
- *
+   *
  * Description: Expresses your feeling by a servo motor.
- *
+   *
  * Author: Zhengqi Dong
  * Location:  
- */
+   */
 
 // include Servo library for servo motors
 #include <span><</span>Servo.h<span>></span>
@@ -118,7 +120,12 @@ void loop() {
     // delay to stabilize
     delay(15);
 }
-{% endhighlight %}
+```
+
+
+
+
+
 
 <!-- 
 ## **USING:**

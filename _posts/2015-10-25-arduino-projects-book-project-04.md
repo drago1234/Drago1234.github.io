@@ -31,6 +31,7 @@ excerpt: >-
 - 3 x 220-ohm resistors
 - 1 x 4 leg RGB LED
 - 3 x 10 kilohm resistors
+- red, green, and blue colored gels
 
 
 **Phototransistors**: It generate a current that is proportional to quantity of light it absorbed. They looks like LEDs and are polarized coomponents, which means they only allow electricity to flow through them in one direction, so attach long end to the power. On the other side, attach a 10 killohm resistor to ground. 
@@ -58,22 +59,19 @@ The actually setup:
 ---
 ## **THE CODE:**
 
-<p align="center"><font face="consolas"><b>Serial.begin(baud_rate);</b></font></p>
-
-
-
 ```c
 /**
 
- * Project Name: Arduino Projects Book - Project 4 - Color Mixing Lamp
- * File Name: 
+ * Project Name: Arduino Projects Book - Project 4 - Color Mixing Lamp*
+ * File Name: Project3_Love-o-Meter.ino
  * Description: 
  * Author: Zhengqi Dong
  * Created:
  * Updated:
+
 **/
 
-// For 4 legs RGB LED
+// For 4 legs RGB LEDG
 const int greenLEDPin = 9;    // LED connected to digital pin 9
 const int redLEDPin = 10;     // LED connected to digital pin 10
 const int blueLEDPin = 11;    // LED connected to digital pin 11
@@ -124,7 +122,10 @@ void loop() {
   Serial.println(blueSensorValue);
 
   /*
-    In order to use the values from the sensor for the LED, you need to do some math. The ADC provides a 10-bit number, but analogWrite() uses 8 bits. You'll want to divide your sensor readings by 4 to keep them in range of the output.
+    In order to use the values from the sensor for the LED, you need to do some
+    math. The ADC provides a 10-bit number, but analogWrite() uses 8 bits.
+    You'll want to divide your sensor readings by 4 to keep them in range
+    of the output.
   */
   redValue = redSensorValue / 4;
   greenValue = greenSensorValue / 4;
@@ -150,7 +151,8 @@ void loop() {
 ## **Video Explanation:**
 
 Here is more detailed explanation of those electronic componenet that I used in this lab:
-<iframe width="1280" height="720" src="https://www.youtube.com/watch?v=Xq8EYTnCiiY&list=RDCMUCUpmmT1Gm_raVpqSvQYyd2Q&start_radio=1&rv=Xq8EYTnCiiY&t=44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/Xq8EYTnCiiY?start=44" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## **Reference:**
 - Fitzgerald, S., & Shiloh, M. _Arduino Projects Book_. Arduino AG, 2017
