@@ -28,8 +28,8 @@ This project, we will use a servo motor to mak a mechanical gauge to point out w
 
 **Servo motor**: 
 
-![breadboard](../images/breadboard.jpg)
-![parts](../images/arduino-projects-book-project-05/parts.jpg)
+![breadboard](/images/breadboard.jpg)
+![parts](/images/arduino-projects-book-project-05/parts.jpg)
 
 
 ## **BUILDING THE CIRCUIT:**
@@ -38,15 +38,15 @@ The servo motor draws more current when it is in motion. This will cause a dip i
 
 Here is my schematic:
 
-![schematic](../images/arduino-projects-book-project-05/schematic.png)
+![schematic](/images/arduino-projects-book-project-05/schematic.png)
 
 Here is my breadboard layout from [Fritzing](http://fritzing.org/home/):
 
-![breadboard-layout](../images/arduino-projects-book-project-05/breadboard-layout.jpg)
+![breadboard-layout](/images/arduino-projects-book-project-05/breadboard-layout.jpg)
 
 Lastly, this is my circuit board:
 
-![build](../images/arduino-projects-book-project-05/build.jpg)
+![build](/images/arduino-projects-book-project-05/build.jpg)
 
 ## **THE CODE:**
 

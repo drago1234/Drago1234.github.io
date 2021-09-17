@@ -112,11 +112,11 @@ void setup() {
 
     while (millis() < 5000) {
         sensor_val = analogRead(SENSOR_PIN);
-
+    
         if (sensor_val > sensor_high) {
             sensor_high = sensor_val; // set new max value
         }
-
+    
         if (sensor_val < sensor_low) {
             sensor_low = sensor_val; // set new min value
         }
