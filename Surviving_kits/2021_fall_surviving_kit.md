@@ -70,7 +70,6 @@ permalink: /Surviving_kits/2021_fall_surviving_kit  # The path to this page
 
 - Introduction to Differential Equations and the MATLAB® ODE Suite, [[Video](https://www.youtube.com/watch?v=ZvL88xqYSak&list=PLUl4u3cNGP63oTpyxCMLKt_JmB0WtSZfG)], [[Website](https://ocw.mit.edu/resources/res-18-009-learn-differential-equations-up-close-with-gilbert-strang-and-cleve-moler-fall-2015/differential-equations-and-linear-algebra/)]
   - Differential Equations and Linear Algebra, https://ocw.mit.edu/resources/res-18-009-learn-differential-equations-up-close-with-gilbert-strang-and-cleve-moler-fall-2015/differential-equations-and-linear-algebra/
-- - 
 
 **Supplementary material:**
 
@@ -89,28 +88,74 @@ permalink: /Surviving_kits/2021_fall_surviving_kit  # The path to this page
 
   - [50+ Data Science and Machine Learning Cheat Sheets](https://www.kdnuggets.com/2015/07/good-data-science-machine-learning-cheat-sheets.html)
 
+### Linear Algebra
+
+- 
+
 ### Probability
 
 - [Probability Cheatsheet v2.0](http://www.wzchen.com/probability-cheatsheet)
 
-## Things to learn
 
-### SolidWorks
 
-**Videos**
+# JD Required Skills
 
-- [SolidWorks 2020 ( FOR ABSOLUTE BEGINNERS )](https://www.youtube.com/watch?v=ejFr41s28ZU&list=PLx-VY2mDlK2HSJrIUCN7uV5tHFVvPPYnK)
-- ==[SOLIDWORKS 2020 Sketch TUTORIAL](https://www.youtube.com/watch?v=8-jR0soaLVI&list=UUGI51H1l-U4itMQQXizMJhA)==
-- [【达索原厂技术工程师】SolidWorks2018从软件操作到产品研发全新系统课程](https://www.bilibili.com/video/BV1Pp4y1a7NB?p=5)
+------
 
-**Supplementary Material**
 
-- MySolidWorks
-  - [Training](https://my.solidworks.com/training)
 
-- [Machanical Base website blog](https://mechanicalbase.com/category/solidworks/), 
+## ML/DL
 
-### Other tools
+
+
+**OpenCV:**
+
+- [OpenCV教程-初识OpenCV-第一篇](https://blog.csdn.net/weixin_46137192/article/details/120355854)
+- [【OpenCV】 ⚠️高手勿入! 半小时学会基本操作 （25 个系列)](https://blog.csdn.net/weixin_46274168/category_11218743.html?spm=1001.2014.3001.5482)
+
+**RL(Reinforcement Learning)**
+
+- Intro:
+  - [来自DeepMind的深度强化学习大总结](https://blog.csdn.net/Mbx8X9u/article/details/78173539)
+  - [CSDN 博客](https://so.csdn.net/so/search?q=reinforcement%20learning&t=&u=&utm_term=reinforcement%20learning&utm_medium=distribute.pc_toolbar_associateword.none-task-associate_word-opensearch_query-1-%3Cem%3Ereinforcement%3C%2Fem%3E%20learning.nonecase&depth_1-utm_source=distribute.pc_toolbar_associateword.none-task-associate_word-opensearch_query-1-%3Cem%3Ereinforcement%3C%2Fem%3E%20learning.nonecase&request_id=163203433916780269880564&opensearch_request_id=163203433916780269880564)
+  - DeepMind – RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning, [[YouTube Video](https://www.youtube.com/watch?v=2pWv7GOvuf0&list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ)], [[Website](https://www.davidsilver.uk/teaching/)]
+
+- Essential Concept: (Summarized in [Google Docs](https://docs.google.com/document/d/15fNROr4dFXfNl95aA0ONtwxhjZ_QwqlWTocAQEK65NE/edit?usp=sharing))
+  - MDP(Markov Decision Process)
+  - Q-learning
+  - CMDP, and RMDP
+- Book
+  - [Reinforcement Learning: An Introduction (352 page)](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf)
+  - [Algorithms for Reinforcement Learning(98)](https://sites.ualberta.ca/~szepesva/papers/RLAlgsInMDPs.pdf)
+- Paper
+  - [2021] [Multi-Agent Reinforcement Learning: A Selective Overview of Theories and Algorithms](https://arxiv.org/pdf/1911.10635.pdf)
+  - [Cooperative Multi-Agent Learning: The State of the Art](https://cs.gmu.edu/~lpanait/papers/panait05cmasl.pdf)
+  - [Robust Constrained-MDPs: Soft-Constrained Robust
+    Policy Optimization under Model Uncertainty](https://arxiv.org/pdf/2010.04870.pdf)
+- Code repo
+  - ==**Browse State-of-the-Art**==, [Multi-agent Reinforcement Learning](https://paperswithcode.com/task/multi-agent-reinforcement-learning)
+- People
+  - BU Calin Belta, 
+    - Chuangchuang Sun, Xiao Li, Calin Belta, [Automata Guided Semi-Decentralized  Multi-Agent Reinforcement Learning](https://sites.bu.edu/hyness/publications/), American Control Conference (ACC), Denver, CO, USA, 2020
+
+Object Detection/Localization 
+
+- [Yolo](https://blog.csdn.net/weixin_46274168/category_11175036.html?spm=1001.2014.3001.5482) 
+  - 入门 – [Yolo 一文看懂目标检测](https://iamarookie.blog.csdn.net/article/details/118402259)
+  - v1-v3 – [Yolo 一小时学会基本操作](https://iamarookie.blog.csdn.net/article/details/118402894)
+  - v4-v5 – [Yolo 一小时吃透 yolov4 & yolov5 原理](https://iamarookie.blog.csdn.net/article/details/118450294)
+
+
+
+## SDE
+
+
+
+## Full Stack
+
+
+
+### Preferred/Extra/Bonus Skills
 
 **MATLAB**
 
@@ -140,29 +185,43 @@ permalink: /Surviving_kits/2021_fall_surviving_kit  # The path to this page
 **Some Recommended Books:**
 
 - [13 Books that all engineering students should know](https://www.linkedin.com/pulse/what-books-should-graduating-engineer-read-before-first-anna-thornton/)
-  - Design
-    - **Design Paradigms: Case Histories of Error and Judgment in Engineering** by Henry Petroski 
-    - **The Design of Everyday Things** by Don Norman
-  - Innovation
-    - **The Innovator's Dilemma: When New Technologies Cause Great Firms to Fail** by Clayton M. Christensen 
-    - **Crossing the Chasm** by Geoffrey A Moore 
-    - **Diffusion of Innovations** by Everett M. Rogers
-  - Society and Ethics
-    - **Edison and the Electric Chair** by Mark Essig
-    - **Bad Blood** by John Carreyrou
-  - Communication
-    - **The Visual Display of Quantitative Information** by Edward R. Tufte
-    - **Thanks for the Feedback: The Science and Art of Receiving Feedback Well** by Douglas Stone and Sheila Heen
-    - **Give and Take: Why Helping Others Drives Our Success** by Adam Grant
-  - Manufacturing
-    - **Manufacturing Processes for Design Professionals** by Rob Thompson 
-    - **The Machine That Changed the World: The Story of Lean Production-- Toyota's Secret Weapon in the Global Car Wars That Is Now Revolutionizing World Industry** by James P. Womack , Daniel T. Jones, et al.
-    - **Machinery's Handbook**
-  - What does it take to get a product to market?
-    - **Soul of a New Machine** by Tracy Kidder
-    - **Car** by Mary Walton
+
+Interested Based
+
+- 量化交易
+  - [基础内容 (15 课时系列)](https://blog.csdn.net/weixin_46274168/category_10961128.html)
 
 
+
+# Course Work Required Skills
+
+## SolidWorks
+
+**Videos**
+
+- [SolidWorks 2020 ( FOR ABSOLUTE BEGINNERS )](https://www.youtube.com/watch?v=ejFr41s28ZU&list=PLx-VY2mDlK2HSJrIUCN7uV5tHFVvPPYnK)
+- ==[SOLIDWORKS 2020 Sketch TUTORIAL](https://www.youtube.com/watch?v=8-jR0soaLVI&list=UUGI51H1l-U4itMQQXizMJhA)==
+- [【达索原厂技术工程师】SolidWorks2018从软件操作到产品研发全新系统课程](https://www.bilibili.com/video/BV1Pp4y1a7NB?p=5)
+
+**Supplementary Material**
+
+- MySolidWorks
+  - [Training](https://my.solidworks.com/training)
+- [Machanical Base website blog](https://mechanicalbase.com/category/solidworks/), 
+
+## Arduino 
+
+- Start Kit Video Tutorial, [[Video 1](https://www.youtube.com/playlist?list=PLT6rF_I5kknPf2qlVFlvH47qHvqvzkknd)], [[Video 2](https://www.arduino.cc/education/remotelearning)]
+- [Master The Basics Of Arduino - Full Arduino Programming Course](https://www.youtube.com/watch?v=1R3fqSFCAjM), [4 hr 38 min Video]
+- [Arduino programming API](https://www.arduino.cc/reference/en/)
+
+
+
+
+
+# 2021 FALL Course Resources
+
+---
 
 ## CS 501 Spark SDE Project
 
@@ -193,8 +252,6 @@ Hard Topic:
 - Communication
   - Blackboard
   - Slack 
-
-
 
 
 
