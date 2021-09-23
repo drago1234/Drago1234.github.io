@@ -90,6 +90,29 @@ permalink: /Surviving_kits/2021_fall_surviving_kit  # The path to this page
 
 ### Linear Algebra
 
+Important Topics:
+
+- Independence, Basis, and Dimension, https://www.youtube.com/watch?v=eeMJg4uI7o0
+- 
+
+Video
+
+- MIT 18.06 Linear Algebra, Spring 2005, [[Youtube VIdeo](https://www.youtube.com/watch?v=ZK3O402wf1c&list=PL49CF3715CB9EF31D&index=1)]
+  - View the complete course at: [http://ocw.mit.edu/18-06S05](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbENySUhXZWZPRFNBZ3U3UDJqU3hPRDdnNzZXZ3xBQ3Jtc0ttWGZNOXJDbnBQR0NwdTd1dzRKU3oxNGpGR0hJb3AwVFNNN0thN1BxbEFSRVU5ZF9kcUU4SVkyNVJRZmllNFZrbHRfZkhrUXFhNVBPeDJDU2hsZWZSUFRCSy1zQ3lSZE11c1M5WVFOVDNkVEdweXJCdw&q=http%3A%2F%2Focw.mit.edu%2F18-06S05)  
+- MIT 18.065 [Matrix Methods in Data Analysis, Signal Processing, and Machine Learning](https://ocw.mit.edu/courses/mathematics/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/), [YouTube Video]
+- [Differential Equations and Linear Algebra](https://ocw.mit.edu/resources/res-18-009-learn-differential-equations-up-close-with-gilbert-strang-and-cleve-moler-fall-2015/differential-equations-and-linear-algebra/)
+- Intro: A New Way to Start Linear Algebra, [[YouTube Video](https://www.youtube.com/watch?v=YrHlHbtiSM0&list=PLUl4u3cNGP61iQEFiWLE21EJCxwmWvvek)]
+
+Blogs + 中文资料
+
+- [MIT线性代数课程精细笔记[第一课]](https://zhuanlan.zhihu.com/p/28277072)
+- [可能是世界上最好的线性代数教程 – 3Blue1Brown中文版](https://zhuanlan.zhihu.com/p/133315049)
+
+Books
+
+- [The-Art-of-Linear-Algebra.pdf](https://github.com/kenjihiranabe/The-Art-of-Linear-Algebra/blob/main/The-Art-of-Linear-Algebra.pdf)
+  - provides some visualization of important concepts introduced in “Linear Algebra for Everyone”, including Column-Row(CR), Gaussian Elimination(LU), Gram-Schmidt Orthogonalization(RQ), Eigenvalues and Diagnoalization(Q$\Lambda Q^T$), and SIngluar Value Decomposition($U\Sigma V^T$) 
+- [Linear Algebra for Everyone](http://math.mit.edu/~gs/everyone/)
 - 
 
 ### Probability
