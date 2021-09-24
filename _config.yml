@@ -28,7 +28,7 @@ author:
 email: dong.760@outlook.com
 github_username:  Drago1234
 disqus_shortname: zhengqi
-favicon:     "./public/triple_spiral.jpg"
+favicon:     "/public/triple_spiral.jpg"
 
 # List of pages to include in the masthead of the website
 pages_list:
