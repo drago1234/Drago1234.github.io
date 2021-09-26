@@ -46,25 +46,29 @@ excerpt: >-
   5. Upload provided code and run 
 
 
+
 **Lab 2 Component List**
 
 -  Mini-pump x1
 
-- - Solenoid valve x2
-  - Additional small diameter      tubing
-  - Power supply wall adapter x1
-  - Breadboard power supply      module x1
-  - Transistor x3
-  - Diode x3
-  - Heat weldable fabric OR      plastic bag
+   -  Solenoid valve x2
+   -  Additional small diameter      tubing
+   -  Power supply wall adapter x1
+   -  Breadboard power supply      module x1
+   -  Transistor x3
+   -  Diode x3
+   -  Heat weldable fabric OR      plastic bag
 
-- Communal tools:
+-  Communal tools:
 
-- - Fabric adhesive
-  - Soldering irons
-  - Impulse sealers
-  - Hand pumps
-  - 
+   -  Fabric adhesive
+   -  Soldering irons
+   -  Impulse sealers
+   -  Hand pumps
+
+
+
+
 
 **Wiring Diagram 接线图；布线图**
 
@@ -94,6 +98,8 @@ Notes:
 1. Sample code to run system is available on Blackboard
 2. A text file containing the code has also been uploaded in case there are issues with downloading the Arduino file
 3. You may need to change the pump/exhaust times in the code to match the capacity of your actuator
+
+
 
 ```c
 #include <Wire.h>
@@ -156,6 +162,6 @@ Lab 2 Report Demo:
 
 **Reference:**
 
-- Based on electro-pneumatic system from Soft Robotic Toolkit
+- [Based on electro-pneumatic system from Soft Robotic Toolkit](https://softroboticstoolkit.com/low-cost-ep-circuit/introduction)
 - 
 

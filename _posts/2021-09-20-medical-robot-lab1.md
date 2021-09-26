@@ -23,6 +23,10 @@ excerpt: >-
 
 
 
+This is a serials of lab tutorial, and the following is what we gonna built at the end of serials.
+
+![img](../images/2021-09-20-medical-robotic-lab1/imag.jpg)
+
 # Intro
 
 - A soft robotic sleeve for haptic feedback during robotic-assisted surgery 
