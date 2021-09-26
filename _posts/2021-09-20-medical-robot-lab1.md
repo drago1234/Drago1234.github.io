@@ -7,6 +7,7 @@ tags: []  # Option
 permalink: 2021-09-20-medical-robotic-lab1
 toc: true# Option
 excerpt: >- 
+  Lab Tutorial Based on ME571 Medical Robotic
 ---
 
 
