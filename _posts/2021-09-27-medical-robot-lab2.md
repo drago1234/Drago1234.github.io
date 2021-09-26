@@ -160,8 +160,8 @@ Lab 2 Report Demo:
 
 
 
-**Reference:**
+# **Reference:**
 
-- [Based on electro-pneumatic system from Soft Robotic Toolkit](https://softroboticstoolkit.com/low-cost-ep-circuit/introduction)
+- [Soft Robotic Toolkit: Based on electro-pneumatic system from Soft Robotic Toolkit](https://softroboticstoolkit.com/low-cost-ep-circuit/introduction), https://softroboticstoolkit.com/low-cost-ep-circuit
 - 
 
