@@ -170,11 +170,26 @@ Object Detection/Localization
 
 
 
-## SDE
-
 
 
 ## Full Stack
+
+### Backend 
+
+AWS
+
+- Amazon S3 – [Amazon Simple Storage Service](https://aws.amazon.com/s3/)
+
+**Docker**
+
+- Installation
+  - [Get started with Docker remote containers on WSL 2](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers)
+
+
+
+### Frontend
+
+
 
 
 
