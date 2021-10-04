@@ -1,10 +1,10 @@
 ---
 layout: post  # Required
-title: 'ME571 A1 Medical Robotics -- Lab 2' # Required
-date: 2021-09-27  # Required
+title: 'ME571 A1 Medical Robotics -- Lab 3' # Required
+date: 2021-10-03  # Required
 categories: [Medical_Robotic, ME571] # Option
 tags: []  # Option
-permalink: 2021-09-27-medical-robotic-lab2
+permalink: 2021-10-03-medical-robotic-lab3
 toc: true# Option
 excerpt: >- 	
   Lab Tutorial Based on ME571 Medical Robotic
@@ -297,12 +297,11 @@ float readForce()
     float force;
     float fsrG = 1.0 / fsrR; // Calculate conductance
     // Break parabolic curve down into two linear slopes:
-    if (fsrR <= 600) 
-  {force = (fsrG - 0.00075) / 0.00000032639;
-      return force;}
-    else
-      {force =  fsrG / 0.000000642857;
-      return force;}
+    if (fsrR <= 600){
+        force = (fsrG - 0.00075) / 0.00000032639;
+        return force;
+    }else{
+        force =  fsrG / 0.000000642857;return force;}
   }
   else
   {
