@@ -2,7 +2,7 @@
 layout: post  # Required
 title: 'ME571 A1 Medical Robotics -- Paper Review' # Required
 date: 2021-10-04  # Required
-categories: [Medical_Robotic, ME571] # Option
+categories: [Medical_Robotic, ME571, Paper_Review] # Option
 tags: []  # Option
 permalink: 2021-10-04-medical-robotic-paper-review
 toc: true# Option
@@ -24,12 +24,6 @@ excerpt: >-
 
 1. TOC
    {: toc }
-
-
-
-
-
-
 
 
 
