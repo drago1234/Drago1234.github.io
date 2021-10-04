@@ -151,15 +151,12 @@ void loop() {
 
 
 
-Lab 2 Walkthrough Video:
-
+**Lab 2 Walkthrough Video:**
 <iframe width="560" height="315" src="https://www.youtube.com/embed/5telpHhVs-0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+**Lab 2 Report Demo:**
 
-Lab 2 Report Demo:
-
-
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NIgS0fdjbmg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 # **Reference:**
 
 - [Soft Robotic Toolkit: Based on electro-pneumatic system from Soft Robotic Toolkit](https://softroboticstoolkit.com/low-cost-ep-circuit/introduction), https://softroboticstoolkit.com/low-cost-ep-circuit
