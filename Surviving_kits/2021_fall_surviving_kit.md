@@ -90,13 +90,11 @@ permalink: /Surviving_kits/2021_fall_surviving_kit  # The path to this page
 
 ### Linear Algebra
 
-Important Topics:
-
-- Independence, Basis, and Dimension, https://www.youtube.com/watch?v=eeMJg4uI7o0
 - 
 
 Video
 
+- University of Michigan, ROB 101: Computational Linear Algebra, [[YouTube Video](https://www.youtube.com/watch?v=v1jneRWVrxY)]，[[Lecture Note](https://github.com/michiganrobotics/rob101/tree/main/Lecture%20Notes)]
 - MIT 18.06 Linear Algebra, Spring 2005, [[Youtube VIdeo](https://www.youtube.com/watch?v=ZK3O402wf1c&list=PL49CF3715CB9EF31D&index=1)]
   - View the complete course at: [http://ocw.mit.edu/18-06S05](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbENySUhXZWZPRFNBZ3U3UDJqU3hPRDdnNzZXZ3xBQ3Jtc0ttWGZNOXJDbnBQR0NwdTd1dzRKU3oxNGpGR0hJb3AwVFNNN0thN1BxbEFSRVU5ZF9kcUU4SVkyNVJRZmllNFZrbHRfZkhrUXFhNVBPeDJDU2hsZWZSUFRCSy1zQ3lSZE11c1M5WVFOVDNkVEdweXJCdw&q=http%3A%2F%2Focw.mit.edu%2F18-06S05)  
 - MIT 18.065 [Matrix Methods in Data Analysis, Signal Processing, and Machine Learning](https://ocw.mit.edu/courses/mathematics/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/), [YouTube Video]
@@ -276,9 +274,28 @@ Interested Based
 - Topics covered:
   - ![image-20210913113054131](../../../../../BU/2021_Fall/CS501-spark project/Flask_Project/FlaskMarket/img/image-20210913113054131.png)
 
-Hard Topic:
+Important Topics:
+
+- HW1
+
+  - [Video] Independence, Basis, and Dimension, https://www.youtube.com/watch?v=eeMJg4uI7o0
+  - [Video] Part 3: Orthogonal Vectors, https://www.youtube.com/watch?v=j8hEnyOiwhw&list=PLUl4u3cNGP61iQEFiWLE21EJCxwmWvvek&index=4
+  - [Video] YouTube, [Jacobian Matrix and Singularities | Robotics | Introduction | Part 1](https://www.youtube.com/watch?v=h2YM0CDzDl4&list=PLZaGkBteQK3HQFSWDM7-yRQWTd86DeDIY&index=10)
+  - [Video] 3Blue1Bronw, [Inverse matrices, column space and null space | Chapter 7, Essence of linear algebra](https://www.youtube.com/watch?v=uQhTuRlWMxw&t=1s)
+  - [Video] MIT Video, [Vector Spaces and Subspaces, Graphs,](https://ocw.mit.edu/resources/res-18-009-learn-differential-equations-up-close-with-gilbert-strang-and-cleve-moler-fall-2015/differential-equations-and-linear-algebra/vector-spaces-and-subspaces/graphs/) 
+  - [Video], [Spatial Descriptions and Transformation Matrices for Robotic Manipulators](https://www.youtube.com/watch?v=4Y1_y9DI_Hw)
+  - [Video] Northwestern Robotics, [Modern Robotics, Chapter 3.3.1: Homogeneous Transformation Matrices](https://www.youtube.com/watch?v=vlb3P7arbkU)
+  - [Video] MIT 18.06, [7. Solving Ax = 0: Pivot Variables, Special Solutions](https://www.youtube.com/watch?v=VqP2tREMvt0&list=PL49CF3715CB9EF31D&index=9)
+  - [Video] MIT 18.06, [15. Projections onto Subspaces](https://www.youtube.com/watch?v=Y_Ac6KiQ1t0&list=PL49CF3715CB9EF31D&index=15)
+  - [Slide] CMU: [An Introduction to Robot Kinematics](https://www.cs.cmu.edu/~16311/current/schedule/ppp/Lec17-FK.pdf)
+
+  Other things to look at:
+
+  - MIT 18.065, [Matrix Methods in Data Analysis, Signal Processing, and Machine Learning](https://ocw.mit.edu/courses/mathematics/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/index.htm)
+  - MIT 18.009, [Differential Equations and Linear Algebra](https://ocw.mit.edu/resources/res-18-009-learn-differential-equations-up-close-with-gilbert-strang-and-cleve-moler-fall-2015/differential-equations-and-linear-algebra/)
 
 - Kalman Filtering
+
   - [Penn State ME620 Robotic](https://alliance.seas.upenn.edu/~meam620/wiki/index.php?n=Main.Schedule)
     - [Kalman Filter](https://alliance.seas.upenn.edu/~meam620/wiki/index.php?n=Main.Schedule?action=download&upname=12_2018_kalmanfilter.pdf), [Kalman Filter notes](https://alliance.seas.upenn.edu/~meam620/wiki/index.php?n=Main.Schedule?action=download&upname=Kalman_notes.pdf), [EKF(extended KF)](https://alliance.seas.upenn.edu/~meam620/wiki/index.php?n=Main.Schedule?action=download&upname=15_2018-extended_kalman_filter.pdf)
     - [Camera models – Perspective projection](https://alliance.seas.upenn.edu/~meam620/wiki/index.php?n=Main.Schedule?action=download&upname=cameramodel2018.pdf)
