@@ -5,17 +5,16 @@ date: 2021-09-28  # Required
 categories: [Hacking Skills, Starter] # Option
 tags: []  # Option
 permalink: getting_start_everything.html
-toc: false # Option
+toc: True # Option
 excerpt: >- # Option
   TBD
 ---
 
 # Table of contents
-
 {: .no_toc .text-delta }
 
 1. TOC
-   {: toc }
+{: toc }
 
 
 

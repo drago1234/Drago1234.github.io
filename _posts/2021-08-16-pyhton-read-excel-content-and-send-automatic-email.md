@@ -5,7 +5,7 @@ date: 2021-08-16  # Required
 categories: [Data Science, Python] # Option
 tags: []  # Option
 permalink: 2021-08-16-pyhton-read-excel-content-and-send-automatic-email.html
-toc: true# Option
+toc: true # Option
 excerpt: >- # Option
   This article is for solving questions like: 1) How to send bulks of email in less than a minute? 2) How to automate the process of sending email to multiple user? And doing this regularlly?
 ---
