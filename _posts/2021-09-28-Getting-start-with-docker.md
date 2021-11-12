@@ -4,7 +4,7 @@ title: 'Getting start with Docker' # Required
 date: 2021-09-28  # Required
 categories: [Hacking Skills, Starter] # Option
 tags: []  # Option
-permalink: getting_start_everything.html
+permalink: getting_start_with_docker.html
 toc: True # Option
 excerpt: >- # Option
   TBD
@@ -927,6 +927,12 @@ This guide contains instructions on how to:
 
 
 
+Reference:
+
+- Best 14 CI/CD Tools You Must Know | Updated for 2021, https://www.katalon.com/resources-center/blog/ci-cd-tools/
+- 
+- 
+
 ## Deploy your app
 
 ### Overview
@@ -972,13 +978,16 @@ EXPOSE 5000
 |                                                              | `-t` portion means "tag" and you can add your *own tag name* I used `hello-world` since this might be your first time using Docker. When in doubt, include a tag. |
 |                                                              | `-f` is the path to the `Dockerfile` you're going to use to build your image. |
 | `docker run -it <your-tag>`                                  | This creates a "container" from your tagged image. In other words, a **container is an instance of an image**. |
+|                                                              | `-i`: interactive mode                                       |
+|                                                              | `-t` Tag name is ?                                           |
 | docker run -it -p 8888:8888 hello_world                      | run a image with interactive mode, and port forward container port 8888 to localhost port 8888, e.g., [localhost_port]:[container_port] |
 | docker run -d hello_world                                    | run a image in background, so you need to type `docker ps -a` in order to see it |
 | docker images                                                | show all the docker images available in local machine        |
-| docker ps                                                    | list all the process running in your docker                  |
-| docker ps -a                                                 | show all the containers being executed                       |
-| docker stop        [container_id]                            | stop running                                                 |
-| docker rm                                                    | remove particular container from docker (stop it, before remove) |
+| docker ps                                                    | list all the process running in your docker – 列出所有当前正在运行的容器 |
+| docker ps -a                                                 | show all the containers being executed or ran – 列出所有之前运行过的容器。 |
+| docker stop [container_id]                                   | stop running                                                 |
+| docker rm  [container_id … ]                                 | remove particular container from docker (stop it, before remove – 删除container, 可以一次性删除多个 |
+| docker rm $(docker ps -a -q -f status=exited)                | deletes all containers that have a status of `exited`. In case you're wondering, the `-q` flag, only returns the numeric IDs and `-f` filters output based on conditions provided. |
 | `docker image rm [tag_name]  --force `                       | Remove image with all alias tag                              |
 | docker image tag react-docker <your-username>/react-docker:1.0 | Provide an new tagname called `<your-username>/react-docker` with 1.0 version, for container  `react-docker` |
 | `docker rmi [image_id]`                                      | remove the docker images                                     |
