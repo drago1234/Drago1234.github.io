@@ -18,178 +18,6 @@ excerpt: >- # Option
 
 
 
-# Docker file Overview
-
-- **FROM**: directive sets the base image from which the Docker container will be built.
-- **WORKDIR**: directive sets the working directory in the image created.
-- **RUN**: directive executes commands in the container.
-
-  - `RUN` is a command that allows you to do any bash shell command you'd do normally. In our case, we just do some basic system updates and basic installs.
-- **EXPOSE**
-
-  - `EXPOSE` allows your docker image to have a `port` or posts exposed to outside the image. This is important for web applications and software you want to receive requests.
-- **COPY**: directive copies files from the file system into the container.
-  - `COPY`:  copy is another command we haven't yet added to our `Dockerfile`. This will allow you to copy local files to your Docker image.
-- **CMD**: directive sets the executable commands within the container.
-
-	- `CMD` this is the final command your docker image will run. It's typically reserved for something like running a web application.
-
-
-
-### **Template for Django**
-
-```bash
-
-# Create a virtual env with pipenv
-mkdir simple_dj_docker
-cd simple_dj_docker
-sudo pip install pipenv
-# python -m pip install pipenv
-pipenv install django==3.1.1 gunicorn --python 3.8
-# To activate this project's virtualenv, run pipenv shell.
-pipenv shell
-# Check the packages are installed
-pip freeze
-# Alternative you can use virtualenv
-# virtualenv simpleenv
-# source simpleenv/bin/activate
-# OR more traditional way
-# python -m venv venv
-# echo venv/ >> .gitignore
-# source venv/bin/activate
-
-# Create Django Project
-django-admin startproject cfehome .
-# Run migration and create superuser
-python manage.py makemigrations
-python manage.py migrate
-python manage.py createsuperuser
-# To run the test case:
-# python manage.py test
-
-# Update Django settings.py
-# DEBUG can be True/False or 1/0
-DEBUG = int(os.environ.get('DEBUG', default=1))
-
-# Create a `.env` file, and append 'DEBUG=1'
-echo 'DEBUG=1' >> .env
-
-# Test Gunicorn
-gunicorn app_namge.wsgi:application
-# Or you want to make it avaialble to the public as well
-gunicorn app_namge.wsgi:application --bind 0.0.0.0:8000
-
-# Create your Dockerfile
-touch Dockerfile
-```
-
-![image-20210930101521061](../images/2021-09-28-Getting-start-with-docker/image-20210930101521061.png)
-
-
-
-Dockerfile
-
-```dockerfile
-# syntax=docker/dockerfile:1
-# pull the official base image (This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. )
-FROM python:3.8
-# python:<version>-slim ==> This image does not contain the common packages contained in the default tag and only contains the minimal packages needed to run python. 
-# python:<version>-alpine ==> This image is based on the popular Alpine Linux project, available in the alpine official image. Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
-
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-ENV DEBUG=0
-
-# install dependencies
-WORKDIR /app
-
-# Install Customized system dependencies
-# install psycopg2 dependencies
-# RUN apk update
-# RUN apk add postgresql-dev musl-dev 
-# RUN apt-get install -qy python3-dev postgresql-dev build-essential
-# RUN pip install pyzmq
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        python3-setuptools \
-        python3-pip \
-        python3-dev \
-        python3-venv \
-        git \
-        && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# copy requirements.txt to /app/requirements.txt
-COPY requirements.txt requirements.txt
-RUN pip3 install --upgrade pip 
-# Install project dependencies to entire system with pipenv
-# RUN pip3 install pipenv
-# RUN pipenv install -r requirements.txt
-# RUN pipenv shell
-# RUN pipenv install django==3.1.1 gunicorn --python 3.8
-# RUN pipenv install --skip-lock --system --dev
-RUN pip3 install -r requirements.txt
-# python -m venv venv
-# echo venv/ >> .gitignore
-# source venv/bin/activate
-# RUN pip3 freeze
-
-# copies all the project source code to the working directory in the container.
-COPY . .
-
-# Make 5000 as the default port to be exposed(so we can access the container from localhost, or even anywhere at internet)
-EXPOSE 5000
-ENV PORT 5000
-
-# FOR Node.js use
-# ENV PORT 80
-# EXPOSE 80
-# COPY package.json /code/package.json
-# RUN npm install
-
-# sets the executable commands in the container.
-CMD ["python3", "chatbot/manage.py", "runserver", "0.0.0.0:5000"]
-# CMD gunicorn app_name.wsgi:application --bind 0.0.0.0:5000
-# CMD ["npm", "start"]
-# CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
-
-# Build a image and Run a container
-# docker build -t hello_world_app .
-# docker run -it -p 5000:5000 hello_world_app 
-# 8888 is default for Jupyter Notebook
-# 5000 is default for Nodejs
-
-## Extra command
-# lsb_release -a
-# wsl -l -v
-
-# Publishing the Docker image to Docker Hub
-# docker login
-# docker tag django_todo:latest <Docker Hub username>/django_todo:latest
-# docker push <Docker Hub username>/django_todo:latest
-
-# Reference:
-# Section: https://www.section.io/engineering-education/django-docker/
-# Semaphore Dockerizing a Python Django Web Application: https://semaphoreci.com/community/tutorials/dockerizing-a-python-django-web-application
-# Basic Usage of Pipenv: https://pipenv-fork.readthedocs.io/en/latest/basics.html
-# Django on Docker Tutorial - A Simple Introduction, https://www.youtube.com/watch?v=KaSJMDo-aPs
-```
-
-
-
-### Template for React
-
-
-
-
-
-### Reference:
-
-1) https://www.section.io/engineering-education/django-docker/
-2) Dockerizing a React App, https://mherman.org/blog/dockerizing-a-react-app/
-3) FROM python:version meaning, https://hub.docker.com/_/python
-
 # Docker Installation on Windows 10
 
 Note: The code listed here is based on this tutorial on YouTube, [WSL with Docker installation on windows 11 | Docker Desktop WSL backend](https://www.youtube.com/watch?v=BMBwyadxokc) 
@@ -700,10 +528,350 @@ Happy Coding!
 
 
 
+### Q&A
+
+```
+docker run -it --rm -v ${PWD}:/code -v /code/node_modules -p 8000:8000 front-end:dev
+```
+
 ### Reference
 
 1. [Section: How to Create Django Docker Images](https://www.section.io/engineering-education/django-docker/)
 2. Semaphore:[Dockerizing a Python Django Web Application:](https://semaphoreci.com/community/tutorials/dockerizing-a-python-django-web-application) 
+
+
+
+# Docker file Overview
+
+- **FROM**: directive sets the base image from which the Docker container will be built.
+- **WORKDIR**: directive sets the working directory in the image created.
+- **RUN**: directive executes commands in the container.
+
+  - `RUN` is a command that allows you to do any bash shell command you'd do normally. In our case, we just do some basic system updates and basic installs.
+- **EXPOSE**
+
+  - `EXPOSE` allows your docker image to have a `port` or posts exposed to outside the image. This is important for web applications and software you want to receive requests.
+- **COPY**: directive copies files from the file system into the container.
+  - `COPY`:  copy is another command we haven't yet added to our `Dockerfile`. This will allow you to copy local files to your Docker image.
+- **CMD**: directive sets the executable commands within the container.
+
+  - `CMD` this is the final command your docker image will run. It's typically reserved for something like running a web application.
+
+
+
+### **Example for Django**
+
+```bash
+# Create a virtual env with pipenv
+mkdir simple_dj_docker
+cd simple_dj_docker
+sudo pip install pipenv
+# python -m pip install pipenv
+pipenv install django==3.1.1 gunicorn --python 3.8
+# To activate this project's virtualenv, run pipenv shell.
+pipenv shell
+# Check the packages are installed
+pip freeze
+# Alternative you can use virtualenv
+# virtualenv simpleenv
+# source simpleenv/bin/activate
+# OR more traditional way
+# python -m venv venv
+# echo venv/ >> .gitignore
+# source venv/bin/activate
+
+# Create Django Project
+django-admin startproject cfehome .
+# Run migration and create superuser
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+# To run the test case:
+# python manage.py test
+
+# Update Django settings.py
+# DEBUG can be True/False or 1/0
+DEBUG = int(os.environ.get('DEBUG', default=1))
+
+# Create a `.env` file, and append 'DEBUG=1'
+echo 'DEBUG=1' >> .env
+
+# Test Gunicorn
+gunicorn app_namge.wsgi:application
+# Or you want to make it avaialble to the public as well
+gunicorn app_namge.wsgi:application --bind 0.0.0.0:8000
+
+# Create your Dockerfile
+touch Dockerfile
+```
+
+![image-20210930101521061](../images/2021-09-28-Getting-start-with-docker/image-20210930101521061.png)
+
+
+
+Dockerfile
+
+```dockerfile
+# syntax=docker/dockerfile:1
+# pull the official base image (This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. )
+FROM python:3.8
+# python:<version>-slim ==> This image does not contain the common packages contained in the default tag and only contains the minimal packages needed to run python. 
+# python:<version>-alpine ==> This image is based on the popular Alpine Linux project, available in the alpine official image. Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV DEBUG=0
+
+# install dependencies
+WORKDIR /app
+
+# Install Customized system dependencies
+# install psycopg2 dependencies
+# RUN apk update
+# RUN apk add postgresql-dev musl-dev 
+# RUN apt-get install -qy python3-dev postgresql-dev build-essential
+# RUN pip install pyzmq
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        python3-setuptools \
+        python3-pip \
+        python3-dev \
+        python3-venv \
+        git \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# copy requirements.txt to /app/requirements.txt
+COPY requirements.txt requirements.txt
+RUN pip3 install --upgrade pip 
+# Install project dependencies to entire system with pipenv
+# RUN pip3 install pipenv
+# RUN pipenv install -r requirements.txt
+# RUN pipenv shell
+# RUN pipenv install django==3.1.1 gunicorn --python 3.8
+# RUN pipenv install --skip-lock --system --dev
+RUN pip3 install -r requirements.txt
+# python -m venv venv
+# echo venv/ >> .gitignore
+# source venv/bin/activate
+# RUN pip3 freeze
+
+# copies all the project source code to the working directory in the container.
+COPY . .
+
+# Make 5000 as the default port to be exposed(so we can access the container from localhost, or even anywhere at internet)
+EXPOSE 5000
+ENV PORT 5000
+
+# FOR Node.js use
+# ENV PORT 80
+# EXPOSE 80
+# COPY package.json /code/package.json
+# RUN npm install
+
+# sets the executable commands in the container.
+CMD ["python3", "chatbot/manage.py", "runserver", "0.0.0.0:5000"]
+# CMD gunicorn app_name.wsgi:application --bind 0.0.0.0:5000
+# CMD ["npm", "start"]
+# CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+
+# Build a image and Run a container
+# docker build -t hello_world_app .
+# docker run -it -p 5000:5000 hello_world_app 
+# 8888 is default for Jupyter Notebook
+# 5000 is default for Nodejs
+
+## Extra command
+# lsb_release -a
+# wsl -l -v
+
+# Publishing the Docker image to Docker Hub
+# docker login
+# docker tag django_todo:latest <Docker Hub username>/django_todo:latest
+# docker push <Docker Hub username>/django_todo:latest
+
+# Reference:
+# Section: https://www.section.io/engineering-education/django-docker/
+# Semaphore Dockerizing a Python Django Web Application: https://semaphoreci.com/community/tutorials/dockerizing-a-python-django-web-application
+# Basic Usage of Pipenv: https://pipenv-fork.readthedocs.io/en/latest/basics.html
+# Django on Docker Tutorial - A Simple Introduction, https://www.youtube.com/watch?v=KaSJMDo-aPs
+```
+
+
+
+### Example of Prisma Backend deployment with Docker
+
+Here is an example of docker file that I used for CS501 project backend:
+
+Dockerfile
+
+```dockerfile
+FROM node:16.8.0
+WORKDIR /code
+
+COPY . .
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH ./node_modules/.bin:$PATH
+# ENV PATH="./node_modules/.bin:$PATH"
+
+ENV PORT 5000
+EXPOSE 5000
+
+# install app dependencies
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+# RUN apt-get update    # ==> not a good idea to run in container
+# RUN apt-get install libssl1.1 libssl-dev  # ==> Those package doesn't exist in 16.8.0-slim. Slim version took out the openssl-y package to compress the size to make it smaller, but out backend required it to build container successfully
+# RUN apt-get install openssl-y   
+
+RUN npm ci --production
+RUN npm install
+
+# RUN npm run build
+
+# start app
+CMD ["bash", "./launch.sh"]
+
+# docker build -t sample:dev .
+# docker run -it -p 3000:3000 simple-react-app
+# $ docker run -it --rm -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true sample:dev
+
+
+# Reference:
+# Dockerizing a React App, https://mherman.org/blog/dockerizing-a-react-app/
+# Heroku + Docker with Secure React in 10 Minutes, https://developer.okta.com/blog/2020/06/24/heroku-docker-react
+```
+
+
+
+You need a launch.sh file because there is some database setup we need to go through before running the backend aplication.
+
+launch.sh
+
+```bash
+#!/bin/bash
+
+npx prisma migrate dev --name init
+npx prisma generate
+# RUN npx prisma introspect
+npx ts-node ./src/scripts.ts
+
+npm start
+```
+
+
+
+docker-compose.yml
+
+```dockerfile
+version: '3'
+
+services:
+  backend:
+    container_name: backend-dev
+    image: prismagraphql/prisma:1.34
+    build: ./backend
+      # When the value supplied is a relative path, it is interpreted as relative to the location of the Compose file. This directory is also the build context that is sent to the Docker daemon.
+      # context: ./backend
+      # dockerfile: ./Dockerfiles
+    ports:
+      - '5000:5000'
+    depends_on: 
+      - postgres
+    # env_file:
+    #   - ./backend/.env
+    # [named vol­umes](https://docs.docker.com/compose/compose-file/#volumes) that are mount­ed and can be shared amongst your Dock­er con­tain­ers (but not your host com­put­er), for stor­ing per­sis­tent data
+    # volumes:
+    #   - .:/code
+    environment:
+      PRISMA_CONFIG: |
+        port: 5000
+        managementApiSecret: 6LeX8LMcAAAAANzYvwbZl34R0wh4LfB027rpMFJh
+        databases:
+          default:
+            connector: postgresql
+            host: localhost
+            port: 5432
+            user: postgres
+            password: postgresql
+    # allows processes to ter­mi­nate quick­ly when you halt them with Control-C
+    init: true
+    restart: always
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: 'always'
+    expose: 
+      - '5432'
+    ports:
+      - 5432:5432  
+    # env_file:
+    #   - .env
+    environment:
+      - POSTGRES_DB=test  # Database name
+      - POSTGRES_HOST_AUTH_METHOD=trust # Trust anyone connect to database, so no authentication as password, easy the development
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgresql
+    volumes:  # volumes help us persist the data between the restart and container, so when we restart the container, the data will be kept in db/data and specified path
+      - postgres:/var/lib/postgresql/data
+    
+  # frontend:
+  #   image: node:16.8.0-slim
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - '8000:8000'
+  #   env_file:
+  #     - ./frontend/.env.development
+  #   volumes:
+  #     - ./frontend:/opt/frontend
+  #   restart: always
+  #   init: true
+  # postgres-db:
+  #   image: postgres:10.3
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: "postgres"
+  #     POSTGRES_PASSWORD: "postgres"
+  #   volumes:
+  #     - postgres:/var/lib/postgresql/data
+  #   init: true
+volumes:
+  postgres: ~
+
+# Reference: 1) Run postgres database in docker container, https://egghead.io/lessons/egghead-run-postgres-database-in-docker-container
+```
+
+
+
+
+
+Error 1:
+
+The backend cannot connect to your database. (Note: listening on IPv3 address ‘0.0.0.0’ means the database is open to all in-bound request, can receive request anywhere in the internet. ) The problem here is the configuration of your backend application is not set up correctly, so it cannot find the correct address of database to communicate with.
+
+![image](../images/all_in_one/image.png)
+
+Solution to that is configure your `DATABASE_URL` at your Prisma backend application, to match the configuration that you defined for the database, as an example shown below:
+
+![image-20211115191549840](../images/all_in_one/image-20211115191549840.png)
+
+
+
+### Reference:
+
+1) https://www.section.io/engineering-education/django-docker/
+2) Dockerizing a React App, https://mherman.org/blog/dockerizing-a-react-app/
+3) FROM python:version meaning, https://hub.docker.com/_/python
+4) Awesome Docker, https://github.com/veggiemonk/awesome-docker
+5) Run postgres database in docker container, https://egghead.io/lessons/egghead-run-postgres-database-in-docker-container
+
+
+
+
 
 # Building Docker container for Python App
 
@@ -912,6 +1080,20 @@ $ docker volume create mysql_config
 
 ## Configure CI/CD
 
+
+
+Figure2: DevOps Tools Ecosystem:
+
+![image-20211111215341444](../images/all_in_one/image-20211111215341444.png)
+
+Figure1: CI/CD Tool chain, https://www.suntechnologies.com/wp-content/uploads/2021/02/tools.png
+
+![img](../images/all_in_one/tools.png)
+
+
+
+
+
 ### Overview
 
 This page guides you through the process of setting up a GitHub Action CI/CD pipeline with Docker containers. Before setting up a new pipeline, we recommend that you take a look at [Ben’s blog](https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/) on CI/CD best practices .
@@ -930,7 +1112,7 @@ This guide contains instructions on how to:
 Reference:
 
 - Best 14 CI/CD Tools You Must Know | Updated for 2021, https://www.katalon.com/resources-center/blog/ci-cd-tools/
-- 
+- Best practices for using Docker Hub for CI/CD, https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/
 - 
 
 ## Deploy your app
@@ -968,11 +1150,12 @@ EXPOSE 5000
 
 
 
-## Common Docker commands
+## **Common Docker commands**
 
 | Command                                                      | Explanation                                                  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | docker --help                                                | show all helping command and info                            |
+| docker container logs [container_name]                       | show all building logs for container  [container_name]       |
 | docker built -t [tag_name]                                   | Build an image with tagname                                  |
 | `docker build -t <your-tag> -f Dockerfile .`                 | Build an image with `-t` tagname, and `-f` the dockerfile used to build image, in `.` current directory. |
 |                                                              | `-t` portion means "tag" and you can add your *own tag name* I used `hello-world` since this might be your first time using Docker. When in doubt, include a tag. |
@@ -1001,14 +1184,144 @@ EXPOSE 5000
 |                                                              |                                                              |
 |                                                              |                                                              |
 
+`docker image rm d2d0a95aa16ce0711013e07666301b34c2f1f144c9d7061487edaf87f1acbfac  --force `
 
+Open specific running container’s in a bash shell
+
+docker ps
+
+docker exec -it 3e7 /bin/bash
+
+![image-20211112173636925](../images/all_in_one/image-20211112173636925.png)
+
+![image-20211112173624603](../images/all_in_one/image-20211112173624603.png)
+
+![image-20211112173541861](../images/all_in_one/image-20211112173541861-16367565423522.png)
+
+![image-20211112203128653](../images/all_in_one/image-20211112203128653.png)
+
+$ ps -Af | grep -i docker ==> show docker process in linux
+
+![image-20211112174554134](../images/all_in_one/image-20211112174554134.png)
 
 Other Good Resources:
 
 - Docker Cheat Sheet, https://github.com/wsargent/docker-cheat-sheet
 
-- - 
-
 - Integration with WSL2
   - Docker Desktop WSL 2 backend
-  - 
+
+
+
+
+
+# Docker Compose
+
+
+
+## Dockmer-compose Command
+
+
+
+## Basic Understanding
+
+
+
+## CS501 Prisma Project Specific:
+
+
+
+
+
+Reference:
+
+- Run postgres database in docker container, https://egghead.io/lessons/egghead-run-postgres-database-in-docker-container
+- Dockerizing a NestJS app with Prisma and PostgreSQL, https://notiz.dev/blog/dockerizing-nestjs-with-prisma-and-postgresql
+
+- Docker official documents:
+  - dockersamples/example-voting-app, https://github.com/dockersamples/example-voting-app/tree/master/vote
+  - Overview of docker-compose CLI, https://docs.docker.com/compose/reference/
+
+### Common workflows
+
+The [Docker CLI](https://docs.docker.com/engine/reference/commandline/cli) and [Docker Compose CLI](https://docs.docker.com/compose/reference/) are used to manage the Prisma servers.
+
+Here's a quick rundown of the most important commands:
+
+- docker-compose build: build or rebuild the container
+- [`docker-compose up -d`](https://docs.docker.com/compose/reference/up/): Start a new Prisma server to which you can deploy your Prisma services.
+- [`docker-compose stop`](https://docs.docker.com/compose/reference/stop/): Stops the Prisma server.
+- [`docker-compose pull`](https://docs.docker.com/compose/reference/pull/): Downloads the [latest Prisma images](https://hub.docker.com/r/prismagraphql/prisma/tags/) from Docker Hub
+- [`docker logs`](https://docs.docker.com/compose/reference/logs/): Shows the logs of the Prisma server (helpful for debugging).
+
+- docker-compose down -v: To destroy the cluster and the data volumes
+- docker container ls
+
+
+
+## File Structure
+
+This [.yaml file](https://yaml.org/) has 3 top-lev­el keys:
+
+- version — the ver­sion num­ber of the [Dock­er Com­pose file,](https://docs.docker.com/compose/compose-file/) which cor­re­sponds to dif­fer­ent capa­bil­i­ties offered by dif­fer­ent ver­sions of the [Dock­er Engine](https://docs.docker.com/engine/)
+- services — each ser­vice cor­re­sponds to a sep­a­rate Dock­er con­tain­er that is cre­at­ed using a sep­a­rate Dock­er image
+- volumes — [named vol­umes](https://docs.docker.com/compose/compose-file/#volumes) that are mount­ed and can be shared amongst your Dock­er con­tain­ers (but not your host com­put­er), for stor­ing per­sis­tent data
+
+
+
+## docker-compose.yml Reference
+
+**BUILD**
+
+When you’re cre­at­ing a Dock­er con­tain­er, you can either base it on an exist­ing image (either a local image or one pulled down from [DockerHub.com](https://dockerhub.com/)), or you can build it local­ly via a Dockerfile.
+
+As men­tioned above, I chose the method­ol­o­gy that each ser­vice would be cre­at­ing as a build from a Dockerfile (all of which extend FROM an image up on [DockerHub.com](https://dockerhub.com/)) to keep things consistent.
+
+This means that some of our Dockerfiles we use are noth­ing more than a sin­gle line, e.g.: FROM mariadb:10.3, but this set­up does allow for expansion.
+
+The two keys used for build are:
+
+- context — this spec­i­fies where the work­ing direc­to­ry for the build should be, rel­a­tive to the docker-compose.yaml file. This is set to the root direc­to­ry of each service
+- dockerfile — this spec­i­fies a path to the Dockerfile to use to build the ser­vice Dock­er con­tain­er. Think of the Dockerfile as a local Dock­er image
+
+So the con­text is always the root direc­to­ry of each ser­vice, with the Dockerfile and any sup­port­ing files for each ser­vice are off in a sep­a­rate direc­to­ry. We do it this way so that we’re [not pass­ing down more than is need­ed](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#understand-build-context) when build­ing the Dock­er images, which slows down the build process sig­nif­i­cant­ly (thanks to Mizux Sei­ha & Patrick Har­ring­ton for point­ing this out!).
+
+
+
+**ENV_FILE**
+
+The env_file set­ting spec­i­fies a path to your .env file for key/value pairs that will be inject­ed into a Dock­er container.
+
+[Dock­er does not allow for quotes](https://github.com/docker/compose/issues/3702) in its .env file, which is con­trary to how .env files work almost every­where else… so remove any quotes you have in your .env file.
+
+You’ll notice that for the nginx ser­vice, there’s a strange &env val­ue in the env_file set­ting, and for the oth­er ser­vices, the set­ting is *env. This is tak­ing advan­tage of [YAML alias­es](https://github.com/cyklo/Bukkit-OtherBlocks/wiki/Aliases-(advanced-YAML-usage)), so if w
+
+**INIT**
+
+Set­ting init: true for an image caus­es [sig­nals to be for­ward­ed](https://docs.docker.com/compose/compose-file/#init) to the process, which allows them to ter­mi­nate quick­ly when you halt them with Control-C.
+
+**DEPENDS_ON**
+
+This just lets you spec­i­fy what oth­er ser­vices this par­tic­u­lar ser­vice depends on; this allows you to ensure that oth­er con­tain­ers are up and run­ning before this con­tain­er starts up.
+
+
+
+
+
+## Extra Note:
+
+- [Dock­er does not allow for quotes](https://github.com/docker/compose/issues/3702) in its .env file, which is con­trary to how .env files work almost every­where else… so remove any quotes you have in your .env file.
+
+
+
+
+
+
+
+
+
+## Reference:
+
+- An Annotated Docker Config for Frontend Web Development, https://nystudio107.com/blog/an-annotated-docker-config-for-frontend-web-development
+- Dockerizing a NestJS app with Prisma and PostgreSQL, https://notiz.dev/blog/dockerizing-nestjs-with-prisma-and-postgresql
+- Connect prisma to PostgreSQL database running in docker container, https://egghead.io/lessons/egghead-connect-prisma-to-postgresql-database-running-in-docker-container
