@@ -1,10 +1,10 @@
 ---
 layout: post  # Required
-title: 'Getting Start with PostgreSQL' # Required
+title: 'all linux command you need as SDE' # Required
 date: 2021-11-15  # Required
 categories: [Getting_Start, SLAM, EK505] # Option
 tags: []  # Option
-permalink: getting-start-with-slam.html
+permalink: all_linux_command_you_need_as_SDE.html
 toc: true# Option
 excerpt: >- 	
 
@@ -30,7 +30,7 @@ Reference:
 
 
 
-## All in one
+# All linux command you will need as SDE
 
 ## Network related
 
@@ -98,7 +98,7 @@ chmod +x speedtest-cli
 
 
 
-Reference:
+**Reference:**
 
 - HowTo: Find Out DNS Server IP Address Used By My Router?, https://www.cyberciti.biz/faq/how-to-find-out-dns-for-router/
 - 
