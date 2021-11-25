@@ -1169,12 +1169,12 @@ EXPOSE 5000
 | docker ps                                                    | list all the process running in your docker – 列出所有当前正在运行的容器 |
 | docker ps -a                                                 | show all the containers being executed or ran – 列出所有之前运行过的容器。 |
 | docker stop [container_id]                                   | stop running                                                 |
-| docker rm  [container_id … ]                                 | remove particular container from docker (stop it, before remove – 删除container, 可以一次性删除多个 |
+| docker rm  **[container_id … ]**                             | Remove one or more **containers ** (stop it, before remove – container only not image, and 可以一次性删除多个 |
 | docker rm $(docker ps -a -q -f status=exited)                | deletes all containers that have a status of `exited`. In case you're wondering, the `-q` flag, only returns the numeric IDs and `-f` filters output based on conditions provided. |
-| `docker image rm [tag_name]  --force `                       | Remove image with all alias tag                              |
+| `docker image rm [tag_name]  --force `                       | Remove container  with all alias tag                         |
 | docker image tag react-docker <your-username>/react-docker:1.0 | Provide an new tagname called `<your-username>/react-docker` with 1.0 version, for container  `react-docker` |
-| `docker rmi [image_id]`                                      | remove the docker images                                     |
-|                                                              | Pro tip, to remove all of these images just run `docker rm $(docker ps -a -q)` then `docker rmi $(docker images -q)` |
+| `docker rmi [image_id]`                                      | remove the **docker images**                                 |
+| `docker rm $(docker ps -a -q) + docker rmi $(docker images -q)` | Pro tip, to remove all of these images just run `docker rm $(docker ps -a -q)` then `docker rmi $(docker images -q)` |
 | docker create                                                | create your own container                                    |
 | docker pull                                                  | get from docker hub                                          |
 | docker push                                                  | push to docker hub                                           |

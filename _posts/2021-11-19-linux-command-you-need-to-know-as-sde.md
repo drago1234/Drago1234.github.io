@@ -1,6 +1,6 @@
 ---
 layout: post  # Required
-title: 'all linux command you need as SDE' # Required
+title: 'All linux command you need as SDE' # Required
 date: 2021-11-15  # Required
 categories: [Getting_Start, SLAM, EK505] # Option
 tags: []  # Option
@@ -85,7 +85,6 @@ sudo ufw allow 22
 sudo ufw reset
 
 
-
 # Fun thing: Testing network speed
 wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
 chmod +x speedtest-cli
@@ -96,12 +95,9 @@ chmod +x speedtest-cli
 
 
 
-
-
 **Reference:**
 
 - HowTo: Find Out DNS Server IP Address Used By My Router?, https://www.cyberciti.biz/faq/how-to-find-out-dns-for-router/
-- 
 
 
 
@@ -125,8 +121,6 @@ kill -9 <pid> # Not sure why, but something you need -9 to make it work
 
 passwd 		# lets you change your password, which you should do regularly (at least once a year). 
 ```
-
-
 
 
 
