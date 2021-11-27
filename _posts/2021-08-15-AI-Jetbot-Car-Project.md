@@ -706,6 +706,14 @@ Here are more information about [Camera Streaming and Multimedia](https://github
 
 For this project, you should use command `video-viewer csi://0  ` for live camera.
 
+
+
+```bash
+
+```
+
+
+
 ```sh
 # ===========================>  MIPI CSI cameras Testing
 $ video-viewer csi://0                        # MIPI CSI camera 0 (substitue other camera numbers)
@@ -714,6 +722,40 @@ $ video-viewer csi://0 rtp://<remote-ip>:1234 # broadcast output stream over RTP
 
 # By default, CSI cameras will be created with a 1280x720 resolution. To specify a different resolution, use the --input-width and input-height options. Note that the specified resolution must match one of the formats supported by the camera.
 $ video-viewer --input-width=1920 --input-height=1080 csi://0
+
+# ===========================> V4L2 cameras cameras Testing (e.g., Extra external camera)
+# However, if you do have a Logitech camera, e..g, HD Pro Webcam C920, then you can try the following :
+# check what devices is available:
+ls /dev/video*
+# Now the video devices should be listed. If there are any, you'll need to find the drivers if they exist.
+$ lsusb
+Bus 002 Device 002: ID 0bda:0411 Realtek Semiconductor Corp.
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 003: ID 8087:0a2b Intel Corp.
+Bus 001 Device 006: ID 046d:c52b Logitech, Inc. Unifying Receiver
+Bus 001 Device 005: ID e0ff:0002
+Bus 001 Device 004: ID 046d:082d Logitech, Inc. HD Pro Webcam C920
+Bus 001 Device 002: ID 0bda:5411 Realtek Semiconductor Corp.
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+# or use v4l-utils to check the exisitng devices:
+$ v4l2-ctl --list-devices
+vi-output, imx219 6-0010 (platform:54080000.vi:0):
+        /dev/video0
+
+HD Pro Webcam C920 (usb-70090000.xusb-2.1):
+        /dev/video1
+
+$ sudo apt install ffmpeg
+$ ffplay /dev/video1
+# Take a picture from terminal
+$ ffmpeg -f v4l2 -video_size 1280x720 -i /dev/video1 -frames 1 out.jpg
+# Parameters chosen based on "How to get camera parameters like resolution" below:
+$ ffmpeg -f v4l2 -framerate 30 -video_size 1280x720 -input_format mjpeg -i /dev/video1 -c copy out.mkv
+# Then:
+$ ffprobe out.mkv
+
+# Read more here, https://askubuntu.com/questions/348838/how-to-check-available-webcams-from-the-command-line
+
 
 # ===========================>  Using the ImageNet Program on Jetson
 cd ~/jetson-inference/build/aarch64/bin
