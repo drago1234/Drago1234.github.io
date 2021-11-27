@@ -21,7 +21,7 @@ excerpt: >-
 
 {: .no_toc .text-delta }
 
-TOC
+1. TOC
 {: toc }
 
 

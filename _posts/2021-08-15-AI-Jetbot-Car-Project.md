@@ -702,9 +702,21 @@ If you have any questions or just want to chat with me, feel free to leave a com
 
 # Appendix A: quick reference for Jetson Inference demo
 
+Here are more information about [Camera Streaming and Multimedia](https://github.com/dusty-nv/jetson-inference/blob/master/docs/aux-streaming.md), https://github.com/dusty-nv/jetson-inference/blob/master/docs/aux-streaming.md
+
+For this project, you should use command `video-viewer csi://0  ` for live camera.
+
 ```sh
+# ===========================>  MIPI CSI cameras Testing
+$ video-viewer csi://0                        # MIPI CSI camera 0 (substitue other camera numbers)
+$ video-viewer csi://0 output.mp4             # save output stream to MP4 file (H.264 by default)
+$ video-viewer csi://0 rtp://<remote-ip>:1234 # broadcast output stream over RTP to <remote-ip>
+
+# By default, CSI cameras will be created with a 1280x720 resolution. To specify a different resolution, use the --input-width and input-height options. Note that the specified resolution must match one of the formats supported by the camera.
+$ video-viewer --input-width=1920 --input-height=1080 csi://0
+
 # ===========================>  Using the ImageNet Program on Jetson
-cd jetson-inference/build/aarch64/bin
+cd ~/jetson-inference/build/aarch64/bin
 ./imagenet images/orange_0.jpg images/test/output_0.jpg     # (default network is googlenet)
 
 # Using anothher image

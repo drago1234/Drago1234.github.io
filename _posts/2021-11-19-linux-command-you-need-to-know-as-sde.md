@@ -32,6 +32,29 @@ Reference:
 
 # All linux command you will need as SDE
 
+## Disk Space Storage
+
+
+
+```bash
+# Check File System Disk Space Usage
+df
+# 3. Show Disk Space Usage in Human Readable Format
+df -h
+
+4. Display Information of /home File System
+```
+
+
+
+Reference
+
+- https://www.tecmint.com/how-to-check-disk-space-in-linux/
+
+
+
+
+
 ## Network related
 
 ```bash
@@ -55,6 +78,13 @@ Name:   www.google.com
 Address: 142.251.35.164
 Name:   www.google.com
 Address: 2607:f8b0:4006:807::2004
+
+
+# Checking Wireless Network Speed, Signal Strength And Other Information
+# 1. Find out your Linux wireless card chipset information
+lspci
+# list network devices including Wi-Fi device on Linux:
+sudo lshw -C network
 ```
 
 ![image-20211120001123416](../images/all_in_one/image-20211120001123416.png)
@@ -69,9 +99,19 @@ Address: 2607:f8b0:4006:807::2004
 
 
 ```bash
-# Checking all network statistic, such port connection
+# Checking all network statistic, such port connection. The netstat command is often used with other networking related Command Prompt commands like nslookup, ping, tracert, ipconfig, and others. See more here, https://www.lifewire.com/netstat-command-2618098
+
 # you might need to run 'sudo apt install net-tools' if you dont have it installed
 netstat -bq
+# display the process's actual file name. Using -b over -o might seem like it's saving you a step or two but using it can sometimes greatly extend the time it takes netstat to fully execute.
+netstat -anp| grep tcp
+netstat -s -p tcp -f
+# [-f] foreign addresses displayed in FQDN format 
+# see protocol specific statistics [-s] but not all of them, just TCP stats [-p tcp]
+netstat -e -t 5
+# show some basic network interface statistics [-e] 
+# and so that these statistics continually updated in the command window every five seconds [-t 5].
+
 
 # For SLURM/PBS in HPC center
 qstat
@@ -181,9 +221,20 @@ $ ssh-keygen -t rsa -b 4096	# Specify certain algorithm
 
 # More: 1) SSH Public Key, https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key
 # 2) gpg utility, https://drago1234.github.io/cryptography/2020/06/09/gpg-utility/
+
+# The ssh_config file in client side ==> Use for ssh configuration
+~/.ssh/config
+# the sshd_config use for server side ssh connection configuration.
+/etc/ssh/sshd_config
 ```
 
 
+
+Reference:
+
+- ssh_config usage, https://linux.die.net/man/5/ssh_config
+- sshd_config — OpenSSH daemon configuration file, https://man.openbsd.org/sshd_config
+-  
 
 
 
