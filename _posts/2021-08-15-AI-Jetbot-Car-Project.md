@@ -706,14 +706,6 @@ Here are more information about [Camera Streaming and Multimedia](https://github
 
 For this project, you should use command `video-viewer csi://0  ` for live camera.
 
-
-
-```bash
-
-```
-
-
-
 ```sh
 # ===========================>  MIPI CSI cameras Testing
 $ video-viewer csi://0                        # MIPI CSI camera 0 (substitue other camera numbers)

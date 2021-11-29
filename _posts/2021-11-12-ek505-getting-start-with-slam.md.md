@@ -18,9 +18,13 @@ excerpt: >-
 {: .no_toc .text-delta }
 
 1. TOC
-    {: toc }
+{: toc }
 
  
+
+[TOC]
+
+
 
 ## Plan:
 
@@ -48,7 +52,7 @@ Books:
 
 
 
-# Implementing ORB-SLAM on Ubuntu 18.04 & ROS Melodic
+
 
 
 
@@ -107,6 +111,50 @@ Written by Erico Guizzo. Date published: 2018-08-01; Date modified: 2020-05-28
 
 # Overview of SLAM
 
+## About Jetbot:
+
+- NVIDIA JetBot: Jetson Nano Vision-Controlled AI Robot, https://www.youtube.com/watch?v=wKMWjIKaU68
+- Completed Tutorial to NVIDIA Jetson AI JetBot Robot Car Project, https://drago1234.github.io/ai-Jetbot-car-project.html#reference-1
+- Explaining Jetbot AI Kit Hector SLAM, https://www.youtube.com/watch?v=Noo3RmavB6I
+
+
+
+## Important Concept:
+
+SLAM的就两件事：建图和定位
+
+- Build a map of the environment
+- Locate the device within that environment
+
+比如，一个最经典的例子就是扫地机器人。一开始，你不知道你在哪，你也不知大周围的环境是怎么样的，障碍物在哪。
+
+对，你有Camera，但你能通过camera来定位吗？确定的位置有一定是真实的吗？
+
+==》现实是，所有的的定位装置，sensor都是impect, 都会带有误差的，哪怕GPS，也是一样。那怎么样才能最大的减小误差呢？ 
+
+==》 The key is, those landmark or points have spatial relationship to each other. As a result, you get a probability distribution of where every position could be. For some points, you might have a higher precision. For others, the uncertainty might be large. Frequently used algorithms to calculate the positions based on uncertainties are the **Extended Kalman Filter**, Maximum a Posteriori (MAP) estimation or **Bundle Adjustment (BA)**.
+
+
+
+EKF 很好理解，检测到闭环后，决定是要相信观测到的值多一些，还是估计的值多一些？然后做一次更新，
+
+However, there are some challenges:
+
+- Huge Computation Cost: Because of the relationships between the points, every new sensor update influences all positions and updates the whole map. Keeping everything up to date requires a significant amount of math.
+- Accumulated inaccuracy: In [“Globally consistent range scan alignment for environment mapping”](https://link.springer.com/article/10.1023/A:1008854305733) (1997), Lu and Milios describe the basics of the issue. In the figure above, (a) shows how range scan errors accumulate over time. Going from one position P*1* … P*n*, each little measurement error accumulates over time, until the resulting environment map isn’t consistent anymore.
+
+### Anatomy of SLAM
+
+How to apply and solve this in an Augmented Reality scenario?
+
+A good starting point for understanding SLAM principles is: [“Past, Present, and Future of Simultaneous Localization and Mapping: Towards the Robust-Perception Age”](https://ieeexplore.ieee.org/abstract/document/7747236/) (2016) by Cadena et. al. They describe the typical architecture of SLAM as follows:
+
+![SLAM Algorithm Overview](../images/all_in_one/SLAM-Algorithm.png)SLAM Algorithm Overview
+
+
+
+
+
 ## Installation & Env Setup
 
 ```bash
@@ -128,6 +176,9 @@ $ cd ~/catkin_ws && catkin_make
 $ cd ~/catkin_ws/src/
 $ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
 $ cd ~/catkin_ws && catkin_make
+
+catkin_make
+
 
 # made the modification in .bashrch file as follows:
 vim ~/.bashrc
@@ -158,7 +209,258 @@ roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
 
 
 
+## Hector SLAM – [Explaining Jetbot AI Kit Hector SLAM](https://www.youtube.com/watch?v=Noo3RmavB6I)
 
+[video], https://www.youtube.com/watch?v=Noo3RmavB6I
+
+[code] https://github.com/issaiass/jetbot_diff_drive
+
+
+
+```bash
+# Create a ROS ros workspace and compile an empty package:
+cd ~
+mkdir -p catkin_ws/src
+cd catkin_ws
+catkin_make
+
+# Open the .bashrc with nano:
+nano ~/.bashrc
+
+# Insert this line at the end of the ~/.bashrc file for sourcing your workspace:
+source ~/catkin_ws/devel/setup.bash
+
+# Clone this repo in the ~/catkin_ws/src folder by typing:
+cd ~/catkin_ws/src
+git clone https://github.com/issaiass/jetbot_diff_drive --recursive
+git clone https://github.com/issaiass/realsense_gazebo_plugin
+git clone https://github.com/issaiass/hector_gazebo_plugins
+cd ..
+
+catkin_make
+source ~/catkin_ws/devel/setup.bash
+
+roslaunch jetbot_gazebo spawn_jetbot.launch world_name:='$(find jetbot_gazebo)/worlds/turtle3_house.world'
+# roslaunch jetbot_gazebo spawn_jetbot.launch world_name:=<your_world>
+
+roslaunch jetbot_slam jetbot_slam.launch slam_methods:=hector
+
+
+# Go to the root folder ~/catkin_ws and make the folder running catkin_make to ensure the application compiles. Now, let's test the robot simulation.
+# 1st terminal - mount only the robot description
+roslaunch jetbot_description description.launch
+# 2nd terminal (optional) - get the robot description
+rosparam get /robot_description
+# Visualizing the robot in rviz
+roslaunch jetbot_viz view_model.launch
+# example... visualize the robot in rviz and disable intel realsense
+roslaunch jetbot_viz view_model.launch realsense_enable:=false
+
+
+# ========> For just view gazebo simulation (no control)
+# There are more parameters for enabling sensors
+# Basic spawning of the robot: spawn jetbot model in gazebo in turtlebot3_world
+roslaunch jetbot_gazebo spawn_jetbot.launch
+# example... spawn jetbot model in gazebo, other world
+roslaunch jetbot_gazebo spawn_jetbot.launch world_name:='$(find jetbot_gazebo)/worlds/turtle3_house.world'
+# roslaunch jetbot_gazebo spawn_jetbot.launch world_name:=<your_world>
+
+# ========> For controlling the jetbot in gazebo and visualize in rviz
+# launch the jetbot to control it in gazebo and visualize in rviz simultaneously
+roslaunch jetbot_control control.launch
+# OR
+# Same as above but with multiple terminals (4 terminals to launch)
+roslaunch jetbot_gazebo spawn_jetbot.launch
+roslaunch jetbot_viz view_model.launch
+roslaunch jetbot_control jetbot_controller_manager.launch
+roslaunch jetbot_rqt_robot_steering.launch
+# Finally, control the robot with the rqt steering controller
+
+
+# ========> For robot navigation (it is not fine tuned at this checkpoint):
+# 1st terminal, launch gazebo
+roslaunch jetbot_gazebo spawn_jetbot.launch
+# 2nd terminal, launch navigation node (dynamic window approach or time elastic band)
+# <option> = teb or dwa
+roslaunch jetbot_navigation jetbot_navigation.launch local_planner:=<option>
+# 2nd terminal, or launch navigation node (dynamic window approach only)
+# <option> = 0 or 1, 0 = move_base 1 = move_base_flex
+# Let's say we want move_base_flex, then the argument is 1
+roslaunch jetbot_navigation jetbot_navigation.launch move_base_flex:=<option>
+
+# ========> For robot slam:
+# 1st terminal, launch gazebo
+roslaunch jetbot_gazebo spawn_jetbot.launch
+# 2nd terminal, launch slam node
+# <option>: gmapping, hector or karto
+roslaunch jetbot_navigation jetbot_slam.launch slam_methods:=<option>
+# 3rd terminal, launch a controller (option 1)
+roslaunch jetbot_control jetbot_rqt_control_steering.launch
+# 3rd terminal, launch a controller (option 2)
+rosrun jetbot_twist_keyboard teleop_twist_keyboard.py
+# 4rt terminal, save the map when finished
+rosrun map_server map_saver -f <path_and_name_of_map>
+```
+
+
+
+
+
+
+
+
+
+
+
+## Implementing ORB-SLAM on Ubuntu 18.04 & ROS Melodic
+
+
+
+```bash
+# Step 1: Plugin your USB WebCam and open up a new terminal window and enter the following:
+$ sudo apt install ros-melodic-usb-cam
+$ roslaunch usb_cam usb_cam-test.launch
+
+# If you get an error message try changing the /dev/video0 to /dev/video1 or any other number in the launch file.
+
+
+# Step 2: The camera_calibration module will already be installed for Melodic. To make sure all the dependencies for the package have been installed, run:
+$ rosdep install camera_calibration
+
+# Once all the dependencies have been installed, you run can the camera_calibration node by giving in the required parameters. To know about each parameter, see this page. (You’ll also need a checkerboard to perform the calibration).
+$ rosrun usb_cam usb_cam_node
+$ rosrun camera_calibration cameracalibrator. --size 9x6 --square 0.02517 image:=/usb_cam/image_raw camera:=/usb_cam --no-service-check
+
+# [Create a .yaml file, and copy the parameter from tutorial, and skip it]
+# Step 3:Now, we need to convert the .ost file to a .yaml file. To do that, enter the following in the terminal:
+$ rosrun  camera_calibration_parsers convert  <filename>.ost <filename>.yaml
+# Read more here, http://wiki.ros.org/camera_calibration_parsers
+
+# Step 4: When you run the usb_cam node, it publishes two important topics that will be subscribed by your orb_slam2_ros node. One is the /camera/image_raw and /camera/camera_info. The latter is the topic that sends your camera parameters to the orb_slam2_ros node. Therefore, you need to make your usb_cam node to publish your .yaml file parameters to that topic. To do so, enter the following commands in your terminal:
+$ roscd usb_cam
+$ cd launch
+$ sudo nano usb_cam-test.launch
+# The nano text editor will open up your launch file. Enter the highlighted line of code as shown in the image below: <param name="camera_info_url" value="file:///home/jetbot/.ros/camera_info/head_camera.yaml/>
+
+
+# Final Step: Setting up your orb_slam2_ros node
+# cd into your catkin workspace and enter the following commands:
+$ cd src
+$ git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
+$ cd ..
+$ catkin_make
+$ source devel/setup.bash
+
+
+# Running it all together
+# Make sure your camera is connected to your PC. Run each of the following commands in new terminals.
+$ roscore
+$ roslaunch usb_cam usb_cam-test.launch
+$ roslaunch orb_slam2_ros orb_slam2_logitech_c920_mono.launch
+$ rosrun orb_slam2_ros debug_image_info.py
+$ rviz
+```
+
+
+
+Error1:
+
+>[ INFO] [1638032855.903411694]: Unable to open camera calibration file [/home/jetbot/.ros/camera_info/head_camera.yaml]
+>[ WARN] [1638032855.903490081]: Camera calibration file /home/jetbot/.ros/camera_info/head_camera.yaml not found.
+>[ INFO] [1638032855.903564926]: Starting 'head_camera' (/dev/video1) at 640x480 via mmap (yuyv) at 30 FPS
+>
+>
+
+Solu:
+
+Create such file in directory, `.ros/camera_info/head_camera.yaml`, with following parameter
+
+```yaml
+image_width: 2448 # 640  
+image_height: 2050  # 480 
+camera_name: head_camera  # Logitech_HD_Pro_C920
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [4827.94, 0, 1223.5, 0, 4835.62, 1024.5, 0, 0, 1]  #  [430.215550, 0.000000, 306.691343, 0.000000, 430.531693, 227.224800, 0.000000, 0.000000, 1.000000] 
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.41527, 0.31874, -0.00197, 0.00071, 0]   # [-0.337586, 0.111612, -0.000218, -0.000030, 0.0000] 
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [4827.94, 0, 1223.5, 0, 0, 4835.62, 1024.5, 0, 0, 0, 1, 0]   # [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0] 
+
+# Read more: 1) http://wiki.ros.org/camera_calibration/Tutorials/MonocularCalibration, and http://wiki.ros.org/camera_calibration_parsers
+```
+
+
+
+
+
+Error 2:
+
+> **MESA-LOADER: failed to open swrast (search paths /usr/lib/aarch64-linux-gnu/dri:${ORIGIN}/dri:/usr/lib/dri)**
+> **libGL error: failed to load driver: swrast**
+
+Solu:
+
+https://forums.developer.nvidia.com/t/jetpack-4-3-mesa-loader-failed-to-open-swrast-while-in-xrdp-session/111199/9
+
+> Sorry again but I really want know what is the exact step to reproduce issue… there are 4 people here asking about similar error but the causes look different.
+>
+> I guess the purpose here is use gnome with xrdp setup and even in a headless case. Is that correct?
+>
+> Not sure why everyone is trying glxinfo. As my previous comment, for any usecase that runs with X API, you need to configure env variable “DISPLAY”. And this variable is valid when xorg detects a screen.
+>
+> For example, if I want to run glxinfo with no monitor.
+>
+> 1. Boot up device without hdmi cable
+> 2. Disable gdm3 manually
+>
+> ```
+> sudo service gdm3 stop
+> ```
+>
+> 1. Run the X manually again.
+>
+> ```
+> nvidia@nvidia-desktop:~$ sudo X
+> ```
+>
+> 1. Tell the X which screen to use, see if xrandr can see this screen and run glxinfo.
+>
+> ```
+> nvidia@nvidia-desktop:~$ export DISPLAY=:0
+> nvidia@nvidia-desktop:~$ xrandr
+> Screen 0: minimum 8 x 8, current 640 x 480, maximum 32767 x 32767
+> HDMI-0 disconnected primary (normal left inverted right x axis y axis)
+> nvidia@nvidia-desktop:~$ glxinfo 
+> name of display: :0
+> display: :0  screen: 0
+> direct rendering: Yes
+> server glx vendor string: NVIDIA Corporation
+> server glx version string: 1.4
+> server glx extensions:
+> ----it is too long so skip the rest---
+> ```
+
+
+
+## Q: How to run both cpp and python code?
+
+
+
+Reference:
+
+- When to use Python vs Cpp with ROS,  https://roboticsbackend.com/python-vs-cpp-with-ros/
+- Python vs C++ – How to run Python and C++ code in ROS, https://www.theconstructsim.com/difference-run-code-ros-python-cpp/
 
 
 
@@ -216,18 +518,14 @@ Tutorial:
 
 # ROS
 
-## Installation:
+## ROS with Windows
 
-!!! Use the bash script here to download directly, https://github.com/ROBOTIS-GIT/robotis_tools/blob/master/install_ros_melodic.sh
+
 
 ROS1 Noetic Installation in Windows: [1-2 hr]
 
 - Just follow the tutorial here, http://wiki.ros.org/noetic/Installation.
 - !! There is a YouTube video for Windows 10 installation, [How to Install ROS Melodic on Windows natively in just 3 Simple Steps || Install ROS without Ubuntu](https://www.youtube.com/watch?v=8QC7-Odeqhc)
-
-ROS Noetic Installation in Ubuntu:
-
-- Follow this tutorial, [ROS Noetic Installation and Path Sourcing](https://www.youtube.com/watch?v=PowY8dV36DY)
 
 ROS2 Foxy on WIndows:
 
@@ -236,7 +534,8 @@ ROS2 Foxy on WIndows:
   - Installation Code snippet, https://github.com/PranshuTople/Installing_ROS
 - [TO-DO] Configuration setup, https://docs.ros.org/en/foxy/Tutorials/Configuring-ROS2-Environment.html
 
-
+- Other solution: VirtualBox 
+  - How to Install Ubuntu 20.04 LTS on VirtualBox in Windows 10, https://www.youtube.com/watch?v=x5MhydijWmc
 
 ```bash
 # Run master node
@@ -250,6 +549,386 @@ rosrun rviz rviz
 ```
 
 
+
+Other Reference:
+
+- Medium, Robot Operating System (ROS) in Windows 10, https://medium.com/geekculture/ros-in-windows-649c0f0fd036
+- [Basic ROS programming on Windows 10 - Publisher and Subscriber nodes](https://decrypthere.blogspot.com/2020/05/basic-ros-programming-on-windows-10.html)
+
+- [ROS on Windows](https://ms-iot.github.io/ROSOnWindows/GettingStarted/UsingROSonWindows.html)
+
+
+
+### [Install ROS on windows 10 using WSL (Full guide)](https://github.com/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)) 
+
+Here a full guide how to install ROS on Windows 10 using [Windows Subsystem for Linux (WSL)](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F).
+
+> **Note:** WSL is only available in Windows 10 version 1607 (the Anniversary update) or higher.
+
+#### **Step1: Install the Windows Subsystem for Linux (WSL).**
+
+1. **Enabling WSL in Windows 10**
+
+Before installing any Linux distributions on Windows, you must enable the "Windows Subsystem for Linux" optional feature in one of the following two ways:
+
+1.1.a Using the GUI for enabling Windows features:
+
+1. Open the Start Menu and search ***Turn Windows features on or off***
+
+2. Select ***Windows Subsystem for Linux***
+
+   ![img](https://i.imgur.com/a5PDpn8.png?4)
+
+3. Click ***OK***
+
+> **Note:** To only install [WSL 1](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-1), you should now restart your machine and move on to [**Step2:** Install Ubuntu distribution.](https://github-wiki-see.page/m/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)#step2-install-ubuntu-distribution)
+
+1.1.b Using PowerShell:
+
+1. Open [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6) as Administrator and run:
+
+```
+dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+```
+
+> **Note:** To only install [WSL 1](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-1), you should now restart your machine and move on to [**Step2:** Install Ubuntu distribution.](https://github-wiki-see.page/m/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)#step2-install-ubuntu-distribution)
+
+2. **Update to WSL 2 `(Optional)`**
+
+[WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2) is a new version of the architecture in WSL that changes how Linux distributions interact with Windows. WSL 2 has the primary goals of increasing file system performance and adding full system call compatibility. Each Linux distribution can run as WSL 1 or as WSL 2, and can be switched between at any time. WSL 2 is a major overhaul of the underlying architecture and uses virtualization technology and a Linux kernel to enable its new features.
+
+> **Note:** WSL 2 is only available in Windows 10, updated to version 2004, **Build 19041** or higher.
+
+2.1 Enable the 'Virtual Machine Platform' optional component:
+
+Before installing [WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2), you must enable the "Virtual Machine Platform" optional feature.
+
+1. Open [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6) as Administrator and run:
+
+```
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+
+1. **Restart** your computer when prompted
+
+2.2 Updating the WSL 2 Linux kernel:
+
+To manually update the Linux kernel inside of [WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2) please **download and install** the [Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi) for x64 machines.
+
+> **Note:** If you're using an ARM64 machine, please download the [ARM64 package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_arm64.msi) instead.
+
+2.3 Set WSL 2 as your default version:
+
+Once you have the kernel installed, please run the following command in [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6) to set [WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2) as the default version when installing a new Linux distribution:
+
+```
+wsl --set-default-version 2
+```
+
+> | **Additional Installation Resources**:                       |
+> | ------------------------------------------------------------ |
+> | [WSL1 Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/install-win10) from Microsoft |
+> | [WSL2 Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/wsl2-install) from Microsoft |
+> | [Windows Server Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/install-on-server) from Microsoft |
+
+
+
+#### Step2: Install Ubuntu distribution.
+
+1. **Installing Ubuntu on WSL**
+
+1.1.a Installing Ubuntu on WSL via the Microsoft Store: `(Recommended)`
+
+The following Ubuntu releases are available as apps on the Microsoft Store:
+
+- [Ubuntu](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6) (*without the release version*) always follows the **recommended** release, switching over to the next one when it gets the first point release.
+- [Ubuntu 20.04 LTS](https://www.microsoft.com/store/apps/9N6SVWS3RX71) (*Focal*) is the current LTS release, supporting both x64 and ARM64 architecture.
+- [Ubuntu 18.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-1804/9n9tngvndl3q) (*Bionic*) is the second LTS release and the first one supporting ARM64 systems, too.
+- [Ubuntu 16.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-1604/9pjn388hp8c9) (*Xenial*) is the first release available for WSL. It supports the x64 architecture only.
+
+Each app creates a separate root file system in which Ubuntu shells are opened but app updates don’t change the root file system afterwards. Installing a different app in parallel creates a different root file system allowing you to have both Ubuntu LTS releases installed and running in case you need it for keeping compatibility with other external systems. You can also upgrade your Ubuntu 16.04 to 18.04 by running `do-release-upgrade` and have three different systems running in parallel, separating production and sandboxes for experiments.
+
+1.1.b Installing Ubuntu on WSL via rootfs:
+
+Ubuntu WSL distribution rootfs daily builds are available for download:
+
+- [Ubuntu 20.04 LTS](https://cloud-images.ubuntu.com/focal/current/) (*Focal*)
+- [Ubuntu 19.10](https://cloud-images.ubuntu.com/eoan/current/) (*Eoan*)
+- [Ubuntu 18.04 LTS](https://cloud-images.ubuntu.com/bionic/current/) (*Bionic*)
+- [Ubuntu 16.04 LTS](https://cloud-images.ubuntu.com/xenial/current/) (*Xenial*)
+
+They can be installed using the [wsl](https://docs.microsoft.com/en-us/windows/wsl/reference) command:
+
+```
+wsl --import <DistributionName> <InstallLocation> <FileName>
+```
+
+1.1.c Installing Ubuntu on WSL by sideloading the `.appx`:
+
+Ubuntu WSL distribution .appx builds are available for download:
+
+- [Ubuntu 20.04 LTS](https://aka.ms/wslubuntu2004) (*Focal*)
+- [Ubuntu 20.04 LTS arm64](https://aka.ms/wslubuntu2004arm)
+- [Ubuntu 18.04 LTS](https://aka.ms/wsl-ubuntu-1804) (*Bionic*)
+- [Ubuntu 18.04 LTS arm64](https://aka.ms/wsl-ubuntu-1804-arm)
+- [Ubuntu 16.04 LTS](https://aka.ms/wsl-ubuntu-1604) (*Xenial*)
+
+They can be installed by enabling sideloading in Windows 10 and double-clicking the .appx and clicking Install or with [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6):
+
+```
+Add-AppxPackage .\Ubuntu_2004.2020.424.0_x64.appx
+```
+
+**2. Set up a new Ubuntu distribution on WSL**
+
+2.1 Starting Ubuntu on WSL:
+
+The Ubuntu on WSL terminal can be started via:
+
+- The app tile in the Windows Start menu (or pinned to your taskbar)
+- [WSL - Remote extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) for [Visual Studio Code](https://code.visualstudio.com/).
+- The [wsl](https://docs.microsoft.com/en-us/windows/wsl/reference) command on the Windows command prompt or [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6)
+- By running `ubuntu2004.exe`, etc. on the Windows command prompt or [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6)
+
+2.2 Create a user account and password:
+
+The first time you launch a newly installed Linux distribution, a console window will open and you'll be asked to wait for a minute or two for files to de-compress and be stored on your PC. All future launches should take less than a second.
+
+Once you have [installed Ubuntu on WSL](https://github-wiki-see.page/m/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)#1-installing-ubuntu-on-wsl), the first step you will be asked to complete when opening your newly installed Linux distribution is to create an account, including a **User Name** and **Password**.
+
+- This **User Name** and **Password** is specific to your Linux distribution and has no bearing on your Windows user name.
+- Once you create this **User Name** and **Password**, the account will be your default user for the distribution and automatically sign-in on launch.
+- This account will be considered the Linux administrator, with the ability to run `sudo` (Super User Do) administrative commands.
+- Each Linux distribution running on the Windows Subsystem for Linux has its own Linux user accounts and passwords. You will have to configure a Linux user account every time you add a distribution, reinstall, or reset.
+
+![Ubuntu unpacking in the Windows console](../images/all_in_one/ubuntuinstall.png)
+
+**2.3 Update and upgrade packages**
+
+Most distributions ship with an empty or minimal package catalog. We strongly recommend regularly updating your package catalog and upgrading your installed packages using your distribution's preferred package manager. For Ubuntu, use apt:
+
+```
+sudo apt update && sudo apt upgrade
+```
+
+Windows does not automatically update or upgrade your Linux distribution(s). This is a task that the most Linux users prefer to control themselves.
+
+#### Step3: Install ROS distribution.
+
+1. Choose a ROS distribution
+
+There is more than one ROS distribution supported at a time. Some are older releases with long term support, making them more stable, while others are newer with shorter support life times, but with binaries for more recent platforms and more recent versions of the ROS packages that make them up. See the [Distributions](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is--Robot-Operating-System-(ROS)%3F) page for more details.
+
+We recommend one of the versions below:
+
+| [ROS Kinetic Kame](http://wiki.ros.org/kinetic/Installation) | [ROS Melodic Morenia](http://wiki.ros.org/melodic/Installation) | [ROS Noetic Ninjemys](http://wiki.ros.org/noetic/Installation) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Released May, 2016**                                       | **Released May, 2018**                                       | **Released May, 2020**                                       |
+| *LTS, supported until April, 2021*                           | *LTS, supported until May, 2023*                             | ***Latest LTS*** *,supported until May, 2025*                |
+| `Isn't recommended for new installs`                         | `Recommended for Ubuntu 18.04`                               | `Recommended for Ubuntu 20.04`                               |
+|                                                              |                                                              |                                                              |
+
+2. Ubuntu install of ROS Noetic
+
+2.1 Setup your `sources.list`:
+
+Setup your computer to accept software from packages.ros.org.
+
+```
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+```
+
+2.2 Set up your keys:
+
+```
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+```
+
+> If you experience issues connecting to the keyserver, you can try substituting `hkp://pgp.mit.edu:80` or `hkp://keyserver.ubuntu.com:80` in the previous command.
+
+Alternatively, you can use curl instead of the apt-key command, which can be helpful if you are behind a proxy server:
+
+```
+curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xC1CF6E31E6BADE8868B172B4F42ED6FBAB17C654' | sudo apt-key add -
+```
+
+2.3 Installation:
+
+First, make sure your Debian package index is up-to-date:
+
+```
+sudo apt update
+```
+
+Now pick how much of ROS you would like to install.
+
+- **Desktop-Full Install: `(Recommended)`** : Everything in **Desktop** plus 2D/3D simulators and 2D/3D perception packages
+
+  ```
+  sudo apt install ros-noetic-desktop-full
+  ```
+
+- **Desktop Install:** Everything in **ROS-Base** plus tools like [rqt](http://wiki.ros.org/rqt) and [rviz](http://wiki.ros.org/rviz)
+
+  ```
+  sudo apt install ros-noetic-desktop
+  ```
+
+- **ROS-Base: (Bare Bones)** ROS packaging, build, and communication libraries. No GUI tools.
+
+  ```
+  sudo apt install ros-noetic-ros-base
+  ```
+
+> There are even more packages available in ROS. You can always install a specific package directly.
+>
+> ```
+> sudo apt install ros-noetic-PACKAGE
+> ```
+>
+> e.g.
+>
+> ```
+> sudo apt install ros-noetic-slam-gmapping
+> ```
+
+> To find available packages, see [ROS Index](https://index.ros.org/packages/page/1/time/#noetic) or use:
+>
+> ```
+> apt search ros-noetic
+> ```
+
+2.4 Environment setup
+
+You must source this script in every **bash** terminal you use ROS in.
+
+```
+source /opt/ros/noetic/setup.bash
+```
+
+It can be convenient to automatically source this script every time a new shell is launched. These commands will do that for you.
+
+**Bash**
+
+> **Note:** If you have more than one ROS distribution installed, `~/.bashrc` must only source the `setup.bash` for the version you are currently using.
+
+```
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+**zsh**
+
+```
+echo "source /opt/ros/noetic/setup.zsh" >> ~/.zshrc
+source ~/.zshrc
+```
+
+#### Step4: Test your installation.
+
+Now, to test your installation, A good way to check is to ensure that [environment variables](http://wiki.ros.org/ROS/EnvironmentVariables) like [ROS_ROOT](http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT) and [ROS_PACKAGE_PATH](http://wiki.ros.org/ROS/EnvironmentVariables#ROS_PACKAGE_PATH) are set:
+
+```
+printenv | grep ROS
+```
+
+If they are not then you might need to 'source' some setup.
+
+
+
+###
+
+```bash
+
+:: activate the ROS environment
+c:\opt\ros\noetic\x64\setup.bat
+
+:: create a empty workspace
+mkdir c:\catkin_ws\src
+cd c:\catkin_ws
+
+:: generate the released package sources list and its ROS dependencies
+:: you can customize the command line to checkout the sources from different channels
+:: see the tips section for more details
+rosinstall_generator <package_name> --deps --exclude RPP --tar --flat > pkg.rosinstall
+rosinstall_generator python-catkin-tools python-rosinstall python-rosinstall-generator python-wstool build-essential --deps --exclude RPP --tar --flat > pkg.rosinstall
+
+choco install python-catkin-tools python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+python-catkin-tools python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+# Installs the navigation stack.
+rosinstall_generator ros-noetic-navigation --deps --exclude RPP --tar --flat > pkg.rosinstall
+sudo apt-get install 
+# Installs the SLAM package.
+choco install ros-noetic-slam-gmapping ros-noetic-navigation
+
+
+
+:: you can manually edit the pkg.rosinstall for more customizations.
+:: see the tips section for more details
+
+:: checkout the sources for real
+vcs import --force src < pkg.rosinstall
+
+:: attempt to acquire the external dependencies
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+
+:: now catkin make to build the workspace
+catkin_make
+
+
+
+# Installs the navigation stack.
+sudo apt-get install ros-noetic-navigation
+# Installs the SLAM package.
+sudo apt-get install ros-noetic-slam-gmapping
+
+sudo apt-get update
+sudo apt-get upgrade
+
+# This will install the core packages of Turtlebot3.
+$ cd ~/catkin_ws/src/
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -b melodic-devel
+$ git clone  https://github.com/ROBOTIS-GIT/turtlebot3.git -b melodic-devel
+$ cd ~/catkin_ws && catkin_make
+
+# Install Turtlebot3 simulator
+$ cd ~/catkin_ws/src/
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+$ cd ~/catkin_ws && catkin_make
+
+# made the modification in .bashrch file as follows:
+vim ~/.bashrc
+# Making alias is optional but recommended to speed-up typing the commands.
+alias burger='export TURTLEBOT3_MODEL=burger'
+alias waffle='export TURTLEBOT3_MODEL=waffle'
+alias tb3fake='roslaunch turtlebot3_fake turtlebot3_fake.launch'
+alias tb3teleop='roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch'
+alias tb3='roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch'
+alias tb3maze='roslaunch turtlebot3_gazebo turtlebot3_world.launch'
+alias tb3house='roslaunch turtlebot3_gazebo turtlebot3_house.launch'
+
+# Reuired: At the end of the file, write the following commands. The last command will let you open Gazebo on a Virtual Machine and avoid crashing its display.
+source /opt/ros/noetic/setup.bash
+source /home/akoubaa/catkin_ws/devel/setup.bash
+export TURTLEBOT3_MODEL=waffle
+export SVGA_VGPU10=0
+
+```
+
+
+
+
+
+## Installation:
+
+!!! Use the bash script here to download directly, https://github.com/ROBOTIS-GIT/robotis_tools/blob/master/install_ros_melodic.sh
+
+ROS Noetic Installation in Ubuntu (Recommended for 20.04)
+
+- Follow this tutorial, [ROS Noetic Installation and Path Sourcing](https://www.youtube.com/watch?v=PowY8dV36DY)
 
 ROS Melodic Installation in Ubuntu 18.04 (recommended)
 
@@ -323,7 +1002,7 @@ $ catkin_make -DCATKIN_WHITELIST_PACKAGES=""
 
 
 
-## ROS Important Concept
+## ROS Important Concept (excerpted from ROS Robot Porgramming Book)
 
 **What is ROS**?
 
@@ -625,6 +1304,174 @@ that are used in the action. The connection between the action server and the cl
 
 
 
+### Chap 5 ROS Important Commands:
+
+
+
+**ROS Shell Commands:**
+
+![image-20211128145226872](../images/all_in_one/image-20211128145226872.png)
+
+**ROS Execution Commands:**
+
+![image-20211128145524987](../images/all_in_one/image-20211128145524987.png)
+
+rosclean: 
+
+- For checking and clearning ROS log file.
+
+The following is an example for examining the log usage.
+
+```bash
+$ rosclean check
+320K ROS node logs → This means the total usage for the ROS node is 320KB
+```
+
+When running ‘roscore’, if the following WARNING message appears, it means that the log file exceeds 1GB. If the system is running out of space for the log, clean up the space with
+`rosclean` command.
+
+`WARNING: disk usage in log directory [/xxx/.ros/log] is over 1GB.`
+
+The following is an example of deleting logs in the ROS log repository (it is `/home/rt/.ros/log` in this example). If you wish to delete, press the `y` key to proceed.
+
+```bash
+$ rosclean purge
+Purging ROS node logs.
+PLEASE BE CAREFUL TO VERIFY THE COMMAND BELOW!
+Okay to perform:
+rm -rf /home/pyo/.ros/log
+(y/n)?
+```
+
+
+
+**ROS information Commands:**
+
+![image-20211128145356901](../images/all_in_one/image-20211128145356901.png)
+
+
+
+**ROS Catkin Commands:**
+
+![image-20211128145329719](../images/all_in_one/image-20211128145329719.png)
+
+
+
+**ROS Package Command:**
+
+![image-20211128145311977](../images/all_in_one/image-20211128145311977.png)
+
+
+
+
+
+**ROS Communication Commands:**
+
+![image-20211128145145385](../images/all_in_one/image-20211128145145385.png)
+
+**rosnode:**
+
+![image-20211128150235743](../images/all_in_one/image-20211128150235743.png)
+
+**rostopic: ROS Topic**
+
+![image-20211128150345688](../images/all_in_one/image-20211128150345688.png)
+
+![image-20211128150419100](../images/all_in_one/image-20211128150419100.png)
+
+Example of rostopic pub:
+
+```bash
+# Let's see the communication topic that are running:
+$ rostopic list		
+/rosout
+/rosout_agg
+/statistics
+/turtle1/cmd_vel
+/turtle1/color_sensor
+/turtle1/pose
+
+# Now, we want to send some message in topic '/turtle1/cmd_vel' ==> But we first need to understand the data type for this topic, 
+$ rostopic type /turtle1/cmd_vel | rosmsg show
+geometry_msgs/Vector3 linear
+  float64 x
+  float64 y
+  float64 z
+geometry_msgs/Vector3 angular
+  float64 x
+  float64 y
+  float64 z
+
+# After understanding the data type, now, we can construct our message and send the command.
+# rostopic pub [topic] [msg_type] [args]
+$ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+```
+
+5.4.4. rosservice: ROS Service
+
+![image-20211128150932003](../images/all_in_one/image-20211128150932003.png)
+
+```bash
+# Close all nodes before running the example regarding ROS service. Then run ‘roscore’, ‘turtlesim_node’ and ‘turtle_teleop_key’ in different terminal windows by running the following commands.
+$ roscore
+$ rosrun turtlesim turtlesim_node
+$ rosrun turtlesim turtle_teleop_key
+
+# rosservice list: Display information of active services ==> This command displays information about the active services. All services that are in use in the same network will be displayed.
+$ rosservice list
+/clear
+/kill
+/reset
+/rosout
+/get_loggers
+/rosout
+/set_logger_level
+/spawn
+/teleop_turtle/get_loggers
+/teleop_turtle/set_logger_level
+/turtle1/set_pen
+/turtle1/teleport_absolute
+/turtle1/teleport_relative
+/turtlesim/get_loggers
+/turtlesim/set_logger_level
+
+# rosservice info [SERVICE_NAME]: Display information of a specific service. ==> The following is an example of checking the node name, URI, type, and parameter of the ‘/turtle1/set_pen’ service using the info option of ‘rosservice’
+$ rosservice info /turtle1/set_pen
+Node: /turtlesim
+URI: rosrpc://192.168.1.100:34715
+Type: turtlesim/SetPen
+Args: r g b width off
+
+# rosservice type [SERVICE_NAME]: Display service type ==> In the following example, we can see that the ‘/turtle1/set_pen’ service is the type of ‘turtlesim/SetPen’.
+$ rosservice type /turtle1/set_pen
+turtlesim/SetPen
+
+# rosservice find [SERVICE_TYPE]: Search services with a specific service type ==> The following example is a command to search for services with the type ‘turtlesim/SetPen’. We can see that the result is ‘/turtle1/set_pen’.
+$ rosservice find turtlesim/SetPen
+/turtle1/set_pen
+
+# rosservice uri [SERVICE_NAME]: Display the ROSRPC URI service ==> By using the uri option of ‘rosservice’, we can check the ROSRPC URI of the ‘/turtle1/set_pen’ service as shown below.
+$ rosservice uri /turtle1/set_pen
+rosrpc://192.168.1.100:50624
+
+# rosservice args [SERVICE_NAME]: Display the service parameters ==> Let us check each parameter of the ‘/turtle1/set_pen’ service as shown in the following example. Through this command, we can check that the parameters being used in the ‘/turtle1/set_pen’ service are ‘r’, ‘g’, ‘b’, ‘width’, and ‘off’.
+$ rosservice args /turtle1/set_pen
+r g b width off
+
+# rosservice call [SERViCE_NAME] [PARAMETER]: Request service with the input parameter ==> The following example is a command that requests the ‘/turtle1/set_pen’ service. The values ‘255 0 0 5 0’ correspond to the parameters (r, g, b, width, off) used for the ‘/turtle1/set_pen’ service. The value of ‘r’ which represents red has the maximum value of 255 while ‘g’ and ‘b’ are both ‘0’, so the color of the pen will be red. The ‘width’ is set to a thickness of 5, and ‘off’ is set to 0 (false), so the line will be displayed. ‘rosservice call’ is an extremely useful command that is used for testing when using a service, and is frequently used.
+$ rosservice call /turtle1/set_pen 255 0 0 5 0
+# Using the command above, we requested for a service that changes the properties of the pen used in turtlesim, and by ordering a command to move in ‘turtle_teleop_key’, we can see that the color of pen that was white is now displayed in red as below.
+
+```
+
+
+
+
+
+
+
+
+
 
 
 ### Message Communication
@@ -650,11 +1497,11 @@ Action:
 
 ![image-20211125235613518](../images/all_in_one/image-20211125235613518.png)
 
-
-
 Example:
 
 ![image-20211126000601948](../images/all_in_one/image-20211126000601948.png)
+
+
 
 
 
@@ -664,21 +1511,238 @@ Example:
 
 ### Beginner Level
 
+#### Installing and Configuring Your ROS Environment
+
+**Install ROS**
+Before starting these tutorials please complete installation as described in the ROS installation instructions.
+
+**Managing Your Environment**
+
+you are ever having problems finding or using your ROS packages make sure that you have your environment properly setup. A good way to check is to ensure that [environment variables](http://wiki.ros.org/ROS/EnvironmentVariables) like [ROS_ROOT](http://wiki.ros.org/ROS/EnvironmentVariables#ROS_ROOT) and [ROS_PACKAGE_PATH](http://wiki.ros.org/ROS/EnvironmentVariables#ROS_PACKAGE_PATH) are set:
+
+```
+$ printenv | grep ROS
+```
+
+If you just installed ROS from `apt` on Ubuntu then you will have setup.*sh files in '`/opt/ros/<distro>/`', and you could source them like so:
+
+```
+$ source /opt/ros/<distro>/setup.bash
+```
+
+**Create a ROS Workspace**
+
+Let's create and build a [catkin workspace](http://wiki.ros.org/catkin/workspaces):
+
+```bash
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/
+# Python 3 users in ROS Melodic and earlier: note, if you are building ROS from source to achieve Python 3 compatibility, and have setup your system appropriately (ie: have the Python 3 versions of all the required ROS Python packages installed, such as catkin) the first catkin_make command in a clean catkin workspace must be:
+$ catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
+
+# Additionally, if you look in your current directory you should now have a 'build' and 'devel' folder. Inside the 'devel' folder you can see that there are now several setup.*sh files. Sourcing any of these files will overlay this workspace on top of your environment. To understand more about this see the general catkin documentation: catkin. Before continuing source your new setup.*sh file:
+$ source devel/setup.bash
+
+# To make sure your workspace is properly overlayed by the setup script, make sure ROS_PACKAGE_PATH environment variable includes the directory you're in.
+$ echo $ROS_PACKAGE_PATH
+/home/youruser/catkin_ws/src:/opt/ros/kinetic/share
+```
+
+
+
+#### Navigating the ROS Filesystem
+
+This tutorial introduces ROS filesystem concepts, and covers using the roscd, rosls, and [rospack](http://wiki.ros.org/rospack) commandline tools.
+
+**Review**
+You may have noticed a pattern with the naming of the ROS tools:
+
+- rospack = ros + pack(age)
+- roscd = ros + cd
+- rosls = ros + ls
 
 
 
 
-1. Navigating the ROS Filesystem
 
-   This tutorial introduces ROS filesystem concepts, and covers using the roscd, rosls, and [rospack](http://wiki.ros.org/rospack) commandline tools.
+---
 
-2. Creating a ROS Package
+#### [Creating a ROS Package ](http://wiki.ros.org/ROS/Tutorials/CreatingPackage)+ [Building a ROS Package](http://wiki.ros.org/ROS/Tutorials/BuildingPackages)
 
-   This tutorial covers using [roscreate-pkg](http://wiki.ros.org/roscreate) or [catkin](http://wiki.ros.org/catkin) to create a new package, and [rospack](http://wiki.ros.org/rospack) to list package dependencies.
+This tutorial covers using [roscreate-pkg](http://wiki.ros.org/roscreate) or [catkin](http://wiki.ros.org/catkin) to create a new package, and [rospack](http://wiki.ros.org/rospack) to list package dependencies, and the toolchain to build a package.
 
-3. Building a ROS Package
+**File structure for a typical catkin packages:**
 
-   This tutorial covers the toolchain to build a package.
+```bash
+The recommended method of working with catkin packages is using a catkin workspace, but you can also build catkin packages standalone. A trivial workspace might look like this:
+
+workspace_folder/        -- WORKSPACE
+  src/                   -- SOURCE SPACE
+    CMakeLists.txt       -- 'Toplevel' CMake file, provided by catkin
+    package_1/
+      CMakeLists.txt     -- CMakeLists.txt file for package_1
+      package.xml        -- Package manifest for package_1
+    ...
+    package_n/
+      CMakeLists.txt     -- CMakeLists.txt file for package_n
+      package.xml        -- Package manifest for package_n
+```
+
+
+
+**Procedure:** 
+
+```bash
+# Step1: You should have created this in the Creating a Workspace Tutorial
+$ cd ~/catkin_ws/src
+
+# Step2: Now use the catkin_create_pkg script to create a new package called 'beginner_tutorials' which depends on std_msgs, roscpp, and rospy:
+# catkin_create_pkg <package_name> [depend1] [depend2] [depend3]
+$ catkin_create_pkg beginner_tutorials std_msgs rospy roscpp
+Created file beginner_tutorials/package.xml
+Created file beginner_tutorials/CMakeLists.txt
+Created folder beginner_tutorials/include/beginner_tutorials
+Created folder beginner_tutorials/src
+Successfully created files in /home/jetbot/catkin_ws/src/beginner_tutorials. Please adjust the values in package.xml.
+
+
+# Step3: Building a catkin workspace and sourcing the setup file in the catkin workspace:
+$ cd ~/catkin_ws
+catkin_make
+# To add the workspace to your ROS environment you need to source the generated setup file:
+$ . ~/catkin_ws/devel/setup.bash
+
+# Step 4: Checking First-order dependencies
+# When using catkin_create_pkg earlier, a few package dependencies were provided. These first-order dependencies can now be reviewed with the rospack tool.
+# $ rospack depends1 <package_name> 
+$ rospack depends1 beginner_tutorials 
+roscpp
+rospy
+std_msgs
+
+# As you can see, rospack lists the same dependencies that were used as arguments when running catkin_create_pkg. These dependencies for a package are stored in the package.xml file:
+$ roscd beginner_tutorials
+$ cat package.xml
+<package format="2">
+...
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+...
+</package>
+
+# Checking Indirect dependencies
+# In many cases, a dependency will also have its own dependencies. For instance, rospy has other dependencies.
+$ rospack depends1 rospy
+genpy
+roscpp
+rosgraph
+rosgraph_msgs
+roslib
+std_msgs
+
+# A package can have quite a few indirect dependencies. Luckily rospack can recursively determine all nested dependencies.
+$ rospack depends beginner_tutorials
+cpp_common
+rostime
+roscpp_traits
+roscpp_serialization
+catkin
+genmsg
+genpy
+message_runtime
+gencpp
+geneus
+gennodejs
+genlisp
+message_generation
+rosbuild
+rosconsole
+std_msgs
+rosgraph_msgs
+xmlrpcpp
+roscpp
+rosgraph
+ros_environment
+rospack
+roslib
+rospy
+
+# Step 5: Customizing Your Package
+# The generated package.xml should be in your new package. Now lets go through the new package.xml and touch up any elements that need your attention.
+
+# description tag
+ <description>The beginner_tutorials package</description>
+# maintainer tags
+<maintainer email="you@yourdomain.tld">Your Name</maintainer>
+# license tags
+ <license>BSD</license>
+# dependencies tags
+<!-- Use build_depend for packages you need at compile time: -->
+<build_depend>genmsg</build_depend>
+<!-- Use buildtool_depend for build tool packages: -->
+<buildtool_depend>catkin</buildtool_depend>
+<!-- Use exec_depend for packages you need at runtime: -->
+<exec_depend>python-yaml</exec_depend>
+<!-- Use test_depend for packages you need only for testing: -->
+<test_depend>gtest</test_depend>
+
+# Step 6: Building Packages with catkin_make
+# $ catkin_make [make_targets] [-DCMAKE_VARIABLES=...]
+
+$ catkin_make -DCMAKE_VARIABLES=""
+
+-- Build files have been written to: /home/jetbot/catkin_ws/build
+####
+#### Running command: "make -j4 -l4" in "/home/jetbot/catkin_ws/build"
+####
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target sketch_generate_messages_nodejs
+[  0%] Built target sketch_generate_messages_cpp
+[  0%] Built target sketch_generate_messages_py
+[  0%] Built target sketch_generate_messages_lisp
+[100%] Built target sketch_generate_messages_eus
+[100%] Built target sketch_generate_messages
+```
+
+Appendix
+
+```bash
+Appendix: Complicated package.xml
+<?xml version="1.0"?>
+<package format="2">
+  <name>beginner_tutorials</name>
+  <version>0.1.0</version>
+  <description>The beginner_tutorials package</description>
+
+  <maintainer email="you@yourdomain.tld">Your Name</maintainer>
+  <license>BSD</license>
+  <url type="website">http://wiki.ros.org/beginner_tutorials</url>
+  <author email="you@yourdomain.tld">Jane Doe</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+</package>
+```
+
+
+
+
+
+---
 
 #### Understanding ROS Nodes
 
@@ -735,6 +1799,8 @@ xmlrpc reply from http://aqy:42235/     time=1.127958ms
 
 
 
+---
+
 #### [Understanding ROS Topics](http://wiki.ros.org/ROS/Tutorials/UnderstandingTopics)
 
 This tutorial introduces ROS topics as well as using the [rostopic](http://wiki.ros.org/rostopic) and [rqt_plot](http://wiki.ros.org/rqt_plot) commandline tools.
@@ -747,9 +1813,18 @@ $ roscore
 
 # run turtlesim in a new terminal:
 $ rosrun turtlesim turtlesim_node
+failed to get the current screen resources
+[ INFO] [1638072023.930022732]: Starting turtlesim with node name /turtlesim
+[ INFO] [1638072023.962090265]: Spawning turtle [turtle1] at x=[5.544445], y=[5.544445], theta=[0.000000]
+QXcbConnection: XCB error: 170 (Unknown), sequence: 170, resource id: 90, major code: 146 (Unknown), minor code: 20
+
 
 # run turtle keyboard teleoperation in a new terminal, which allow us to drive the turtle around with
 $ rosrun turtlesim turtle_teleop_key
+jetbot@jetbot-desktop:~/catkin_ws$ rosrun turtlesim turtle_teleop_key
+Reading from keyboard
+---------------------------
+Use arrow keys to move the turtle. 'q' to quit.
 ```
 
 ##### **ROS Topics**
@@ -782,7 +1857,7 @@ $ rostopic
 bw    echo  find  hz    info  list  pub   type 
 ```
 
-##### Using rostopic echo
+**Using rostopic echo**
 
 `rostopic echo` shows the data published on a topic.
 
@@ -816,7 +1891,7 @@ Now let's look at `rqt_graph` again. Press the refresh button in the upper-left 
 
 
 
-##### Using rostopic list
+**Using rostopic list**
 
 `rostopic list` returns a list of all topics currently subscribed to and published.
 
@@ -861,6 +1936,24 @@ rostopic type [topic]
   ```bash
   $ rostopic type /turtle1/cmd_vel
   geometry_msgs/Twist
+  # <package dirctory>/<ROS message>
+  
+  jetbot@jetbot-desktop:/opt/ros/melodic/share/geometry_msgs/msg$ cat Twist.msg
+  # This expresses velocity in free space broken into its linear and angular parts.
+  Vector3  linear
+  Vector3  angular
+  
+  jetbot@jetbot-desktop:/opt/ros/melodic/share/geometry_msgs/msg$ cat Vector3.msg
+  # This represents a vector in free space.
+  # It is only meant to represent a direction. Therefore, it does not
+  # make sense to apply a translation to it (e.g., when applying a
+  # generic rigid transformation to a Vector3, tf2 will only apply the
+  # rotation). If you want your data to be translatable too, use the
+  # geometry_msgs/Point message instead.
+  
+  float64 x
+  float64 y
+  float64 z
   
   # We can look at the details of the message using rosmsg:
   $ rosmsg show geometry_msgs/Twist
@@ -874,6 +1967,32 @@ rostopic type [topic]
     float64 z
   ```
 
+  As we can see below, `geometry_msgs` represents the name of package directory, and `Twist `is the ROS message for file Twist.msg, which shown below:
+
+![image-20211128011300910](../images/all_in_one/image-20211128011300910.png)
+
+and the Vector3 is also an ROS message defined in Vector3.msg file, shown below:
+
+![image-20211128011552959](../images/all_in_one/image-20211128011552959.png)
+
+
+
+**msg File**
+
+The ‘msg’ file is the message file used by topics, with has the file extension of ‘*.msg’. The ‘Twist’ message in the ‘geometry_msgs’ described above is an example of message. Such msg file <u>consists of field types and field names</u>.
+
+![image-20211128010501602](../images/all_in_one/image-20211128010501602.png)
+
+**srv File**
+
+The ‘srv’ file is the message file used by services, with the file extension of ‘*.srv’. For example, the SetCameraInfo message in the ‘sensor_msgs’ described above is a typical srv file. The major difference from the msg file is that the series of three hyphens (---) serve as a delimiter; the upper message being the service request message and the lower message being the service response message.
+
+![image-20211128010629402](../images/all_in_one/image-20211128010629402.png)
+
+
+
+
+
 
 
 ROS_Robot_Programming – 4.3. Message:
@@ -886,7 +2005,7 @@ ROS_Robot_Programming – 4.3. Message:
 
 
 
-##### rostopic pub
+**rostopic pub**
 
 `rostopic pub` publishes data on to a topic currently advertised.
 
@@ -901,13 +2020,15 @@ rostopic pub [topic] [msg_type] [args]
 ```bash
 # rostopic pub [topic] [msg_type] [args]
 $ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+publishing and latching message for 3.0 seconds
 # rostopic pub -1 ==> publish one message then exit:
 # /turtle1/cmd_vel ==> the name of the topic to publish to:
 # geometry_msgs/Twist ==> the message type to use when publishing to the topic
 # -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'  ==> required arguments, with linear velocity value x=2.0, y=0.0, and z=0.0, and angular velocity value x=0.0, y=0.0, and z=1.8 
 
-$ rostopic pub /turt1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
+$ rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
 # -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]' ==>  keep moving at 1 Hz steady stream of commands
+
 ```
 
 The First command will send a single message to turtlesim telling it to move with a linear velocity of 2.0, and an angular velocity of 1.8 .
@@ -922,15 +2043,27 @@ We can also look at what is happening in `rqt_graph`. Press the refresh button i
 
 ![rqt_graph_pub.png](../images/all_in_one/UnderstandingTopicsaction=AttachFile&do=get&target=rqt_graph_pub.png)
 
-As you can see the turtle is running in a continuous circle. In a **new terminal**, we can use `rostopic echo` to see the data published by our turtlesim:
+As you can see the turtle is running in a continuous circle. In a <u>new terminal,</u> we can use `rostopic echo` to see the data published by our turtlesim:
 
+```bash
+$ rostopic echo /turtle1/pose
+x: 6.24901485443
+y: 5.80964660645
+theta: 0.691200017929
+linear_velocity: 0.0
+angular_velocity: 0.0
+---
+x: 6.24901485443
+y: 5.80964660645
+theta: 0.691200017929
+linear_velocity: 0.0
+angular_velocity: 0.0
+---
 ```
-rostopic echo /turtle1/pose
-```
 
 
 
-##### Using rostopic hz
+**Using rostopic hz**
 
 `rostopic hz` reports the rate at which data is published.
 
@@ -963,7 +2096,7 @@ average rate: 59.463
 
 `rqt_plot` displays a scrolling time plot of the data published on topics. Here we'll use `rqt_plot` to plot the data being published on the `/turtle1/pose` topic. First, start rqt_plot by typing
 
-```
+```bash
 $ rosrun rqt_plot rqt_plot
 ```
 
@@ -971,7 +2104,11 @@ in a new terminal. In the new window that should pop up, a text box in the upper
 
 ![rqt_plot.png](../images/all_in_one/UnderstandingTopicsaction=AttachFile&do=get&target=rqt_plot.png)
 
+Pressing the minus button shows a menu that allows you to hide the specified topic from the plot. Hiding both the topics you just added and adding `/turtle1/pose/theta` will result in the plot shown in the next figure.
 
+![rqt_plot2.png](../images/all_in_one/UnderstandingTopicsaction=AttachFile&do=get&target=rqt_plot2.png)
+
+That's it for this section, use `Ctrl-C` to kill the `rostopic` terminals but keep your turtlesim running.
 
 
 
@@ -1034,9 +2171,16 @@ $ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.
 # /turtle1/cmd_vel ==> the name of the topic to publish to:
 # geometry_msgs/Twist ==> the message type to use when publishing to the topic
 # -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'  ==> required arguments, with linear velocity value x=2.0, y=0.0, and z=0.0, and angular velocity value x=0.0, y=0.0, and z=1.8 
+$ rostopic pub  -r 1 /turtle1/cmd_vel geometry_msgs/Twist '{linear: {x: -100.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 50.0}}'
+# rostopic pub  -r 5 ==> publish five message then exit:
+# /turtle1/cmd_vel ==> the name of the topic to publish to:
+# geometry_msgs/Twist ==> the message type to use when publishing to the topic
+# '{linear: {x: -0.9, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.5}}'  ==> with json format, moving in x axis with 0.9 velocity, and in backward direction and counter-clockwise.
 
 $ rostopic pub /turt1/cmd_vel geometry_msgs/Twist -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
 # -r 1 -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]' ==>  keep moving at 1 Hz steady stream of commands
+# Or with yam format
+$ rostopic pub /turtle1/cmd_vel geometry_msgs/Twist -r 1 -- '{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'
 
 
 # In a new terminal, we can use rostopic echo to see the real-time command_velocity data being published on a topic, in a new terminal, run:
@@ -1067,6 +2211,12 @@ average rate: 16.485
 average rate: 15.658
         min: 0.015s max: 0.206s std dev: 0.07571s window: 29
 average rate: 15.525
+
+# Note about turtlesim:
+# ==> For velocity, you can move in x and y direction, but no in z direction ==> Because this is a 2D plane
+# ==> For angular vel, you only can control z, because it's a 2D plane, thinking a arrow pointing outward!!!
+$ rostopic pub  -r 1 /turtle1/cmd_vel geometry_msgs/Twist '{linear: {x: 0.9, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 5.0}}'  # ==> moving clockwise and forward direction
+$ rostopic pub  -r 10 /turtle1/cmd_vel geometry_msgs/Twist '{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: -5.0}}'  # ==>  Rotate clockwise
 ```
 
 You will see it’s running in a circle:
@@ -1075,63 +2225,517 @@ You will see it’s running in a circle:
 
 
 
-2. Understanding ROS Services and Parameters
+##### More Fun about ROS Turtlesim
 
-   This tutorial introduces ROS services, and parameters as well as using the [rosservice](http://wiki.ros.org/rosservice) and [rosparam](http://wiki.ros.org/rosparam) commandline tools.
+![img](../images/all_in_one/Project-1-scaled.jpg)
 
-3. Using rqt_console and roslaunch
+**Snake Game using ROS Turtlesim**
+
+**Project: Turtle-Sketch**
+
+- In this project, the image on the left is taken as input and the image on the right is obtained as output by using turtlesim
+
+[![Output](https://github.com/Shilpaj1994/TurtleSim-Sketch/raw/master/sketch/docs/Output.png)](https://github.com/Shilpaj1994/TurtleSim-Sketch/blob/master/sketch/docs/Output.png)
+
+```bash
+# Download the packages
+git clone https://github.com/Shilpaj1994/TurtleSim-Sketch.git
+catkin_make -DCATKIN_WHITELIST_PACKAGES="orb_slam2_ros"
+# Move sketch, image_thresholding, and dynamic-reconfigure-no
+tic-devel to ROS_ws/src
+
+# Build the workspace
+catkin_make -DCATKIN_WHITELIST_PACKAGES="sketch;image_thresholding; dynamic_reconfigure"
+source ~/catkin_ws/devel/setup.bash
+
+```
+
+
+
+---
+
+#### [Understanding ROS Services and Parameters]()
+
+This tutorial introduces ROS services, and parameters as well as using the [rosservice](http://wiki.ros.org/rosservice) and [rosparam](http://wiki.ros.org/rosparam) commandline tools.
+
+- [**msg**](http://wiki.ros.org/msg): msg files are <u>simple text files that describe the fields of a ROS message</u>. They are used to generate source code for messages in different languages.
+- [**srv**](http://wiki.ros.org/srv): an srv file <u>describes a service</u>. It is <u>composed of two parts: a request and a response</u>.
+
+msg files are stored in the `msg` directory of a package, and srv files are stored in the `srv` directory.
+
+**msgs** are just <u>simple text files with a field type and field name per line</u>. The field types you can use are:
+
+- int8, int16, int32, int64 (plus uint*)
+- float32, float64
+- string
+- time, duration
+- other msg files
+- variable-length array[] and fixed-length array[C]
+
+Here is an example of Twist message that we saw previously:
+
+```bash
+jetbot@jetbot-desktop:/opt/ros/melodic/share/geometry_msgs/msg$ cat Twist.msg
+# This expresses velocity in free space broken into its linear and angular parts.
+Vector3  linear
+Vector3  angular
+```
+
+There is also a <u>special type in ROS</u>: `Header`, the **header** <u>contains a timestamp and coordinate frame information</u> that are commonly used in ROS. You will frequently see the first line in a msg file have `Header header`.
+
+Here is an example of a msg that uses a Header, a string primitive, and two other msgs :
+
+```
+  Header header
+  string child_frame_id
+  geometry_msgs/PoseWithCovariance pose
+  geometry_msgs/TwistWithCovariance twist
+```
+
+**srv files** are just like msg files, except they contain two parts: <u>a request and a response.</u> The two parts are separated by a '---' line. Here is an example of a srv file:
+
+```
+int64 A
+int64 B
+---
+int64 Sum
+```
+
+In the above example, <u>`A` and `B` are the request, and `Sum` is the response</u>.
+
+##### Using msg
+
+**Creating a msg**
+
+Step 1: Define a new msg in the package that was created in the previous tutorial.
+
+```bash
+$ roscd beginner_tutorials
+$ mkdir msg
+$ echo "int64 num" > msg/Num.msg
+```
+
+The example `.msg` file above contains only 1 line. You can, of course, create a more complex file by adding multiple elements, one per line, like this:
+
+```
+string first_name
+string last_name
+uint8 age
+uint32 score
+```
+
+
+
+Step2: There's one more step, though. We need to make sure that the msg files are turned into source code for C++, Python, and other languages. Open `package.xml`, and make sure these two lines are in it and [uncommented](http://www.htmlhelp.com/reference/wilbur/misc/comment.html):
+
+```
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+```
+
+Note that at build time, we need "message_generation", while at runtime, we only need "message_runtime". 
+
+
+
+Step 3: Open `CMakeLists.txt` in your favorite text editor ([rosed](http://wiki.ros.org/ROS/Tutorials/UsingRosEd) from the previous tutorial is a good option). Add the `message_generation` dependency to the `find_package` call which already exists in your `CMakeLists.txt` so that you can generate messages. You can do this by simply adding `message_generation` to the list of `COMPONENTS` such that it looks like this:
+
+```
+# Do not just add this to your CMakeLists.txt, modify the existing text to add message_generation before the closing parenthesis
+find_package(catkin REQUIRED COMPONENTS
+   roscpp
+   rospy
+   std_msgs
+   message_generation
+)
+```
+
+You may notice that sometimes your project builds fine even if you did not call `find_package` with all dependencies. This is because catkin combines all your projects into one, so if an earlier project calls `find_package`, yours is configured with the same values. But forgetting the call means your project can easily break when built in isolation.
+
+Also make sure you export the message runtime dependency.
+
+```
+catkin_package(
+  ...
+  CATKIN_DEPENDS message_runtime ...
+  ...)
+```
+
+Find the following block of code:
+
+```
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
+```
+
+Uncomment it by removing the `#` symbols and then replace the stand in `Message*.msg` files with your `.msg` file, such that it looks like this:
+
+```
+add_message_files(
+  FILES
+  Num.msg
+)
+```
+
+By adding the .msg files manually, we make sure that CMake knows when it has to reconfigure the project after you add other .msg files.
+
+Now we must ensure the `generate_messages()` function is called.
+
+*For ROS Hydro and later,* you need to uncomment these lines:
+
+```
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
+```
+
+- so it looks like:
+
+  ```
+  generate_messages(
+    DEPENDENCIES
+    std_msgs
+  )
+  ```
+
+*In earlier versions,* you may just need to uncomment one line:
+
+```
+generate_messages()
+```
+
+Now you're ready to generate source files from your msg definition. If you want to do so right now, skip next sections to [Common step for msg and srv](http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv#Common_step_for_msg_and_srv).
+
+
+
+**Using rosmsg**
+
+That's all you need to do to create a msg. Let's make sure that ROS can see it using the `rosmsg show` command.
+
+Usage:
+
+```bash
+$ rosmsg show [message type]
+```
+
+Example:
+
+```bash
+$ rosmsg show beginner_tutorials/Num
+```
+
+You will see:
+
+```
+int64 num
+```
+
+In the previous example, the message type consists of two parts:
+
+- `beginner_tutorials` -- the package where the message is defined
+- `Num` -- The name of the msg `Num`.
+
+If you can't remember which Package a msg is in, you can leave out the package name. Try:
+
+```bash
+$ rosmsg show Num
+```
+
+You will see:
+
+```bash
+[beginner_tutorials/Num]:
+int64 num
+```
+
+
+
+##### Using srv
+
+**Creating a srv**
+
+Let's use the package we just created to create a srv:
+
+```bash
+$ roscd beginner_tutorials
+$ mkdir srv
+```
+
+Instead of creating a new srv definition by hand, we will copy an existing one from another package. For that, `roscp` is a useful commandline tool for copying files from one package to another.
+
+Usage:
+
+```bash
+$ roscp [package_name] [file_to_copy_path] [copy_path]
+```
+
+Now we can copy a service from the [rospy_tutorials](http://wiki.ros.org/rospy_tutorials) package:
+
+```bash
+$ roscp rospy_tutorials AddTwoInts.srv srv/AddTwoInts.srv
+```
+
+There's one more step, though. We need to make sure that the srv files are turned into source code for C++, Python, and other languages.
+
+Unless you have done so already, open `package.xml`, and make sure these two lines are in it and [uncommented](http://www.htmlhelp.com/reference/wilbur/misc/comment.html):
+
+```
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+```
+
+As before, note that at build time, we need "message_generation", while at runtime, we only need "message_runtime".
+
+Unless you have done so already for messages in the previous step, add the `message_generation` dependency to generate messages in `CMakeLists.txt`:
+
+```
+# Do not just add this line to your CMakeLists.txt, modify the existing line
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  message_generation
+)
+```
+
+(Despite its name, `message_generation` works for both `msg` and `srv`.)
+
+Also you need the same changes to package.xml for services as for messages, so look above for the additional dependencies required.
+
+Remove `#` to uncomment the following lines:
+
+```
+# add_service_files(
+#   FILES
+#   Service1.srv
+#   Service2.srv
+# )
+```
+
+And replace the placeholder `Service*.srv` files for your service files:
+
+```
+add_service_files(
+  FILES
+  AddTwoInts.srv
+)
+```
+
+Now you're ready to generate source files from your service definition. If you want to do so right now, skip next sections to [Common step for msg and srv](http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv#Common_step_for_msg_and_srv).
+
+
+
+##### Using rossrv
+
+That's all you need to do to create a srv. Let's make sure that ROS can see it using the `rossrv show` command.
+
+Usage:
+
+```bash
+$ rossrv show <service type>
+```
+
+Example:
+
+```bash
+$ rossrv show beginner_tutorials/AddTwoInts
+```
+
+You will see:
+
+```
+int64 a
+int64 b
+---
+int64 sum
+```
+
+Similar to `rosmsg`, you can find service files like this without specifying package name:
+
+```
+$ rossrv show AddTwoInts
+[beginner_tutorials/AddTwoInts]:
+int64 a
+int64 b
+---
+int64 sum
+
+[rospy_tutorials/AddTwoInts]:
+int64 a
+int64 b
+---
+int64 sum
+```
+
+Here, two services are shown. The first is the one you just created in the beginner_tutorials package, and the second is the pre-existing one from the rospy_tutorials package.
+
+
+
+##### Common step for msg and srv
+
+Unless you have already done this in the previous steps, change in `CMakeLists.txt`. :
+
+```
+# generate_messages(
+#   DEPENDENCIES
+# #  std_msgs  # Or other packages containing msgs
+# )
+```
+
+Uncomment it and add any packages you depend on which contain `.msg` files that your messages use (in this case `std_msgs`), such that it looks like this:
+
+```
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+```
+
+Now that we have made some new messages we need to make our package again:
+
+```bash
+# In your catkin workspace
+$ roscd beginner_tutorials
+$ cd ../..
+$ catkin_make
+$ cd -
+```
+
+Any .msg file in the msg directory will generate code for use in all supported languages. The C++ message header file will be generated in `~/catkin_ws/devel/include/beginner_tutorials/`. The Python script will be created in `~/catkin_ws/devel/lib/python2.7/dist-packages/beginner_tutorials/msg`. The lisp file appears in `~/catkin_ws/devel/share/common-lisp/ros/beginner_tutorials/msg/`.
+
+Similarly, any .srv files in the srv directory will have generated code in supported languages. For C++, this will generate header files in the same directory as the message header files. For Python and Lisp, there will be an 'srv' folder beside the 'msg' folders.
+
+The full specification for the message format is available at the [Message Description Language](http://wiki.ros.org/ROS/Message_Description_Language) page.
+
+If you are building C++ nodes which use your new messages, you will also need to declare a dependency between your node and your message, as described in the [catkin msg/srv build documentation](http://docs.ros.org/latest/api/catkin/html/howto/format2/building_msgs.html).
+
+
+
+**Getting Help**
+
+We've seen quite a few ROS tools already. It can be difficult to keep track of what arguments each command requires. Luckily, most ROS tools provide their own help.
+
+Try:
+
+```
+$ rosmsg -h
+```
+
+- You should see a list of different `rosmsg` subcommands.
+
+  ```
+  Commands:
+    rosmsg show     Show message description
+    rosmsg list     List all messages
+    rosmsg md5      Display message md5sum
+    rosmsg package  List messages in a package
+    rosmsg packages List packages that contain messages
+  ```
+
+You can also get help for subcommands
+
+```
+$ rosmsg show -h
+```
+
+- This shows the arguments that are needed for rosmsg show:
+
+```
+Usage: rosmsg show [options] <message type>
+
+Options:
+  -h, --help  show this help message and exit
+  -r, --raw   show raw message text, including comments
+```
+
+##### **Review**
+
+Let's just list some of the commands we've used so far:
+
+- rospack = ros+pack(age) : provides information related to ROS packages
+- roscd = ros+cd : **c**hanges **d**irectory to a ROS package or stack
+- rosls = ros+ls : **l**ist**s** files in a ROS package
+- roscp = ros+cp : **c**o**p**ies files from and to a ROS package
+- rosmsg = ros+msg : provides information related to ROS message definitions
+- rossrv = ros+srv : provides information related to ROS service definitions
+- catkin_make : makes (compiles) a ROS package
+  - rosmake = ros+make : makes (compiles) a ROS package (if you're not using a catkin workspace)
+
+
+
+
+
+
+
+```bash
+# ROS Services
+# Services are another way that nodes can communicate with each other. Services allow nodes to send a request and receive a response.
+```
+
+
+
+
+
+
+
+
+
+1. Using rqt_console and roslaunch
 
    This tutorial introduces ROS using [rqt_console](http://wiki.ros.org/rqt_console) and [rqt_logger_level](http://wiki.ros.org/rqt_logger_level) for debugging and [roslaunch](http://wiki.ros.org/roslaunch) for starting many nodes at once. If you use `ROS fuerte` or ealier distros where [rqt](http://wiki.ros.org/rqt) isn't fully available, please see this page with [this page](http://wiki.ros.org/ROS/Tutorials/UsingRxconsoleRoslaunch) that uses old `rx` based tools.
 
-4. Using rosed to edit files in ROS
+2. Using rosed to edit files in ROS
 
    This tutorial shows how to use [rosed](http://wiki.ros.org/rosbash) to make editing easier.
 
-5. Creating a ROS msg and srv
+3. Creating a ROS msg and srv
 
    This tutorial covers how to create and build msg and srv files as well as the [rosmsg](http://wiki.ros.org/rosmsg), rossrv and roscp commandline tools.
 
-6. Writing a Simple Publisher and Subscriber (C++)
+4. Writing a Simple Publisher and Subscriber (C++)
 
    This tutorial covers how to write a publisher and subscriber node in C++.
 
-7. Writing a Simple Publisher and Subscriber (Python)
+5. Writing a Simple Publisher and Subscriber (Python)
 
    This tutorial covers how to write a publisher and subscriber node in python.
 
-8. Examining the Simple Publisher and Subscriber
+6. Examining the Simple Publisher and Subscriber
 
    This tutorial examines running the simple publisher and subscriber.
 
-9. Writing a Simple Service and Client (C++)
+7. Writing a Simple Service and Client (C++)
 
    This tutorial covers how to write a service and client node in C++.
 
-10. Writing a Simple Service and Client (Python)
+8. Writing a Simple Service and Client (Python)
 
-    This tutorial covers how to write a service and client node in python.
+   This tutorial covers how to write a service and client node in python.
 
-11. Examining the Simple Service and Client
+9. Examining the Simple Service and Client
 
-    This tutorial examines running the simple service and client.
+   This tutorial examines running the simple service and client.
 
-12. Recording and playing back data
+10. Recording and playing back data
 
     This tutorial will teach you how to record data from a running ROS system into a .bag file, and then to play back the data to produce similar behavior in a running system
 
-13. Reading messages from a bag file
+11. Reading messages from a bag file
 
     Learn two ways to read messages from desired topics in a bag file, including using the `ros_readbagfile` script.
 
-14. Getting started with roswtf
+12. Getting started with roswtf
 
     Basic introduction to the [roswtf](http://wiki.ros.org/roswtf) tool.
 
-15. Navigating the ROS wiki
+13. Navigating the ROS wiki
 
     This tutorial discusses the layout of the ROS wiki ([wiki.ros.org](http://wiki.ros.org/Documentation)) and talks about how to find what you want to know.
 
-16. Where Next?
+14. Where Next?
 
     This tutorial discusses options for getting to know more about using ROS on real or simulated robots.
 
@@ -1181,6 +2785,217 @@ More client API tutorials can be found in the relevant package ([roscpp](http://
 
 
 
+### [rosbash Overview:](http://wiki.ros.org/rosbash)
+
+**Command line utilities**
+
+`rosbash` includes the following command line utilities:
+
+- [roscd](http://wiki.ros.org/rosbash#roscd) - change directory starting with package, stack, or location name
+- [rospd](http://wiki.ros.org/rosbash#rospd) - `pushd` equivalent of `roscd`
+- [rosd](http://wiki.ros.org/rosbash#rosd) - lists directories in the directory-stack
+- [rosls](http://wiki.ros.org/rosbash#rosls) - list files of a ros package
+- [rosed](http://wiki.ros.org/rosbash#rosed) - edit a file in a package
+- [roscp](http://wiki.ros.org/rosbash#roscp) - copy a file from a package
+- [rosrun](http://wiki.ros.org/rosbash#rosrun) - run executables of a ros package
+
+
+
+**roscd**
+
+`roscd` allows you to change directories using a package name, stack name, or special location.
+
+Usage:
+
+```bash
+$ roscd <package-or-stack>[/subdir]
+# For example:
+$ roscd roscpp
+```
+
+You can continue to use a relative path after the package name to go further into the package:
+
+```
+roscd roscpp/include/ros
+```
+
+`roscd` without argument will take you to `$ROS_WORKSPACE`.
+
+Additionally, the `ROS_LOCATIONS` environment variable can be used to add additional special locations for use with `roscd`. `ROS_LOCATIONS` is <u>a colon-separated list of `key=path` pairs.</u>
+
+For example, adding the following to your `.bashrc` file:
+
+```
+export ROS_LOCATIONS="pkgs=~/ros/pkgs:dev=~/ros/dev"
+```
+
+Will then allow you to type:
+
+```
+$ roscd dev
+```
+
+and end up in `~/ros/dev`.
+
+**roscp**
+
+`roscp` allows you to conveniently copy a file from a package. Similar to `rosed` you can specify any file in the package regardless of hierarchy.
+
+For example:
+
+```
+$ roscp roscpp_tutorials talker.cpp .
+```
+
+Will end up copying the file from `~/ros/pkgs/ros_tutorials/roscpp_tutorials/talker/talker.cpp` to current directory.
+
+
+
+**rosls**
+
+`rosls` allows you to view the contents of a package, stack, or location.
+
+For example:
+
+```bash
+$ rosls roscpp
+cmake  msg  package.xml  rosbuild  srv
+$ rosls roscpp/rosbuild
+roscpp.cmake  scripts
+$ rosls roscpp/rosbuild/scripts
+genmsg_cpp.py  gensrv_cpp.py  msg_gen.py
+```
+
+
+
+**rosed**
+
+`rosed` allows you to easily edit files in a ROS package by typing the package name and the name of the file you want to edit:
+
+```bash
+$ rosed roscpp_tutorials add_two_ints_server.cpp
+```
+
+Note: you can specify ANY file in a package, including those further down within the file hierarchy. If you specify an ambiguous file you will be prompted to select one.
+
+For example:
+
+```bash
+$ rosed roscpp CMakeLists.txt
+You have chosen a non-unique filename, please pick one of the following:
+1) ~/ros/ros/core/roscpp/test/CMakeLists.txt
+2) ~/ros/ros/core/roscpp/CMakeLists.txt
+3) ~/ros/ros/core/roscpp/src/CMakeLists.txt
+4) ~/ros/ros/core/roscpp/src/libros/CMakeLists.txt
+#?
+```
+
+The default editor for rosed is vim. To use a different editor, set the `EDITOR` environment variable. E.g., in your ~/.bashrc:
+
+```bash
+export EDITOR='emacs -nw'
+```
+
+This example makes emacs the default editor.
+
+You also can change the editor for one `rosed` call on the fly:
+
+```bash
+EDITOR=geany rosed rosbash rosbash
+```
+
+
+
+**rosrun**
+
+`rosrun` allows you to run an executable in an arbitrary package from anywhere without having to give its full path or `cd`/`roscd` there first.
+
+Usage:
+
+```bash
+rosrun <package> <executable>
+# Example:
+rosrun roscpp_tutorials talker
+```
+
+It's also possible to pass a `~parameter` using the following syntax (replace the `~` with an `_`):
+
+```
+rosrun package node _parameter:=value
+```
+
+Example:
+
+```
+rosrun my_package my_node _my_param:=value
+```
+
+...or run with a given name:
+
+```
+rosrun package node __name:=name
+```
+
+Example:
+
+```
+rosrun my_package my_node __name:=my_name
+```
+
+For more information about remapping, see: [Remapping Arguments](https://wiki.ros.org/Remapping Arguments)
+
+Starting in Indigo, rosrun has a `--prefix` option which can be used to run a node in gdb or valgrind. Example:
+
+```
+rosrun --prefix 'gdb -ex run --args' my_package my_node
+```
+
+For more example prefixes, see: [Roslaunch Nodes in Valgrind or GDB](http://wiki.ros.org/roslaunch/Tutorials/Roslaunch Nodes in Valgrind or GDB)
+
+
+
+
+
+**Tab Completion**
+
+`rosbash` enables tab-completion for its own tools and for a number of other ros utilities: [rosmake](http://wiki.ros.org/rosmake), [roslaunch](http://wiki.ros.org/roslaunch), [rosparam](http://wiki.ros.org/rosparam), [rosnode](http://wiki.ros.org/rosnode), [rostopic](http://wiki.ros.org/rostopic), [rosservice](http://wiki.ros.org/rosservice), [rosmsg](http://wiki.ros.org/rosmsg), [rossrv](http://wiki.ros.org/rossrv), [rosbag](http://wiki.ros.org/rosbag).
+
+
+
+
+
+
+
+### Learning tf – [Tutorials](http://wiki.ros.org/tf/Tutorials)
+
+#### [Introduction to tf](http://wiki.ros.org/tf/Tutorials/Introduction to tf)
+
+Coordinate Transformation (TF)
+
+
+
+1. Writing a tf broadcaster (Python)
+
+   This tutorial teaches you how to broadcast the state of a robot to tf.
+
+2. Writing a tf listener (Python)
+
+   This tutorial teaches you how to use tf to get access to frame transformations.
+
+3. Adding a frame (Python)
+
+   This tutorial teaches you how to add an extra fixed frame to tf.
+
+4. Learning about tf and time (Python)
+
+   This tutorial teaches you to use the `waitForTransform` function to wait for a transform to be available on the `tf` tree.
+
+5. Time travel with tf (Python)
+
+   This tutorial teaches you about advanced time travel features of tf
+
+
+
 ROS2 Galactic Installation in WIndows:
 
 - If you are a window user, follow this tutorial, [Building ROS 2 on Windows](http://docs.ros.org/en/galactic/Installation/Windows-Development-Setup.html)
@@ -1225,6 +3040,12 @@ rosdep install --from-paths src --ignore-src -r -y
 
 ## Udemy: [ROS for Beginners: Basics, Motion, and OpenCV](https://www.udemy.com/course/ros-essentials/)
 
+Resource:
+
+- Course Slide, [Github Robot-Operating-System-Udemy/Slides/](https://github.com/MrinmoiHossain/Robot-Operating-System-Udemy/tree/master/Slides)
+
+
+
 ### Intro, Installation, Env Setup, and Test code
 
 #### Installation
@@ -1240,6 +3061,91 @@ rosdep install --from-paths src --ignore-src -r -y
  1130  cd catkin_ws/
  1134  catkin_make
 ```
+
+
+
+#### Creating ROS workspace
+
+```bash
+# Managing Your Environment
+$ printenv | grep ROS
+# ROS_ETC_DIR=/opt/ros/melodic/etc/ros
+# ROS_ROOT=/opt/ros/melodic/share/ros
+# ROS_MASTER_URI=http://localhost:11311
+# ROS_VERSION=1
+# ROS_PYTHON_VERSION=2
+# ROS_PACKAGE_PATH=/opt/ros/melodic/share
+# ROSLISP_PACKAGE_DIRECTORIES=
+# ROS_DISTRO=melodic
+
+source /opt/ros/melodic/setup.sh
+
+# Create a ROS Workspace
+mkdir -p ~/catkin_ws/src
+# mkdir -p: create a directory with a sub-dir inside of it
+cd src
+catkin_init_workspace
+# Initialize a new workspace  ==> It will create CMakeLists.txt, and the symlink point to catkin_make cmake tools
+printf "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+cd ~/catkin_ws
+catkin_make
+source ~/catkin_ws/devel/setup.bash
+
+# Checking ROS & Gazebo Versions
+# On Ubunutu 16.04, you should have ROS Kinetic with Gazebo 7, whereas on Ubuntu 18.04, you should have ROS Melodic with Gazebo 9
+rosversion -d
+gazebo -v
+```
+
+Configuring Your ROS Environment (Optional)
+
+```bash
+$ export ROS_HOSTNAME=localhost
+$ export ROS_MASTER_URI=http://localhost:11311	# Default port, just FYI
+```
+
+
+
+####  Creating ROS packages
+
+```bash
+cd ~/catkin_ws/src
+catkin_create_pkg ros_basics_tutorial std_msgs rospy roscpp	# catkin_create_pkg <pkg_name> <dependencies...>
+cd ..
+ckin_make
+cd ~/catkin_ws/src
+ls
+# Then you will see the package that you created for your project
+
+# ...
+# After you made some change, e.g., add some files(node) to the src, and you can call `catkin_make` to compile them and generate executable.
+catkin_make
+```
+
+
+
+Error:
+
+```bash
+-- ros_essentials_cpp: 8 messages, 1 services
+CMake Warning at /opt/ros/melodic/share/catkin/cmake/catkin_package.cmake:166 (message):
+  catkin_package() DEPENDS on 'system_lib' but neither
+  'system_lib_INCLUDE_DIRS' nor 'system_lib_LIBRARIES' is defined.
+Call Stack (most recent call first):
+```
+
+Solu: 
+
+https://get-help.robotigniteacademy.com/t/catkin-package-depends-on-the-catkin-package-other-catkin-pkg-which-must-therefore-be-listed-as-a-run-dependency-in-the-package-xml-help-needed-with-unit-6-on-services-in-ros-servers-messages/8237/2
+
+Because you have multiple package and you want to catkin on a new package. it’s a good idea to specify the package you want to build with.
+
+```bash
+catkin_make --only-pkg-with-deps ros_basics_tutorial
+catkin_make -DCATKIN_WHITELIST_PACKAGES="orb_slam2_ros"
+```
+
+
 
 
 
@@ -1316,7 +3222,9 @@ Solu:
 
 
 
-#### Testing your installation with C++ nodes
+#### Demo of Talker & listener nodes
+
+**Talker & listener with C++ nodes**
 
 
 ```bash
@@ -1329,7 +3237,9 @@ $ rosrun ros_essentials_cpp listener_node
 
 ![image-20211125120500760](../images/all_in_one/image-20211125120500760.png)
 
-#### Testing and fixing installation with Python nodes
+
+
+**Talker & listener with with Python nodes:**
 
 ```bash
 $ rosrun ros_essentials_cpp talker.py
@@ -1341,87 +3251,6 @@ $ rosrun ros_essentials_cpp listener.py
 ![image-20211125120616652](../images/all_in_one/image-20211125120616652.png)
 
 
-
-#### Creating ROS workspace
-
-```bash
-mkdir -p ~/catkin_ws/src
-# Managing Your Environment
-$ printenv | grep ROS
-# ROS_ETC_DIR=/opt/ros/melodic/etc/ros
-# ROS_ROOT=/opt/ros/melodic/share/ros
-# ROS_MASTER_URI=http://localhost:11311
-# ROS_VERSION=1
-# ROS_PYTHON_VERSION=2
-# ROS_PACKAGE_PATH=/opt/ros/melodic/share
-# ROSLISP_PACKAGE_DIRECTORIES=
-# ROS_DISTRO=melodic
-
-source /opt/ros/melodic/setup.sh
-
-# Create a ROS Workspace
-mkdir catkin_ws
-cd catkin_ws
-mkdir -p src
-cd src
-catkin_init_workspace
-printf "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
-cd ~/catkin_ws
-catkin_make
-source ~/catkin_ws/devel/setup.bash
-
-# Checking ROS & Gazebo Versions
-# On Ubunutu 16.04, you should have ROS Kinetic with Gazebo 7, whereas on Ubuntu 18.04, you should have ROS Melodic with Gazebo 9
-rosversion -d
-gazebo -v
-```
-
-Configuring Your ROS Environment (Optional)
-
-```bash
-$ export ROS_HOSTNAME=localhost
-$ export ROS_MASTER_URI=http://localhost:11311	# Default port, just FYI
-```
-
-
-
-####  Creating ROS packages
-
-```bash
-cd ~/catkin_ws/src
-catkin_create_pkg ros_basics_tutorial std_msgs rospy roscpp	# catkin_create_pkg <pkg_name> <dependencies...>
-cd ..
-ckin_make
-cd ~/catkin_ws/src
-ls
-# Then you will see the package that you created for your project
-
-# ...
-# After you made some change, e.g., add some files(node) to the src, and you can call `catkin_make` to compile them and generate executable.
-catkin_make
-```
-
-
-
-Error:
-
-```bash
--- ros_essentials_cpp: 8 messages, 1 services
-CMake Warning at /opt/ros/melodic/share/catkin/cmake/catkin_package.cmake:166 (message):
-  catkin_package() DEPENDS on 'system_lib' but neither
-  'system_lib_INCLUDE_DIRS' nor 'system_lib_LIBRARIES' is defined.
-Call Stack (most recent call first):
-```
-
-Solu: 
-
-https://get-help.robotigniteacademy.com/t/catkin-package-depends-on-the-catkin-package-other-catkin-pkg-which-must-therefore-be-listed-as-a-run-dependency-in-the-package-xml-help-needed-with-unit-6-on-services-in-ros-servers-messages/8237/2
-
-Because you have multiple package and you want to catkin on a new package. it’s a good idea to specify the package you want to build with.
-
-```bash
-catkin_make --only-pkg-with-deps ros_basics_tutorial
-```
 
 
 
@@ -1487,14 +3316,14 @@ rosrun turtlesim turtle_teleop_key
 
 
 
-### TurtuleSim simulation demo
+#### TurtuleSim simulation demo
 
 - After launch the turtlesim with command,  `rosrun turtlesim turtlesim_node`
 
 terminal 1
 
 ```bash
-jetbot@jetbot-desktop:~$ rosrun turtlesim turtlesim_node
+$ rosrun turtlesim turtlesim_node
 failed to get the current screen resources
 [ INFO] [1637895887.443274050]: Starting turtlesim with node name /turtlesim
 [ INFO] [1637895887.465488411]: Spawning turtle [turtle1] at x=[5.544445], y=[5.544445], theta=[0.000000]
@@ -1505,7 +3334,7 @@ QXcbConnection: XCB error: 170 (Unknown), sequence: 170, resource id: 90, major 
 terminal 2:
 
 ```bash
-jetbot@jetbot-desktop:~$ rostopic list
+$ rostopic list
 /rosout
 /rosout_agg
 /turtle1/cmd_vel
@@ -1516,7 +3345,7 @@ jetbot@jetbot-desktop:~$ rostopic list
 terminal 3:
 
 ```bash
-jetbot@jetbot-desktop:~$ rosnode list
+$ rosnode list
 /rosout
 /turtlesim
 ```
@@ -1526,7 +3355,7 @@ jetbot@jetbot-desktop:~$ rosnode list
 terminal 1
 
 ```bash
-jetbot@jetbot-desktop:~$ rosrun turtlesim turtle_teleop_key
+$ rosrun turtlesim turtle_teleop_key
 Reading from keyboard
 ---------------------------
 Use arrow keys to move the turtle. 'q' to quit.
@@ -1535,7 +3364,7 @@ Use arrow keys to move the turtle. 'q' to quit.
 terminal 2:
 
 ```bash
-jetbot@jetbot-desktop:~$ rostopic list
+$ rostopic list
 /rosout
 /rosout_agg
 /turtle1/cmd_vel
@@ -1546,7 +3375,7 @@ jetbot@jetbot-desktop:~$ rostopic list
 terminal 3:
 
 ```bash
-jetbot@jetbot-desktop:~$ rosnode list
+$ rosnode list
 /rosout
 /teleop_turtle
 /turtlesim
@@ -1555,7 +3384,7 @@ jetbot@jetbot-desktop:~$ rosnode list
 terminal 4:
 
 ```bash
-jetbot@jetbot-desktop:~$ rosnode info /turtlesim
+$ rosnode info /turtlesim
 --------------------------------------------------------------------------------
 Node [/turtlesim]
 Publications:
@@ -1594,17 +3423,61 @@ Connections:
 
 
 ```bash
-# Getting more information about certain node
-rosnode info /turtlesim
-
-# Getting more information about certain topics
-rostopic info /turtle1/cmd_vel
-
 # Show all running topics
-rostopic list
+$ rostopic list
+rosnode list
+/rosout
+/rosout_agg
+/turtle1/cmd_vel
+/turtle1/color_sensor
+/turtle1/pose
 
 # List all the running node/process
-rosnode list
+$ rosnode list
+/rosout
+/turtlesim
+
+# !!! Getting more information about certain node
+$ rosnode info /turtlesim
+--------------------------------------------------------------------------------
+Node [/turtlesim]
+Publications:
+ * /rosout [rosgraph_msgs/Log]
+ * /turtle1/color_sensor [turtlesim/Color]
+ * /turtle1/pose [turtlesim/Pose]
+
+Subscriptions:
+ * /turtle1/cmd_vel [unknown type]
+
+Services:
+ * /clear
+ * /kill
+ * /reset
+ * /spawn
+ * /turtle1/set_pen
+ * /turtle1/teleport_absolute
+ * /turtle1/teleport_relative
+ * /turtlesim/get_loggers
+ * /turtlesim/set_logger_level
+
+
+contacting node http://jetbot-desktop:41333/ ...
+Pid: 18076
+Connections:
+ * topic: /rosout
+    * to: /rosout
+    * direction: outbound (53495 - 127.0.0.1:46600) [19]
+    * transport: TCPROS
+
+# Getting more information about certain topics
+$ rostopic info /turtle1/cmd_vel
+Type: geometry_msgs/Twist
+Publishers: None
+Subscribers:
+ * /turtlesim (http://jetbot-desktop:41333/)
+ 
+ 
+
 ```
 
 
@@ -1629,7 +3502,191 @@ ROS topic
 
 ![image-20211125225015647](../images/all_in_one/image-20211125225015647.png)
 
-- 
+
+
+
+
+#### Demo of ROS basic command:
+
+```bash
+$ rostopic pub -r 10 /turtle1/cmd_vel geometry_mesgs/Twist '{linear: {x: 0.1, y:0.0, z:0.0}, angular: {x:0.0, y:0.0, z:0.0}}'
+# /turtle1/cmd_vel ==> Topic name
+# geometry_mesgs/Twist ==> message type
+# '{linear: {x: 0.1, y:0.0, z:0.0}, angular: {x:0.0, y:0.0, z:0.0}}' ==> args in json format
+
+$ rostopic echo /turtle1/cmd_vel
+linear: 
+  x: 2.0
+  y: 0.0
+  z: 0.0
+angular: 
+  x: 0.0
+  y: 0.0
+  z: 0.0
+
+# Checking the message type
+# romsg show <package_name>/<type>
+romsg show geometry_msgs/Twist
+```
+
+
+
+**Short Quiz:**
+
+**Question 1**: You have written a ROS node A that implements a driver to a camera sensor and collect images from this camera. What is the best way to send images to other ROS nodes?
+
+- It is better that we use a publisher/subscriber pattern using ROS topics, where images will be streamed to subscribed nodes over a pre-defined topic name
+
+Question 2: Consider a robot navigation application, where a robot will send, from a ROS Node A, a goal location (x,y,theta) on the map to another ROS node (Node B), which will execute the mission and make the robot navigates to the desired location.
+
+What is the best approach to implement communication between Node A and Node B?
+
+- We use an action communication pattern, where a client sends the goal location to the server Node B and can continue to do other processing while the server Node B executes the mission.
+
+**Question 3:** Consider the ROS message **geometry_msgs/Twist**. What does **geometry_msgs** represent?
+
+- It represents the package where the message is located.
+
+Question 4: What is the difference between a ROS workspace and a ROS package?
+
+- A ROS workspace is a folder that can contain one ore more catkin packages
+
+**Question 5:** Consider the following syntax to create a subscriber object.
+
+**rospy.Subscriber('cmd_vel', Twist, f_velocity)**
+
+Check all the correct answers.
+
+- **f_velocity** is a function that is executed every time a new message is received by the subscriber.
+
+**Question 6:** In a ROS topic, we have two nodes, where one node sends the request on the topic name and the second node will respond on the same topic. ==> False
+
+**Question 7:** ROS does not provide any kind of real-time guarantee for the delivery of messages between nodes ==> It’s based on TCP/UDP communication protocol, so message can get drop without notice, and no priority specified amount nodes’ communication
+
+- True
+
+**Question 8:** When we create a new ROS node using Python, we need to add the required dependencies in both **package.xml** and **CMakeLists.txt**. ==> False
+
+#### Assignment 1
+
+**Note: please use {...} to format the instruction for better readability and make it easier for me to review.**
+
+To respond to the questions, open a terminal and start turtlesim simulator and test commands before putting your answer.
+
+- What is the first command you must run in ROS?  
+- What is the command to run the Turtlesim simulator node?  
+- What is the command to find the list of all ROS nodes?  
+- What is the command to find the list of all ROS topics?  
+- What is the topic that tells about the position of the turtle?  
+- What is the topic that sends commands to the turtle to make it move?  
+- What is the command that tells you the information about the velocity topic?  
+- What is the node used to publish the velocity commands to the turtle?  
+- What is the node used to subscribe to the velocity commands to the turtle?  
+- What is the command that allows to see the type of message for velocity topic?  
+- What is the content of the velocity message? Explain its content.  
+- What is the content of the position message? Explain its content.  
+- Write is the command that allows to publish velocity command to the turtle with a linear velocity 1.0 and angular velocity 0.5.
+
+#### Questions for this assignment
+
+What is the first command you must run in ROS?
+
+`roscore`
+
+What is the command to run the Turtlesim simulator?
+
+`rosrun turtlesim turtlesim_node`
+
+What is the command to find the list of all ROS nodes?
+
+`rosnode list`
+
+What is the command to find the list of all ROS topics?
+
+`rostopic list`
+
+What is the topic that tells about the position of the turtle?
+
+`rostopic echo /turtle1/pose`
+
+What is the topic that sends command to the turtle to make it move?
+
+`cmd_vel`
+
+What is the command that tells you information about the topic about velocity?
+
+```bash
+$ rostopic info /turtle1/cmd_vel
+Type: geometry_msgs/Twist
+Publishers:
+ * /teleop_turtle (http://localhost:41049/)
+Subscribers:
+ * /turtlesim (http://jetbot-desktop:41333/
+ 
+# Or use the folloing to get real-time data
+$ rostopic echo /turtle1/cmd_vel
+```
+
+What is the node used to publish velocity commands to the turtle?
+
+What is the node used to subscribe to velocity commands to the turtle?
+
+```bash
+$ rostopic info /turtle1/cmd_vel
+Type: geometry_msgs/Twist
+
+Publishers:
+ * /teleop_turtle (http://localhost:41049/)
+
+Subscribers:
+ * /turtlesim (http://jetbot-desktop:41333/)
+ 
+# ==> SO /teleop_turtle for publisher, and /turtlesim for subscriber
+```
+
+What is the command that allows to see the type of message for velocity topic?
+
+```bash
+$ rostopic info /turtle1/cmd_vel
+Type: geometry_msgs/Twist
+
+Publishers:
+ * /teleop_turtle (http://localhost:41049/)
+
+Subscribers:
+ * /turtlesim (http://jetbot-desktop:41333/)
+```
+
+What is the content of the velocity message? Explain its content.
+
+```bash
+$ rostopic type /turtle1/cmd_vel | rosmsg show
+geometry_msgs/Vector3 linear
+  float64 x
+  float64 y
+  float64 z
+geometry_msgs/Vector3 angular
+  float64 x
+  float64 y
+  float64 z
+# geometry_msgs: directory location of package
+# Vector3, float64 : data type
+# linear, x: data name
+```
+
+What is the content of the position message? Explain its content
+
+```bash
+$ rostopic type /turtle1/pose | rosmsg show
+float32 x
+float32 y
+float32 theta
+float32 linear_velocity
+float32 angular_velocity
+# <ROS msg type> <ROS msg name>
+```
+
+
 
 
 
@@ -1699,16 +3756,138 @@ $ rostopic list
 $ rosrun camera_calibration cameracalibrator.py --size 8x6 --square 0.108 image:=/camera/image_raw camera:=/camera
 
 
-$ rosrun camera_calibration cameracalibrator.py --size 7x7 --square 0.045 image:=/camera/image_raw camera:=/camera video_device:=csi://0
+$ rosrun camera_calibration cameracalibrator.py --size 7x7 --square 0.045 image:=/camera/image_raw camera:=/camera video_device:=/dev/video1
+
+rosrun camera_calibration cameracalibrator.py --approximate 0.1 --size 8x6 --square 0.108 right:=/my_stereo/right/image_raw left:=/my_stereo/left/image_raw
+
+# Reference, https://askubuntu.com/questions/348838/how-to-check-available-webcams-from-the-command-line
+
+```
+
+
+
+### [ROS for Beginners II: Localization, Navigation and SLAM](https://www.udemy.com/course/ros-navigation/)
+
+Installation
+
+```bash
+sudo apt-get install ros-noetic-navigation
+sudo apt-get install ros-noetic-slam-gmapping
+
+# Before installing Turtlebot3, make sure to make the following two commands:
+sudo apt-get update
+sudo apt-get upgrade
+# The installation may fail if you do not an upgrade.
+
+# This will install the core packages of Turtlebot3.
+# Then, do the following (if you install for noetic, make -b noetic-devel to get the right branch)
+$ cd ~/catkin_ws/src/
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -b noetic-devel
+$ git clone  https://github.com/ROBOTIS-GIT/turtlebot3.git -b noetic-devel
+$ cd ~/catkin_ws && catkin_make
+# If you install on melodic, change -b noetic-devel with -b melodic-devel
+
+# Afterward, and after the correct compilation of the catkin_ws, you can download and installation the simulation packages$ cd
+~/catkin_ws/src/
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+$ cd ~/catkin_ws && catkin_make
+# As such the Turtlebot3 simulator should be installed.
+
+# Then, made the modification in .bashrch file as follows:
+
+$ cd
+$ gedit .bashrc
+# Inside the bashrc file put the following aliases to make it easier access to different executables in the alias section.
+
+alias burger='export TURTLEBOT3_MODEL=burger'
+alias waffle='export TURTLEBOT3_MODEL=waffle'
+alias tb3fake='roslaunch turtlebot3_fake turtlebot3_fake.launch'
+alias tb3teleop='roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch'
+alias tb3='roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch'
+alias tb3maze='roslaunch turtlebot3_gazebo turtlebot3_world.launch'
+alias tb3house='roslaunch turtlebot3_gazebo turtlebot3_house.launch'
+# also at the end of the file, write the following commands
+
+source /opt/ros/noetic/setup.bash
+source /home/akoubaa/catkin_ws/devel/setup.bash
+export TURTLEBOT3_MODEL=waffle
+export SVGA_VGPU10=0
+# The last command will let you open Gazebo on a Virtual Machine and avoid crashing its display.
+
+# For Powershell
+$Env:<variable-name> = "<new-value>"
+$Env:TURTLEBOT3_MODEL = "waffle"
+$Env:SVGA_VGPU10 = "0"
+# For CMD
+setx variable_name variable_value
+setx TURTLEBOT3_MODEL waffle
+setx SVGA_VGPU10 0
+
+
+```
+
+
+
+Starting Running the SLAM Simmulation
+
+```bash
+ catkin_make -DCATKIN_WHITELIST_PACKAGES=""
+ devel\setup.bat
+ 
+ 
+$ roslaunch turtlebot3_gazebo turtlebot3_house.launch
+$ roslaunch turtlebot3_slam turtlebot3_slam.launch slamc_methods:=gmapping	# Other options: cartographer, hector_slam
+
+# Saving map
+$ rosrun map_server map_saver -f ~/tb3_house_map
+# This commadn will generate two file, one with .pgm extension, store the image; Another one with .yaml extension, store the metadata about the image
+
+resolution: m/pixel, means 
+origin: x, y yaw(rotataion)
+
+```
+
+[TO-DO] ==> Can’t get noetic version of two package, `ros-noetic-navigation` and `ros-noetic-slam-gmapping`, install in Windows,  ==> There is no such package avail for Windows, so we cannot just use `choco` to install. Also, from [slam_gmapping github](https://github.com/ros-perception/slam_gmapping/tree/slam_gmapping-1.2.8), this package is not avail for neotic distro, so …. ==> you might need to install the melodic distro in Windows…
+
+![image-20211128225236747](../images/all_in_one/image-20211128225236747.png)
+
+Error1: 
+
+```bash
+ERROR: cannot launch node of type [gmapping/slam_gmapping]: gmapping
+ROS path [0]=c:\opt\ros\noetic\x64\share\ros
+ROS path [1]=C:/catkin_ws/src
+ROS path [2]=c:\opt\ros\noetic\x64\share
+```
+
+Solu: 
+
+Install that slam_package manually, https://answers.ros.org/question/224502/slam_gmapping-installation/, and build from source:
+
+```bash
+# create a catkin workspace:
+mkdir -p catkin_ws/src
+cd catkin_ws/src
+source /opt/ros/<DISTRO>/setup.bash
+catkin_init_workspace
+# clone the repository:
+git clone https://github.com/ros-perception/slam_gmapping.git
+# compile the workspace
+cd ..
+catkin_make -DCATKIN_WHITELIST_PACKAGES="gmapping;slam_gmapping"
+# source the workspace
+source devel/setup.bash
 ```
 
 
 
 
 
+
+
+
+
 ### ROS Command cheatsheet	
-
-
 
 ```bash
 # Starting ros master node
@@ -1722,8 +3901,7 @@ $ rosnode list
 /rostopic_22930_1637998293550
 /teleop_turtle
 /turtlesim
-jetbot@jetbot-desktop:/opt/ros/melodic/share/usb_cam$ roscd t
-urtlesim
+$ roscd turtlesim
 jetbot@jetbot-desktop:/opt/ros/melodic/share/turtlesim$ ls
 cmake  images  msg  package.xml  srv
 # Now, we can find out more information about turtlesim node, such as:
@@ -1757,6 +3935,8 @@ roslaunch gazebo_ros empty_world.launch
 # Launch rviz
 rosrun rviz rviz	# rosrun <package_name> <node_to_execute>
 ```
+
+
 
 
 
@@ -1818,7 +3998,7 @@ ROS_DISTRO=melodic
 
 - Code:
 
-```
+```bash
 $ mkdir ngrok
 $ cd ngrok/
 $ wget -c https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm64.zip	# Note: you need to check your CPU architecture first, with command 'lscpu', and 'chmod +rx ngrok' to make it executable.
@@ -1839,4 +4019,421 @@ $ ./ngrok tcp 22	# ngrok TCP tunnels allow you to expose any networked service t
 
 
 ## Q: How to Fix “No route to host” SSH Error in Linux, https://www.tecmint.com/fix-no-route-to-host-ssh-error-in-linux/
+
+
+
+
+
+# Appendix A: File Structure
+
+```bash
+jetbot@jetbot-desktop:~/catkin_ws$ tree . -L 3
+.
+├── build
+│   ├── atomic_configure
+│   │   ├── env.sh
+│   │   ├── local_setup.bash
+│   │   ├── local_setup.sh
+│   │   ├── local_setup.zsh
+│   │   ├── setup.bash
+│   │   ├── setup.sh
+│   │   ├── _setup_util.py
+│   │   └── setup.zsh
+│   ├── catkin
+│   │   └── catkin_generated
+│   ├── catkin_generated
+│   │   ├── env_cached.sh
+│   │   ├── generate_cached_setup.py
+│   │   ├── installspace
+│   │   ├── metapackages
+│   │   ├── order_packages.cmake
+│   │   ├── order_packages.py
+│   │   ├── setup_cached.sh
+│   │   └── stamps
+│   ├── CATKIN_IGNORE
+│   ├── catkin_make.cache
+│   ├── CMakeCache.txt
+│   ├── CMakeFiles
+│   │   ├── 3.10.2
+│   │   ├── clean_test_results.dir
+│   │   ├── cmake.check_cache
+│   │   ├── CMakeDirectoryInformation.cmake
+│   │   ├── CMakeError.log
+│   │   ├── CMakeOutput.log
+│   │   ├── CMakeRuleHashes.txt
+│   │   ├── CMakeTmp
+│   │   ├── download_extra_data.dir
+│   │   ├── doxygen.dir
+│   │   ├── feature_tests.bin
+│   │   ├── feature_tests.c
+│   │   ├── feature_tests.cxx
+│   │   ├── FindOpenMP
+│   │   ├── Makefile2
+│   │   ├── Makefile.cmake
+│   │   ├── progress.marks
+│   │   ├── run_tests.dir
+│   │   ├── TargetDirectories.txt
+│   │   └── tests.dir
+│   ├── cmake_install.cmake
+│   ├── CTestConfiguration.ini
+│   ├── CTestCustom.cmake
+│   ├── CTestTestfile.cmake
+│   ├── gtest
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   ├── googlemock
+│   │   └── Makefile
+│   ├── Makefile
+│   ├── orb_slam_2_ros
+│   │   ├── catkin_generated
+│   │   ├── cmake
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   ├── docs
+│   │   ├── Makefile
+│   │   └── setup_custom_pythonpath.sh
+│   ├── orb_slam2_ros
+│   │   ├── catkin_generated
+│   │   ├── cmake
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   ├── docs
+│   │   ├── Makefile
+│   │   └── setup_custom_pythonpath.sh
+│   ├── ros_basics_tutorial
+│   │   ├── catkin_generated
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   └── Makefile
+│   ├── ros_essentials_cpp
+│   │   ├── catkin_generated
+│   │   ├── cmake
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   └── Makefile
+│   ├── test_results
+│   ├── turtlebot3
+│   │   ├── turtlebot3
+│   │   ├── turtlebot3_bringup
+│   │   ├── turtlebot3_description
+│   │   ├── turtlebot3_example
+│   │   ├── turtlebot3_navigation
+│   │   ├── turtlebot3_slam
+│   │   └── turtlebot3_teleop
+│   ├── turtlebot3_msgs
+│   │   ├── catkin_generated
+│   │   ├── cmake
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── CTestTestfile.cmake
+│   │   └── Makefile
+│   └── turtlebot3_simulations
+│       ├── turtlebot3_fake
+│       ├── turtlebot3_gazebo
+│       └── turtlebot3_simulations
+├── devel
+│   ├── cmake.lock
+│   ├── env.sh
+│   ├── include
+│   │   ├── orb_slam2_ros
+│   │   ├── ros_essentials_cpp
+│   │   ├── turtlebot3_example
+│   │   └── turtlebot3_msgs
+│   ├── lib
+│   │   ├── liblaserscan_lib.so
+│   │   ├── libutility_lib.so
+│   │   ├── orb_slam2_ros
+│   │   ├── pkgconfig
+│   │   ├── python2.7
+│   │   ├── ros_basics_tutorial
+│   │   ├── ros_essentials_cpp
+│   │   ├── turtlebot3_bringup
+│   │   ├── turtlebot3_fake
+│   │   ├── turtlebot3_gazebo
+│   │   └── turtlebot3_slam
+│   ├── local_setup.bash
+│   ├── local_setup.sh
+│   ├── local_setup.zsh
+│   ├── setup.bash
+│   ├── setup.sh
+│   ├── _setup_util.py
+│   ├── setup.zsh
+│   └── share
+│       ├── common-lisp
+│       ├── gennodejs
+│       ├── orb_slam2_ros
+│       ├── ros_basics_tutorial
+│       ├── ros_essentials_cpp
+│       ├── roseus
+│       ├── turtlebot3_bringup
+│       ├── turtlebot3_description
+│       ├── turtlebot3_example
+│       ├── turtlebot3_fake
+│       ├── turtlebot3_gazebo
+│       ├── turtlebot3_msgs
+│       ├── turtlebot3_navigation
+│       ├── turtlebot3_slam
+│       └── turtlebot3_teleop
+└── src
+    ├── CMakeLists.txt -> /opt/ros/melodic/share/catkin/cmake/toplevel.cmake
+    ├── orb_slam2_ros
+    │   ├── CMakeLists.txt
+    │   ├── Dependencies.md
+    │   ├── docker
+    │   ├── License-gpl.txt
+    │   ├── LICENSE.txt
+    │   ├── orb_slam2
+    │   ├── orb_slam2_ros_py
+    │   ├── package.xml
+    │   ├── README.md
+    │   ├── ros
+    │   └── srv
+    ├── ros_basics_tutorial
+    │   ├── CMakeLists.txt
+    │   ├── include
+    │   ├── package.xml
+    │   └── src
+    ├── ros_essentials_cpp
+    │   ├── action
+    │   ├── CMakeLists.txt
+    │   ├── include
+    │   ├── msg
+    │   ├── package.xml
+    │   ├── README.md
+    │   ├── src
+    │   └── srv
+    ├── turtlebot3
+    │   ├── ISSUE_TEMPLATE.md
+    │   ├── LICENSE
+    │   ├── README.md
+    │   ├── turtlebot3
+    │   ├── turtlebot3_bringup
+    │   ├── turtlebot3_description
+    │   ├── turtlebot3_example
+    │   ├── turtlebot3_navigation
+    │   ├── turtlebot3_slam
+    │   └── turtlebot3_teleop
+    ├── turtlebot3_msgs
+    │   ├── CHANGELOG.rst
+    │   ├── CMakeLists.txt
+    │   ├── LICENSE
+    │   ├── msg
+    │   ├── package.xml
+    │   └── README.md
+    └── turtlebot3_simulations
+        ├── LICENSE
+        ├── README.md
+        ├── turtlebot3_fake
+        ├── turtlebot3_gazebo
+        └── turtlebot3_simulations
+
+116 directories, 86 files
+```
+
+
+
+
+
+# Appendix B: .bashrc
+
+
+
+```bash
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+# export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+export CUDA_HOME=/usr/local/cuda-10.0
+export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH
+export PATH=/usr/local/cuda-10.0/bin:$PATH
+export JP_VERSION=4.3   # Jetpack version
+
+# export PATH="$HOME/.rbenv/bin:$PATH"
+# eval "$(rbenv init -)"
+# export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# ================================> Customized Section: @author: Drago, @date: 08/18/2021
+# Remember to activate it with command: $ source ~/.bashrc
+alias python=/usr/bin/python3
+alias pip=pip3
+
+# virtualenv and virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Reference: 1) https://unix.stackexchange.com/questions/129143/what-is-the-purpose-of-bashrc-and-how-does-it-work 2) https://www.thegeekstuff.com/2008/09/bash-shell-take-control-of-ps1-ps2-ps3-ps4-and-prompt_command/
+
+# Simple version:
+export CLICOLOR=1
+export LANG="en_US.UTF-8"
+alias cp="cp -i"
+alias ls="ls --color=auto"
+# export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
+# set -o vi                                       # Set vi as the editor at the command line
+export EDITOR="vim"                              # Set vi as the default editor
+
+# Some awesome tri
+HISTCONTROL=ignoreboth:erasedups HISTSIZE=1000 HISTFILESIZE=2000      # Set up my history file to ignore duplicates and be much larger than the default.
+# ls --color=al > /dev/null 2>&1 && alias ls='ls -F --color=al' || alias ls='ls -G'   #  Color option for ls depending on if you are using linux or OSX
+# md () { [ $# = 1 ] && mkdir -p "$@" && cd "$@" || echo "Error - no directory passed!"; }    # Function "md" to make and cd into a directory with one command
+# git_branch () { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'; }
+# Define an awesome PS1 prompt
+# HOST='\033[02;36m\]\h'; HOST=' '$HOST
+# TIME='\033[01;31m\]\t \033[01;32m\]'
+# LOCATION=' \033[01;34m\]`pwd | sed "s#\(/[^/]\{1,\}/[^/]\{1,\}/[^/]\{1,\}/\).*\(/[^/]\{1,\}/[^/]\{1,\}\)/\{0,1\}#\1_\2#g"`'
+# BRANCH=' \033[00;33m\]$(git_branch)\[\033[00m\]\n\$ '
+# PS1=$TIME$USER$HOST$LOCATION$BRANCH
+# Improved PS2 prompt
+# PS2='\[\033[01;36m\]>'
+
+# test -f ~/.bash_aliases && . $_                 # execute my .bash_aliases file if it exists
+# test -f ~/.git-completion.bash && . $_          # Execute my git tab completion script (for remotes and branches) if it exists.
+# test -s ~/.autojump/etc/profile.d/autojump && . $_  # Execute autojump if it exists
+# [ ${BASH_VERSINFO[0]} -ge 4 ] && shopt -s autocd    # Allow cd'ing without typing the cd part if the bash version >= 4
+# [ -f /etc/bash_completion ] && ! shopt -oq posix && . /etc/bash_completion  # Execute a bash completion script if it exists
+# [ -z $TMUX ] && export TERM=xterm-256color && exec tmux                     # Use TMUX if it is present
+# export PATH="$PATH:$HOME/.rvm/bin"                                          # Add RVM to PATH for scripting
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$home/.rvm/scripts/rvm"        # Use rvm if it exists.
+
+# echo $ROS_PACKAGE_PATH
+# source /home/jetbot/catkin_ws/devel/setup.bash
+
+alias burger='export TURTLEBOT3_MODEL=burger'
+alias waffle='export TURTLEBOT3_MODEL=waffle'
+alias tb3fake='roslaunch turtlebot3_fake turtlebot3_fake.launch'
+alias tb3teleop='roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch'
+alias tb3='roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch'
+alias tb3maze='roslaunch turtlebot3_gazebo turtlebot3_world.launch'
+alias tb3house='roslaunch turtlebot3_gazebo turtlebot3_house.launch'
+
+# Also at the end of the file, write the following commands. The last command will let you open Gazebo on a Virtual Machine and avoid crashing its display.
+source /opt/ros/melodic/setup.bash
+source /home/jetbot/catkin_ws/devel/setup.bash
+export TURTLEBOT3_MODEL=waffle # If you want to use TB3 BUrger, change to TURTLEBOT3_MODEL=burger
+export SVGA_VGPU10=0
+```
 
