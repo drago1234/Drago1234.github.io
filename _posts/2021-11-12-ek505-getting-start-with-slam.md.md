@@ -1,5 +1,5 @@
 ---
-layout: post  # Required
+Exaslayout: post  # Required
 title: 'Getting Start with SLAM' # Required
 date: 2021-11-15  # Required
 categories: [Getting_Start, SLAM, EK505] # Option
@@ -1095,13 +1095,25 @@ ROS provides standard operating system services such as hardware abstraction, de
 
 acts as a name server for node-to-node connections and message communication. (Removed in ROS2, for eliminating the “single point of failure” issue.)
 
-The master communicates with slaves using XMLRPC (XML-Remote Procedure Call)3, which is an HTTP-based protocol that does not maintain connectivity.
+The master communicates with slaves using XMLRPC (XML-Remote Procedure Call), which is an HTTP-based protocol that does not maintain connectivity. When you execute ROS, the master will be configured with the URI address and port configured in the ROS_MASTER_URI. By default, the URI address uses the IP address of local PC, and port number 11311, unless otherwise modified.
 
-When you execute ROS, the master will be configured with the URI address and port configured in the ROS_MASTER_URI. By default, the URI address uses the IP address of local PC, and port number 11311, unless otherwise modified.
+You might ask, why node cannot directly communicate with each other? Why do we need master?  ==> Imagine, if we have millions of nodes, how do you know where is the xxx you want to connect with? ==> That’s it. We need an agancy who can provides those registration and searching/identification service. That’s the job of master node, and that’s why Master node must run first before any other nodes. 
+
+![image-20211129204729387](../images/all_in_one/image-20211129204729387.png)
+
+As you saw the picture above, “A master node act like a name server as it keeps names of nodes, topics, services and action, as well as the URI address, port number and parameters.”, and in http://wiki.ros.org/Master, “<u>The role of the Master is to enable individual ROS nodes to locate one another. Once these nodes have located each other they communicate with each other peer-to-peer.</u>”
+
+
+
+Q: What happen if ROS Master crashes?
+
+> The communication amount nodes will continue.  But if they stopped, they can’t connect to each other again. You can verify this by running the talker and listener node, and stop the master while they were communication.
+
+
 
 **Node:**  
 
-the smallest unit of processor running in ROS.
+<u>The smallest unit of processor running in ROS</u>.  Can pass messages to one another through topics, make service calls to other nodes, provide a service for other nodes, or set or retrieve shared data from a communal database called the parameter server.
 
 The **node** uses 
 
@@ -1126,6 +1138,10 @@ A metapackage is a set of packages that have a common purpose. For example, the 
 A node sends or receives data between nodes via a message. Messages are variables such as integer, floating point, and boolean. Nested message structure that contains another messages or an array of messages can be used in the message. 
 
 TCPROS and UDPROS communication protocol is used for message delivery. Topic is used in unidirectional message delivery while service is used in bidirectional message delivery that request and response are involved.
+
+==>其实就是ROS版的 TCP and UDP communication protocal, 但也基本一样的，communication 之前，需要建立three-way handshake, connection建立之后，就可以互相发消息了。
+
+![image-20211129113449783](../images/all_in_one/image-20211129113449783.png)
 
 **Topic:** 
 
@@ -1253,17 +1269,129 @@ TCP stands for Transmission Control Protocol. It is often called TCP/IP. The Int
 
 TCPROS is a message format based on TCP/IP and UDPROS is a message format based on UDP. TCPROS is more frequently used in ROS.
 
+TCP and UDP的区别就是TCP需要three-handshake process, but UDP doesn’t, they just keep communicating without worrying whether package has dropped or not.
+
 **CMakeLists.txt**
 
 Catkin, which is the build system of ROS, uses CMake by default. The build environment is specified in the ‘CMakeLists.txt’26 file in each package folder.
 
+```cmake
+cmake_minimum_required(VERSION 2.8.3)	# the minimum required version of ‘cmake’ installed on the operating system.
+
+project(my_first_ros_pkg)		# Use the package name entered in ‘package.xml’ when building the package
+
+# The ‘find_package’ entry is the component package required to perform a build on Catkin. In this example, ‘roscpp’ and ‘std_msgs’ are set as dependent packages. 
+# If the package entered here is not found in the system, an error will occur when building the package.
+find_package(catkin REQUIRED COMPONENTS	
+    roscpp
+    std_msgs
+)
+
+# The following is a method used when using packages other than ROS. 
+# For example, when using Boost, the ‘system’ package must be installed beforehand. This feature is an option that allows you to install indirect dependent packages.
+find_package(Boost REQUIRED COMPONENTS system)
+
+# The ‘catkin_python_setup()’ is an option when using Python with ‘rospy’. It invokes the Python installation process ‘setup.py’.
+catkin_python_setup()
+
+# The ‘FILES’ option will automatically generate a header file (*.h) by referring to the ‘.msg’ files in the ‘msg’ folder of the current package. In this example, message files Message1.msg and Message2.msg are used.
+add_message_files(
+    FILES
+    Message1.msg
+    Message2.msg
+)
+
+# ‘add_service_files’ is an option to add a service file to use. The ‘FILES’ option will refer to ‘.srv’ files in the ‘srv’ folder in the package. In this example, you have the option to use the service files Service1.srv and Service2.srv.
+add_service_files(
+    FILES
+    Service1.srv
+    Service2.srv
+)
+
+# generate_messages is necessary for creating a message.
+# ‘generate_messages’ is an option to set dependent messages. This example sets the DEPENDENCIES option to use the ‘std_msgs’ message package.
+generate_messages(
+    DEPENDENCIES
+    std_msgs
+)
+
+# ‘generate_dynamic_reconfigure_options’ loads configuration files that are referred when using ‘dynamic_reconfigure’.
+generate_dynamic_reconfigure_options(
+    cfg/DynReconf1.cfg
+    cfg/DynReconf2.cfg
+)
+
+# The following are the options when performing a build on Catkin. 
+# ‘INCLUDE_DIRS’ is a setting that specifiesused to specify the header file in the ‘include’ folder, which is the internal folder of the package. 
+# ‘LIBRARIES’ is a setting used to specify the package library in the following configuration.
+# ‘CATKIN_DEPENDS’ specifies dependent packages and in this example, the dependent packages are set to ‘roscpp’ and ‘std_msgs’. ‘DEPENDS’ is a setting that describes system-dependent packages.
+catkin_package(
+    INCLUDE_DIRS include
+    LIBRARIES my_first_ros_pkg
+    CATKIN_DEPENDS roscpp std_msgs
+    DEPENDS system_lib
+)
+
+# ‘include_directories’ is an option to specify folders to include. In the example, ‘${catkin_INCLUDE_DIRS}’ is configured, which refers to the header file the ‘include’ folder in the package. To specify an additional include folder, append it to the next line of ‘${catkin_INCLUDE_DIRS}’.
+include_directories(
+	${catkin_INCLUDE_DIRS}
+)
+
+# ‘add_library’ declares the library to be created after the build. The following option will create ‘my_first_ros_pkg’ library from ‘my_first_ros_pkg.cpp’ file in the ‘src’ folder.
+add_library(my_first_ros_pkg
+	src/${PROJECT_NAME}/my_first_ros_pkg.cpp
+)
+
+# ‘add_dependencies’ is a command to perform certain tasks prior to the build process such as creating dependent messages or dynamic reconfigurations. The following options describe the creation of dependent messages and dynamic reconfiguration, which are the dependencies of the ‘my_first_ros_pkg’ library.
+add_dependencies(my_first_ros_pkg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+# 'add_executable’ specifies the executable to be created after the build. The option specifies the system to refer to the ‘src/my_first_ros_pkg_node.cpp’ file to generate the ‘my_first_ros_pkg_node’ executable file. If there are multiple ‘*.cpp’ files to be referenced, append them after ‘my_first_ros_pkg_node.cpp’. If there are two or more executable files to be created, add an additional ‘add_executable’ entry.
+add_executable(my_first_ros_pkg_node src/my_first_ros_pkg_node.cpp)
+
+# ‘add_dependencies’ option is like the ‘add_dependencies’ previously described, which is required to perform certain tasks such as creating dependent messages or dynamic reconfigurations prior to building libraries or executable files. The following describes the dependency of the executable file named ‘my_first_ros_pkg_node’, not the library mentioned above. It is most often used when creating message files prior to building executable files.
+add_dependencies(my_first_ros_pkg_node
+	${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}
+)
+
+# ‘target_link_libraries’ is an option that links libraries and executables that need to be linked before creating an executable file.
+target_link_libraries(my_first_ros_pkg_node
+	${catkin_LIBRARIES}
+)
+
+```
+
+The following is the modified build configuration file (CMakeLists.txt). Modify the file for
+your package. For more information on how to use the configuration file, please refer to the packages of TurtleBot3 and ROBOTIS OP3 published at ‘https://github.com/ROBOTIS-GIT’.
+
+![image-20211129222520801](../images/all_in_one/image-20211129222520801.png)
+
 **package.xml:**
 
-An XML file27 contains package information that describes the package name, author, license, and dependent packages.
+An XML file contains package information that describes the package name, author, license, and dependent packages.
+
+- <buildtool_depend> Describes the dependencies of the build system. As we are using the Catkin build system, write ‘catkin’.
+- <build_depend> Dependent package name when building the package.
+- <run_depend> Dependent package name when running the package.
+- <test_depend> Dependent package name when testing the package.
+
+For example:
+
+![image-20211129114444625](../images/all_in_one/image-20211129114444625.png)
 
 
 
+**Short Summary: about three Communication Methods**
 
+**Topic:**
+
+- A communication channel between publisher and subscriber
+- One-way communication
+
+![image-20211125235557759](../images/all_in_one/image-20211125235557759.png)
+
+**Service**
+
+![image-20211125235604322](../images/all_in_one/image-20211125235604322.png)
 
 
 
@@ -1284,6 +1412,8 @@ Establish connection only once，the connection terminated immediately after cli
 
 **Action:** 
 
+![image-20211125235613518](../images/all_in_one/image-20211125235613518.png)
+
 ![image-20211125230221385](../images/all_in_one/image-20211125230221385.png)
 
 动作（action）在执行的方式上好像是在服务（service）的请求（goal）和响应(result）之间仅仅多了中途反馈环节，但实际的运作方式与话题相同。事实上，如果使用rostopic命令来查阅话题，那么可以看到该动作的goal、status、cancel、result和feedback等五个话题。动作服务器和客户端之间的连接与上述发布者和订阅中的TCPROS连接相同，但某些用法略有不同。例如，动作客户端发送取消命令或服务器发送结果值会中断连接，等。
@@ -1291,16 +1421,69 @@ Establish connection only once，the connection terminated immediately after cli
 Action may look similar to the request and the response of the service with an additional feedback message in order to provide intermediate result between the request (goal) and the response(result), but in practice it is rather more like a topic. In fact, if you use the ‘rostopic’ command to list up topics, there are five topics such as goal, status, cancel, result, and feedback
 that are used in the action. The connection between the action server and the client is similar to the TCPROS connection of the publisher and subscriber, but the usage is slightly different. For example, when an action client sends a cancel command or the server sends a result value, the connection will be terminated.
 
-<img src="../images/all_in_one/image-20211125195605071.png" alt="image-20211125195605071" style="zoom: 150%;" />
+![image-20211125235526011](../images/all_in_one/image-20211125235526011.png)
+
+![image-20211125235533366](../images/all_in_one/image-20211125235533366.png)
+
+**Example:**
+
+![image-20211129113740221](../images/all_in_one/image-20211129113740221.png)
 
 
 
-**Short Summary:**
+![image-20211126000601948](../images/all_in_one/image-20211126000601948.png)
 
-- Nodes
-  - Can pass messages to one another through topics, make service calls to other nodes, provide a service for other nodes, or set or retrieve shared data from a communal database called the parameter server.
-- Topics
-- Master
+
+
+#### Writing Source Code (create a new C++ file )
+
+The following setting is configured in the executable file creation section (add_executable) of the ‘CMakeLists.txt’ file mentioned above.
+`add_executable(hello_world_node src/hello_world_node.cpp)`
+This is the setting to create the executable ‘hello_world_node’ by referring to the ‘hello_
+world_node’ source code in the ‘src’ folder of the package. As ‘hello_world_node.cpp’ source code has to be manually created and written by developer, let’s write a simple example.
+First, move to the source code folder (src) in your package folder by using ‘cd’ command and create the ‘hello_world_node.cpp’ file as shown below. This example uses the gedit editor, but you can use your preferred editor, such as vi, gedit, qtcreator, vim, or emacs.
+
+```bash
+$ cd ~/catkin_ws/src/my_first_ros_pkg/src/
+$ gedit hello_world_node.cpp
+```
+
+Then, write the following source code in the created file, `hello_world_node.cpp`
+
+```c++
+#include <ros/ros.h>
+#include <std_msgs/String.h>
+#include <sstream>
+int main(int argc, char **argv){
+    ros::init(argc, argv, "hello_world_node");
+    ros::NodeHandle nh;
+    ros::Publisher chatter_pub = nh.advertise<std_msgs::String>("say_hello_world", 1000);
+    ros::Rate loop_rate(10);
+    int count = 0;
+    while (ros::ok()){
+        std_msgs::String msg;
+        std::stringstream ss;
+        ss << "hello world!" << count;
+        msg.data = ss.str();
+        ROS_INFO("%s", msg.data.c_str());
+        chatter_pub.publish(msg);
+        ros::spinOnce();
+        loop_rate.sleep();
+        ++count;
+	}
+	return 0;
+}
+```
+
+Once above code is saved in the file, all the necessary work for building a package is completed. Before building the package, update the profile of the ROS package with the below command. It is a command to apply the previously created package to the ROS package list. Although this is not mandatory, it is convenient to update after creating a new package as it will allows to find the package using auto-completion feature with the Tab key.
+
+```bash
+$ rospack profile
+The following is a Catkin build. Go to the Catkin workspace and build the package.
+$ cd ~/catkin_ws && catkin_make
+```
+
+
 
 
 
@@ -1308,11 +1491,11 @@ that are used in the action. The connection between the action server and the cl
 
 
 
-**ROS Shell Commands:**
+#### **ROS Shell Commands:**
 
 ![image-20211128145226872](../images/all_in_one/image-20211128145226872.png)
 
-**ROS Execution Commands:**
+#### **ROS Execution Commands:**
 
 ![image-20211128145524987](../images/all_in_one/image-20211128145524987.png)
 
@@ -1345,15 +1528,82 @@ rm -rf /home/pyo/.ros/log
 
 
 
-**ROS information Commands:**
+#### **ROS information Commands:**
 
 ![image-20211128145356901](../images/all_in_one/image-20211128145356901.png)
 
 
 
-**ROS Catkin Commands:**
+#### **ROS Catkin Commands:**
 
 ![image-20211128145329719](../images/all_in_one/image-20211128145329719.png)
+
+```bash
+$ catkin_make -DCATKIN_WHITELIST_PACKAGES="" -DPYTHON_EXECUTABLE=/usr/bin/python3
+# Build all packages with python3 interpreter
+
+$ catkin_make -DCATKIN_WHITELIST_PACKAGES="ros_essentials_cpp" -DPYTHON_EXECUTABLE=/usr/bin/python3
+# Only build ros_essentials_cpp with python3 interpreter
+```
+
+After you finished editing file, don’t forget to run catkin_make and soruce:
+
+```bash
+# In your catkin workspace
+$ cd ~/catkin_ws
+$ source ./devel/setup.bash
+```
+
+
+
+Error 1:
+
+If you see the following error, that means the source src didn’t define correctly.
+
+```bash
+CMake Error at /opt/ros/melodic/share/catkin/cmake/catkin_install_python.cmake:68 (message):
+  catkin_install_python() called with non-existing file
+  '/home/jetbot/catkin_ws/src/ros_basics_tutorial/scripts/talker.py'.
+Call Stack (most recent call first):
+  ros_basics_tutorial/CMakeLists.txt:213 (catkin_install_python)
+```
+
+Solu:
+
+Maybe try?
+
+```bash
+catkin_install_python(PROGRAMS src/scripts/talker.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+```
+
+And this is my file tree:
+
+![image-20211130124446858](../images/all_in_one/image-20211130124446858.png)
+
+
+
+Error 2:
+
+```bash
+jetbot@jetbot-desktop:~/catkin_ws$ rosrun ros_basics_tutorial
+ talker.py
+[rosrun] Couldn't find executable named talker.py below /home/jetbot/catkin_ws/src/ros_basics_tutorial
+[rosrun] Found the following, but they're either not files,
+[rosrun] or not executable:
+[rosrun]   /home/jetbot/catkin_ws/src/ros_basics_tutorial/src/scripts/talker.py
+```
+
+Solu:
+
+https://discourse.ros.org/t/couldnt-find-executable-named-talker-py/9474
+
+```bash
+$ sudo chmod +x talker.py
+```
+
+
 
 
 
@@ -1365,7 +1615,7 @@ rm -rf /home/pyo/.ros/log
 
 
 
-**ROS Communication Commands:**
+#### **ROS Communication Commands:**
 
 ![image-20211128145145385](../images/all_in_one/image-20211128145145385.png)
 
@@ -1407,7 +1657,7 @@ geometry_msgs/Vector3 angular
 $ rostopic pub -1 /turtle1/cmd_vel geometry_msgs/Twist -- '[2.0, 0.0, 0.0]' '[0.0, 0.0, 1.8]'
 ```
 
-5.4.4. rosservice: ROS Service
+**5.4.4. rosservice: ROS Service**
 
 ![image-20211128150932003](../images/all_in_one/image-20211128150932003.png)
 
@@ -1468,42 +1718,63 @@ $ rosservice call /turtle1/set_pen 255 0 0 5 0
 
 
 
+### Chap 7: Basic ROS Programming:
+
+**7.1. Things to Know Before Programming ROS**
+
+**Standard Unit:**
+
+The messages used in ROS follows SI units, the most widely used standard in the world.
+
+![image-20211129212342443](../images/all_in_one/image-20211129212342443.png)
+
+#### **Coordinate Representation**
+
+![image-20211129212720690](../images/all_in_one/image-20211129212720690.png)
+
+==> Just remember: 
+
+- Right hand rule
+- RGB represent the color for X, Y, Z axis
+
+#### **Programming Rules**:
+
+- Reusability: This reduces the amount of additional work that developers frequently need to do when working with source code, enhances code understanding among other collaborators, and facilitates code reviews between developers. This is not a requirement, but many ROS users agree and adhere to this rule.
+- **Naming Convention:**
+  - <u>Package, Topic, Service, and File following snake_case</u> convention
+    - <img src="../images/all_in_one/image-20211129214916577.png" alt="image-20211129214916577" style="zoom:150%;" />
+  - messages, services and action file names placed in the /msg and /srv folders follow CamelCased rules, and those *.msg, *.srv, and *.action files are converted to header files and then used as structures or types (e.g. TransformStamped.msg, SetSpeed.srv)
+    - <img src="../images/all_in_one/image-20211129214928647.png" alt="image-20211129214928647" style="zoom:150%;" />
+
+#### **Creating a Package:**
+
+The following command creates a `'ros_tutorials_topic'`package. This package is dependent on the ‘`message_generation`’, ‘`std_msgs`’, and ‘`roscpp`’ packages, as they are appended as dependency options followed by the custom package name. 
+
+- The **‘message_generation’** package will be <u>required to create a new message.</u> 
+- ‘**std_msgs’** is the ROS standard message package 
+- and **‘roscpp’** is <u>the client library to use C/C++</u> in ROS. 
+
+These dependent packages can be included while creating the package, but they can also be added after creating the ‘`package.xml`’ in the package folder.
+
+```bash
+$ cd ~/catkin_ws/src
+$ catkin_create_pkg ros_tutorials_topic message_generation std_msgs roscpp
+```
+
+When the package is created, the `ros_tutorials_topic `package folder is created in the `~/catkin_ws/src` folder. In this package folder, the `CMakeLists.txt` and `package.xml `files are created along with default folders. You can inspect it with the ‘ls’ command as below, or check the inside of the package using the GUI-based Nautilus, which is similar to Windows File Explorer.
+
+```bash
+$ cd ros_tutorials_topic
+$ ls
+include → Header File Folder
+src → Source Code Folder
+CMakeLists.txt → Build Configuration File
+package.xml → Package Configuration File
+```
 
 
 
-
-
-
-### Message Communication
-
-![image-20211125235526011](../images/all_in_one/image-20211125235526011.png)
-
-![image-20211125235533366](../images/all_in_one/image-20211125235533366.png)
-
-
-
-Topic:
-
-- A communication channel between publisher and subscriber
-- One-way communication
-
-![image-20211125235557759](../images/all_in_one/image-20211125235557759.png)
-
-Service
-
-![image-20211125235604322](../images/all_in_one/image-20211125235604322.png)
-
-Action:
-
-![image-20211125235613518](../images/all_in_one/image-20211125235613518.png)
-
-Example:
-
-![image-20211126000601948](../images/all_in_one/image-20211126000601948.png)
-
-
-
-
+Writing the Publisher Node
 
 
 
@@ -2225,7 +2496,9 @@ You will see it’s running in a circle:
 
 
 
-##### More Fun about ROS Turtlesim
+##### More Fun about ROS Turtlesim 
+
+- ROS.org, [turtlesim Tutoria](http://wiki.ros.org/turtlesim/Tutorials/Go%20to%20Goal)l, 
 
 ![img](../images/all_in_one/Project-1-scaled.jpg)
 
@@ -2699,45 +2972,146 @@ Let's just list some of the commands we've used so far:
 
    This tutorial covers how to write a publisher and subscriber node in C++.
 
-5. Writing a Simple Publisher and Subscriber (Python)
 
-   This tutorial covers how to write a publisher and subscriber node in python.
 
-6. Examining the Simple Publisher and Subscriber
+#### [Writing a Simple Publisher and Subscriber (Python)](http://wiki.ros.org/ROS/Tutorials/WritingPublisherSubscriber%28python%29)
 
-   This tutorial examines running the simple publisher and subscriber.
+This tutorial covers how to write a publisher and subscriber node in python.
 
-7. Writing a Simple Service and Client (C++)
+**Regular Procedure for writing <u>Publisher</u> ROS Topics:**
+
+> Step 1: Determine a name for the topic to publish, e.g., “chatter” ==> It’s up to you to decide the name, but once determined, publisher and subscriber have to agree on the same name.
+>
+> Step 2: Determine the type of the messages that the topic will publish, e.g., String ==> This is based on the type of data you need to send in a message, 
+>
+> Step 3: Determine the frequency of topic publication (how many message per second) ==> e.g., 1 msg/sec, 10 msgs/sec, or 100 msgs/sec, this depends on the requirement of application, or how critical of the data is for you application, e.g., if you want to build some real-world data in Drone, the real-time data can be important, so you might want higher updating frequency, like 100 hz or 100 msgs/sec
+>
+> Step 4: Create a publisher object with parameters chosen
+>
+> Step 5: Keep publishing the topic message at the selected frequency.
+
+**Regular Procedure for writing <u>Subscriber</u> ROS Topics:**
+
+> Step 1: Identify the name for the topic to listen to  ==> That name must match to the topic publisher you want to communicate with.
+>
+> Step 2: Identify the type of the messages to be received
+>
+> Step 3: Define a callback function that will automatically executed when a new message is received on the topic
+>
+> Step 4: Start listening for the topic messages
+>
+> Step 5: Spin to listen for ever (in C++)
+
+**talker.py**
+
+```python
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from std_msgs.msg import String
+
+def talker():
+    #create a new publisher. we specify the topic name, then type of message then the queue size
+    pub = rospy.Publisher('chatter', String, queue_size=10)
+    #we need to initialize the node
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # node are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'talker' node 
+    rospy.init_node('talker', anonymous=True)
+    #set the loop rate
+    rate = rospy.Rate(1) # 1hz
+    #keep publishing until a Ctrl-C is pressed
+    i = 0
+    while not rospy.is_shutdown():
+        hello_str = "hello world %s" % i
+        rospy.loginfo(hello_str)
+        pub.publish(hello_str)
+        rate.sleep()
+        i=i+1
+
+if __name__ == '__main__':
+    try:
+        talker()
+    except rospy.ROSInterruptException:
+        pass
+
+```
+
+**listener.py**
+
+```python
+#!/usr/bin/env python
+import rospy
+from std_msgs.msg import String
+
+def chatter_callback(message):
+    #get_caller_id(): Get fully resolved name of local node
+    rospy.loginfo(rospy.get_caller_id() + "I heard %s", message.data)
+    
+def listener():
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # node are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'listener' node so that multiple listeners can
+    # run simultaneously.
+    rospy.init_node('listener', anonymous=True)
+    rospy.Subscriber("chatter", String, chatter_callback)
+    # spin() simply keeps python from exiting until this node is stopped
+    rospy.spin()
+
+if __name__ == '__main__':
+    listener()
+```
+
+
+
+
+
+Examining the Simple Publisher and Subscriber
+
+This tutorial examines running the simple publisher and subscriber.
+
+
+
+1. Writing a Simple Service and Client (C++)
 
    This tutorial covers how to write a service and client node in C++.
 
-8. Writing a Simple Service and Client (Python)
 
-   This tutorial covers how to write a service and client node in python.
 
-9. Examining the Simple Service and Client
 
-   This tutorial examines running the simple service and client.
+Writing a Simple Service and Client (Python)
 
-10. Recording and playing back data
+This tutorial covers how to write a service and client node in python.
 
-    This tutorial will teach you how to record data from a running ROS system into a .bag file, and then to play back the data to produce similar behavior in a running system
 
-11. Reading messages from a bag file
 
-    Learn two ways to read messages from desired topics in a bag file, including using the `ros_readbagfile` script.
+Examining the Simple Service and Client
 
-12. Getting started with roswtf
+This tutorial examines running the simple service and client.
 
-    Basic introduction to the [roswtf](http://wiki.ros.org/roswtf) tool.
 
-13. Navigating the ROS wiki
 
-    This tutorial discusses the layout of the ROS wiki ([wiki.ros.org](http://wiki.ros.org/Documentation)) and talks about how to find what you want to know.
+1. Recording and playing back data
 
-14. Where Next?
+   This tutorial will teach you how to record data from a running ROS system into a .bag file, and then to play back the data to produce similar behavior in a running system
 
-    This tutorial discusses options for getting to know more about using ROS on real or simulated robots.
+2. Reading messages from a bag file
+
+   Learn two ways to read messages from desired topics in a bag file, including using the `ros_readbagfile` script.
+
+3. Getting started with roswtf
+
+   Basic introduction to the [roswtf](http://wiki.ros.org/roswtf) tool.
+
+4. Navigating the ROS wiki
+
+   This tutorial discusses the layout of the ROS wiki ([wiki.ros.org](http://wiki.ros.org/Documentation)) and talks about how to find what you want to know.
+
+5. Where Next?
+
+   This tutorial discusses options for getting to know more about using ROS on real or simulated robots.
 
 
 
@@ -3688,6 +4062,87 @@ float32 angular_velocity
 
 
 
+### ROS Topics (59-70)
+
+#### Writing a publisher node in Python
+
+talker.py	
+
+```python
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from std_msgs.msg import String
+def talker():
+    """
+    create a new publisher object. We specify the 
+    	topic name -- 'chatter', 
+    	type of message -- ROS String, 
+    	queue size -- 10, or the buffer size.
+    """
+    pub = rospy.Publisher('chatter', String, queue_size=10)
+    """
+    We need to initialize the node. In ROS, nodes are uniquely named. If two nodes with the same node are launched, the previous one is kicked off. 
+	anonymous=True flag means that rospy will choose a unique name for our 'talker' node, so multiple subscriber name will be unique.
+    """
+    rospy.init_node('talker', anonymous=True)
+    # set the loop rate
+    rate = rospy.Rate(1) # How many message to send per sec? 1 ==> 1 msgs/sec, 10 ==> 10 msgs/sec 
+    # 1hz ==> sleep 1 sec; if 10 hz, it would sleep 10/1 == 0.1 sec; if 2hz ==> it would sleep 2/1 = 0.5 sec 
+    
+    # keep publishing until a Ctrl-C is pressed
+    i = 0
+    while not rospy.is_shutdown():
+        hello_str = "hello world %s" % i
+        rospy.loginfo(hello_str)
+        pub.publish(hello_str)	
+        rate.sleep()
+        i=i+1
+
+if __name__ == '__main__':
+    try:
+        talker()
+    except rospy.ROSInterruptException:
+        pass
+
+```
+
+
+
+
+
+#### Writing a Subscriber Node in Python
+
+listener.py
+
+```python
+#!/usr/bin/env python
+import rospy
+from std_msgs.msg import String
+
+def chatter_callback(message):
+    #get_caller_id(): Get fully resolved name of local node
+    rospy.loginfo(rospy.get_caller_id() + " I heard %s", message.data)
+    # you can use print() as well, for example:
+    print("I heard ", message.data)
+def listener():
+    # In ROS, nodes are uniquely named. If two nodes with the same
+    # node are launched, the previous one is kicked off. The
+    # anonymous=True flag means that rospy will choose a unique
+    # name for our 'listener' node so that multiple listeners can
+    # run simultaneously.
+    rospy.init_node('listener', anonymous=True)
+    rospy.Subscriber("chatter", String, chatter_callback)	# chatter_callback will be executed whenever a new message is being published in the "chatter" topic.
+
+    # spin() simply keeps python from exiting until this node is stopped
+    rospy.spin()
+
+if __name__ == '__main__':
+    listener()
+```
+
+![image-20211130005137775](../images/all_in_one/image-20211130005137775.png)
+
 
 
 
@@ -3702,8 +4157,6 @@ float32 angular_velocity
   - With VcXsrv, https://stackoverflow.com/questions/39695166/visual-studio-code-on-linux-xwindow-forwarding/40013437#40013437 ==> Basically you need to download VcXsrv 
   - With FastX3, https://www.starnet.com/xwin32kb/fastx-3-installation/#UbuntuDebian_Based_Systems
   - Troubleshooting X server, https://www.cs.odu.edu/~zeil/cs252/sum21/Public/xtrouble/index.html#/
-  - 
-- 
 
 
 
@@ -3892,6 +4345,9 @@ source devel/setup.bash
 ```bash
 # Starting ros master node
 roscore	
+
+catkin_make -DCATKIN_WHITELIST_PACKAGES="ros_essentials_cpp" -DPYTHON_EXECUTABLE=/usr/bin/python3
+$ catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
 
 # Takes you to the last ROS workspace that you have sourced in setup.bash
 $ roscd	
