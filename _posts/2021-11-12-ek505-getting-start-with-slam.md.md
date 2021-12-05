@@ -114,8 +114,12 @@ Written by Erico Guizzo. Date published: 2018-08-01; Date modified: 2020-05-28
 ## About Jetbot:
 
 - NVIDIA JetBot: Jetson Nano Vision-Controlled AI Robot, https://www.youtube.com/watch?v=wKMWjIKaU68
+- Github, [NVIDIA-AI-IOT/jetbot](https://github.com/NVIDIA-AI-IOT/jetbot/)
+- [Github], [dusty-nv/jetson-inference](https://github.com/dusty-nv/jetson-inference)
 - Completed Tutorial to NVIDIA Jetson AI JetBot Robot Car Project, https://drago1234.github.io/ai-Jetbot-car-project.html#reference-1
 - Explaining Jetbot AI Kit Hector SLAM, https://www.youtube.com/watch?v=Noo3RmavB6I
+
+
 
 
 
@@ -143,6 +147,44 @@ However, there are some challenges:
 - Huge Computation Cost: Because of the relationships between the points, every new sensor update influences all positions and updates the whole map. Keeping everything up to date requires a significant amount of math.
 - Accumulated inaccuracy: In [“Globally consistent range scan alignment for environment mapping”](https://link.springer.com/article/10.1023/A:1008854305733) (1997), Lu and Milios describe the basics of the issue. In the figure above, (a) shows how range scan errors accumulate over time. Going from one position P*1* … P*n*, each little measurement error accumulates over time, until the resulting environment map isn’t consistent anymore.
 
+
+
+### Bundle Adjustment
+
+TO-READ:
+
+- [Visual SLAM -- Why Bundle Adjust?](https://arxiv.org/pdf/1902.03747.pdf)
+
+
+
+
+
+Based on [Bundle Adjustment - 5 Minutes with Cyrill](https://www.youtube.com/watch?v=lmj2Jk5tl60)
+
+- An estimation technique that is used to estimate the 3D location of points in the environment, and those points have been estimated from camera images, as well as where the camera was when taking the images and where it was looking to 
+- So estimate the location of the cameras and the points jointly, so that the error of twhere the points are projected to is minimized. 
+- So, we wanna to minimize the reprojection error, that means we assume we know the location of camera and the location of the points in the environment and then we are projecting point into a camera image, which gives us a pixel coordinate of that point
+- So where would that point be projected to if my estimated would be correct
+-  And we compare this location to the actual location where we observed this point in our image, and what we’re trying to do is to minimize this discrepancy, 
+- Bundle adjustiment is a statistical optimal solution, making some assumption, such as gaussian noise and the dependencies, how the mapping of the features into your camera images actually happen, and also assuming known data associatio.  
+
+### ORB-SLAM
+
+Reference:
+
+- [ORB-SLAM3] Carlos Campos, Richard Elvira, Juan J. Gómez Rodríguez, José M. M. Montiel and Juan D. Tardós, **ORB-SLAM3: An Accurate Open-Source Library for Visual, Visual-Inertial and Multi-Map SLAM**, *IEEE Transactions on Robotics, 2021* **[PDF](https://arxiv.org/abs/2007.11898)**. [[Github](https://github.com/UZ-SLAMLab/ORB_SLAM3), [Demo Video](https://www.youtube.com/channel/UCXVt-kXG6T95Z4tVaYlU80Q)]
+- [ORB-SLAM2] Raúl Mur-Artal and Juan D. Tardós. **ORB-SLAM2: an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras**. *IEEE Transactions on Robotics,* vol. 33, no. 5, pp. 1255-1262, 2017. **[PDF](https://arxiv.org/pdf/1610.06475.pdf)**
+- [ORB_SLAM] Raúl Mur-Artal, José M. M. Montiel and Juan D. Tardós. **ORB-SLAM: A Versatile and Accurate Monocular SLAM System**. *IEEE Transactions on Robotics,* vol. 31, no. 5, pp. 1147-1163, 2015. (**2015 IEEE Transactions on Robotics Best Paper Award**). **[PDF](https://arxiv.org/pdf/1502.00956.pdf)**.
+- [DBoW2 Place Recognition] Dorian Gálvez-López and Juan D. Tardós. **Bags of Binary Words for Fast Place Recognition in Image Sequences**. *IEEE Transactions on Robotics,* vol. 28, no. 5, pp. 1188-1197, 2012. **[PDF](http://doriangalvez.com/php/dl.php?dlp=GalvezTRO12.pdf)**
+- [IMU-Initialization] Carlos Campos, J. M. M. Montiel and Juan D. Tardós, **Inertial-Only Optimization for Visual-Inertial Initialization**, *ICRA 2020*. **[PDF](https://arxiv.org/pdf/2003.05766.pdf)**
+- [ORBSLAM-Atlas] Richard Elvira, J. M. M. Montiel and Juan D. Tardós, **ORBSLAM-Atlas: a robust and accurate multi-map system**, *IROS 2019*. **[PDF](https://arxiv.org/pdf/1908.11585.pdf)**
+- [ORBSLAM-VI] Raúl Mur-Artal, and Juan D. Tardós, **Visual-inertial monocular SLAM with map reuse**, IEEE Robotics and Automation Letters, vol. 2 no. 2, pp. 796-803, 2017. **[PDF](https://arxiv.org/pdf/1610.05949.pdf)**
+- 
+- 
+- 
+
+
+
 ### Anatomy of SLAM
 
 How to apply and solve this in an Augmented Reality scenario?
@@ -150,8 +192,6 @@ How to apply and solve this in an Augmented Reality scenario?
 A good starting point for understanding SLAM principles is: [“Past, Present, and Future of Simultaneous Localization and Mapping: Towards the Robust-Perception Age”](https://ieeexplore.ieee.org/abstract/document/7747236/) (2016) by Cadena et. al. They describe the typical architecture of SLAM as follows:
 
 ![SLAM Algorithm Overview](../images/all_in_one/SLAM-Algorithm.png)SLAM Algorithm Overview
-
-
 
 
 
@@ -215,7 +255,11 @@ roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
 
 [code] https://github.com/issaiass/jetbot_diff_drive
 
+ROS.org [hector_mapping documentation](http://wiki.ros.org/hector_mapping)
 
+- Github
+  - [HECTOR SLAM INSTALLATION GUIDE & TUTORIALS](https://github.com/samialperen/oko_slam/blob/master/doc/hector_slam_tutorial.md)
+  - [Cartographer_ROS SLAM INSTALLATION GUIDE & TUTORIALS](https://github.com/samialperen/oko_slam/blob/master/doc/cartographer_slam_tutorial.md)
 
 ```bash
 # Create a ROS ros workspace and compile an empty package:
@@ -224,7 +268,7 @@ mkdir -p catkin_ws/src
 cd catkin_ws
 catkin_make
 
-# Open the .bashrc with nano:
+ROS.org Open the .bashrc with nano:
 nano ~/.bashrc
 
 # Insert this line at the end of the ~/.bashrc file for sourcing your workspace:
@@ -304,7 +348,370 @@ rosrun map_server map_saver -f <path_and_name_of_map>
 
 
 
+Udemy ROS for Beginner II: SLAM Demo and Discussion:
 
+```bash
+$ roslaunch turtlebot3_gazebo turtlebot3_house.launch
+
+
+process[robot_state_publisher-1]: started with pid [6838]
+ERROR: cannot launch node of type [hector_mapping/hector_mapping]: hector_mapping
+ROS path [0]=/opt/ros/melodic/share/ros
+ROS path [1]=/home/jetbot/catkin_ws/src
+ROS path [2]=/opt/ros/melodic/share
+
+```
+
+
+
+
+
+## Implementation of ORB-SLAM2 on Windows
+
+### Reference:
+
+- !! [phdsky](https://github.com/phdsky)/**[ORBSLAM24Windows](https://github.com/phdsky/ORBSLAM24Windows)**
+- !!! [Video] [ORB SLAM2 安装](https://www.youtube.com/watch?v=Lq3Z1wvlbok)
+- [Github] [ORB-SLAM2](https://github.com/raulmur/ORB_SLAM2)
+- [TUM Dataset download](https://vision.in.tum.de/data/datasets/rgbd-dataset/download)
+
+- [Phylliida](https://github.com/Phylliida)/**[orbslam-windows](https://github.com/Phylliida/orbslam-windows)**
+- [CSDN] [ORB-SLAM2在window下的配置 (1)](https://blog.csdn.net/yfic000/article/details/75635424)  
+  - [ORB-SLAM2在window下的配置 (2)](https://blog.csdn.net/yfic000/article/details/75645136?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-5.fixedcolumn&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-5.fixedcolumn)
+  - [ORB-SLAM2在window下的配置 (3)](https://blog.csdn.net/yfic000/article/details/75716518?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-1.fixedcolumn&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-1.fixedcolumn)
+  - [ORB-SLAM2在window下的配置 (4)](https://blog.csdn.net/yfic000/article/details/75773105?spm=1001.2101.3001.6650.4&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBLOGCOLUMN%7Edefault-4.fixedcolumn&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBLOGCOLUMN%7Edefault-4.fixedcolumn)
+  - [ORB-SLAM2在window下的配置 (5)](https://blog.csdn.net/yfic000/article/details/75790975?spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-2.fixedcolumn&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-2.fixedcolumn)
+  - [ORB-SLAM2在window下的配置 (6)](https://blog.csdn.net/yfic000/article/details/75799853?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBLOGCOLUMN%7Edefault-3.fixedcolumn&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBLOGCOLUMN%7Edefault-3.fixedcolumn)
+  - [ORB-SLAM2在window下的配置 (7)[END]](https://blog.csdn.net/yfic000/article/details/75908256?spm=1001.2101.3001.6650.4&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.highlightwordscore&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.highlightwordscore)
+- [CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
+  - [Configuring CMake to build OpenCV on Windows](https://perso.uclouvain.be/allan.barrea/opencv/cmake_config.html)
+
+**Prerequisite**
+
+1. OpenCV
+
+- Version is not required, but not too old. In this tutorial is 2.4.13.
+- Add `YOUR_OWN_PATH\opencv\build;` `YOUR_OWN_PATH\opencv\build\x64\vc12\bin;` to your environment variable "PATH", you can also add `YOUR_OWN_PATH\opencv\build\x86\vc12\bin;` if you want to bulid a x86 type application.
+
+1. Cmake
+
+- Version should at least be 2.8.
+
+1. Visual Studio
+
+- In this tutorial is VS2013(Corresponding to opencv's vc12).
+
+So, we'll build a visual studio 2013 project of ORB_SLAM2 using cmake and then make a x64 app.
+
+**Steps**
+
+First, we'll compile the projects in **Thirdparty** folder.
+
+### **DBoW2**
+
+1. Open cmake-gui, select DBow2 folder as the source path and the DBow2/build folder as the binaries path.
+2. Click configure, select Visual Studio 16 2019 Win64(or your own) as the generator, click finish.
+3. After configure done, click Generate.
+4. Go to the DBow2/build folder, double click the DBoW2.sln to open the peoject.
+5. Build ALL_BUILD in either debug or release mode you want.
+6. After success build, the libraries will be in the lib folder of the DBow2 project source folder.
+
+`========== Build: 1 succeeded, 0 failed, 2 up-to-date, 0 skipped ==========`
+
+![image-20211204024807402](../images/all_in_one/image-20211204024807402.png)
+
+**eigen**
+
+**eigen is not need to be built**
+
+### **g2o**
+
+1. Open cmake-gui, select g2o folder as the source path and the g2o/build folder as the binaries path.
+2. Click configure, select Visual Studio 12 2013 Win64(or your own) as the generator, click finish.
+3. After configure done, click Generate.
+4. Go to the g2o/build folder, double click the g2o.sln to open the peoject.
+5. Right click on the g2o project->Properties->C/C++->Preprocessor Definitions, add WINDOWS at the end row, click Apply and OK.
+6. Build ALL_BUILD in either debug or release mode you want. **(Remind to repeat step 5 && Mode should be the same as DBoW2)**
+7. After success build, the libraries will be in the lib folder of the g2o project source folder.
+
+The result you might see:
+
+`========== Build: 1 succeeded, 0 failed, 2 up-to-date, 0 skipped ==========`
+
+```txt
+Build started...
+1>------ Build started: Project: g2o, Configuration: Release x64 ------
+1>cl : command line warning D9002: ignoring unknown option '-O3'
+1>cl : command line warning D9002: ignoring unknown option '-march=native'
+1>types_sba.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(62,74): warning C4996: 'Eigen::AlignedBit': was declared deprecated
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_sba.h(41): message : see reference to class template instantiation 'g2o::BaseVertex<3,Eigen::Vector3d>' being compiled
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(99,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(99): message : while compiling class template member function 'int g2o::BaseVertex<3,Eigen::Vector3d>::stackSize(void) const'
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_sba.h(41): message : see reference to class template instantiation 'g2o::BaseVertex<3,Eigen::Vector3d>' being compiled
+1>types_six_dof_expmap.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(62,74): warning C4996: 'Eigen::AlignedBit': was declared deprecated
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_sba.h(41): message : see reference to class template instantiation 'g2o::BaseVertex<3,Eigen::Vector3d>' being compiled
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_binary_edge.h(59,82): warning C4996: 'Eigen::AlignedBit': was declared deprecated
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.h(80): message : see reference to class template instantiation 'g2o::BaseBinaryEdge<2,Eigen::Vector2d,g2o::VertexSBAPointXYZ,g2o::VertexSE3Expmap>' being compiled
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_binary_edge.h(60,82): warning C4996: 'Eigen::AlignedBit': was declared deprecated
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.h(126,67): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.cpp(151,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.cpp(151,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.cpp(300,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.cpp(300,20): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(99,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(99): message : while compiling class template member function 'int g2o::BaseVertex<6,g2o::SE3Quat>::stackSize(void) const'
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.h(59): message : see reference to class template instantiation 'g2o::BaseVertex<6,g2o::SE3Quat>' being compiled
+1>types_seven_dof_expmap.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(62,74): warning C4996: 'Eigen::AlignedBit': was declared deprecated
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_sba.h(41): message : see reference to class template instantiation 'g2o::BaseVertex<3,Eigen::Vector3d>' being compiled
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_binary_edge.h(59,82): warning C4996: 'Eigen::AlignedBit': was declared deprecated
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.h(80): message : see reference to class template instantiation 'g2o::BaseBinaryEdge<2,Eigen::Vector2d,g2o::VertexSBAPointXYZ,g2o::VertexSE3Expmap>' being compiled
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_binary_edge.h(60,82): warning C4996: 'Eigen::AlignedBit': was declared deprecated
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_six_dof_expmap.h(126,67): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(99,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\../core/base_vertex.h(99): message : while compiling class template member function 'int g2o::BaseVertex<7,g2o::Sim3>::stackSize(void) const'
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\types\types_seven_dof_expmap.h(49): message : see reference to class template instantiation 'g2o::BaseVertex<7,g2o::Sim3>' being compiled
+1>hyper_graph_action.cpp
+1>hyper_graph.cpp
+1>marginal_covariance_cholesky.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\marginal_covariance_cholesky.cpp(160,43): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+1>matrix_structure.cpp
+1>batch_stats.cpp
+1>parameter.cpp
+1>cache.cpp
+1>optimizable_graph.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\optimizable_graph.cpp(447,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+1>solver.cpp
+1>optimization_algorithm_factory.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\optimization_algorithm_factory.cpp(106,47): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\optimization_algorithm_factory.cpp(107,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+1>estimate_propagator.cpp
+1>factory.cpp
+1>sparse_optimizer.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\sparse_optimizer.cpp(179,31): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\sparse_optimizer.cpp(383,46): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\sparse_optimizer.cpp(384,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\sparse_optimizer.cpp(463,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+1>hyper_dijkstra.cpp
+1>parameter_container.cpp
+1>optimization_algorithm.cpp
+1>optimization_algorithm_with_hessian.cpp
+1>Generating Code...
+1>Compiling...
+1>optimization_algorithm_levenberg.cpp
+1>jacobian_workspace.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\jacobian_workspace.cpp(63,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+1>robust_kernel.cpp
+1>robust_kernel_factory.cpp
+1>robust_kernel_impl.cpp
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\robust_kernel_impl.cpp(67,14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\robust_kernel_impl.cpp(74,9): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\robust_kernel_impl.cpp(95,14): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+1>C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\g2o\core\robust_kernel_impl.cpp(96,17): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+1>timeutil.cpp
+1>string_tools.cpp
+1>property.cpp
+1>Generating Code...
+1>cl : command line warning D9002: ignoring unknown option '-O3'
+1>cl : command line warning D9002: ignoring unknown option '-march=native'
+1>os_specific.c
+1>g2o.vcxproj -> C:\ORB_SLAM_Project\ORBSLAM24Windows\Thirdparty\g2o\lib\Release\g2o.lib
+1>Done building project "g2o.vcxproj".
+========== Build: 1 succeeded, 0 failed, 2 up-to-date, 0 skipped ==========
+```
+
+
+
+![image-20211204025149362](../images/all_in_one/image-20211204025149362.png)
+
+
+
+### **Pangolin**
+
+1. Open cmake-gui, select Pangolin folder as the source path and the Pangolin/build folder as the binaries path.
+2. Click configure, select Visual Studio 12 2013 Win64(or your own) as the generator, click finish.
+3. After configure done, click Generate.
+4. Go to the Pangolin/build folder, double click the Pangolin.sln to open the peoject.
+5. Build ALL_BUILD in either debug or release mode you want. **(Mode should be the same as DBoW2 && g2o)**.
+6. You'll get a error of "cannot open input file 'pthread.lib'", just ignore it.
+7. After success build, the libraries will be in the lib folder of the Pangolin project source folder.
+
+The result you might see after built:
+
+Pangolin Library
+
+![image-20211204001138793](../images/all_in_one/image-20211204001138793.png)
+
+![image-20211204001156487](../images/all_in_one/image-20211204001156487.png)
+
+
+
+
+
+### **ORBSLAM24Windows**
+
+1. Open cmake-gui, select ORBSLAM24Windows folder as the source path and the ORBSLAM24Windows/build folder as the binaries path.
+
+2. Click configure, select Visual Studio 12 2013 Win64(or your own) as the generator, click finish.
+
+3. After configure done, click Generate.
+
+4. Go to the ORBSLAM24Windows/build folder, double click the ORB_SLAM2.sln to open the peoject.
+
+5. Choose either debug or release mode you want. **(Mode should be the same as DBoW2 && g2o && Pangolin)**.
+
+6. Right click the ORB_SLAM2 project and then click generate.
+
+7. After success build, the libraries will be in the lib folder of the ORB_SLAM2 project source folder, and here is the result you might see:
+
+   1. ORB_SLAM2 build successfully
+
+      ![image-20211204004242650](../images/all_in_one/image-20211204004242650.png)
+
+
+### **Applications**
+
+If you want to make apps, you can also build the mono-stero-RGBD projects provided.
+
+**Example1:  mono-tum**
+
+Take mono_tum app as an example, you can follow the steps below.
+
+1. Go to the ORBSLAM24Windows/build folder, double click the ORB_SLAM2.sln to open the peoject.
+
+2. Choose either debug or release mode you want. **(Build mode should be the same as DBoW2 && g2o && Pangolin && ORB_SLAM2)**.
+
+3. Right click the mono_tum project and then click generate.
+
+4. Download tum dataset sequence, for example [freiburg2_desk](http://filecremers3.informatik.tu-muenchen.de/rgbd/dataset/freiburg2/rgbd_dataset_freiburg2_desk.tgz)
+
+5. Right click on the mono_tum project->Properties->C/C++->**Preprocessor Definitions**, add COMPILEDWITHC11 at the end row, click Apply and OK.
+
+   1. ![image-20211204033703823](../images/all_in_one/image-20211204033703823.png)
+
+   2. Build for mono_tum
+
+      ![image-20211204011112899](../images/all_in_one/image-20211204011112899.png)
+
+6. Right click the mono_tum project and then click Property->Config Property->Debug, input three parameters (Usage: ./mono_tum path_to_vocabulary path_to_settings path_to_sequence, the first can be ignored in windows)
+
+- **path_to_vocabulary** In ORBSLAM24Windows/Vocabulary folder, unpack the tar, a .txt file
+- **path_to_settings** In ORBSLAM24Windows/Examples/Monocular folder, rgbd_dataset_freiburg2_desk corresponding to TUM2.yaml
+- **path_to_sequence** rgbd_dataset_freiburg2_desk folder path
+
+1. Run app, it'll take a few minutes to load the vocabulary dictionary, and then you'll get the result as below:
+
+![image-20211204035407557](../images/all_in_one/image-20211204035407557.png)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zPW0AYSO0H8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+If you don't satisfied with the speed of loading dictionary, you can reference issue [vocabulary convert](https://github.com/raulmur/ORB_SLAM2/pull/21) to convert the txt vocabulary to bin vocabulary, it speeds up a lot.
+
+
+
+**Example2： rgbd_tum**
+
+Take rgbd_tum app as an example, you can follow the steps below.
+
+1. Go to the ORBSLAM24Windows/build folder, double click the ORB_SLAM2.sln to open the peoject.
+
+2. Choose either debug or release mode you want. **(Build mode should be the same as DBoW2 && g2o && Pangolin && ORB_SLAM2)**.
+
+3. Right click the rgbd_tum project and then click generate.
+
+4. Download tum dataset sequence, for example [freiburg2_desk](http://filecremers3.informatik.tu-muenchen.de/rgbd/dataset/freiburg2/rgbd_dataset_freiburg2_desk.tgz)
+
+5. Right click on the mono_tum project->Properties->C/C++->**Preprocessor Definitions**, add COMPILEDWITHC11 at the end row, click Apply and OK.
+
+6.  Run the executable
+
+   1. Download a sequence from http://vision.in.tum.de/data/datasets/rgbd-dataset/download and uncompress it.
+   2. Associate RGB images and depth images using the python script [associate.py](http://vision.in.tum.de/data/datasets/rgbd-dataset/tools). We already provide associations for some of the sequences in *Examples/RGB-D/associations/*. You can generate your own associations file executing:
+
+   ```bash
+   $ sudo apt install subversion
+   $ svn checkout https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools
+   $ cd rgbd_benchmark_tools/
+   # python associate.py PATH_TO_SEQUENCE/rgb.txt PATH_TO_SEQUENCE/depth.txt > associations.txt
+   /mnt/c/ORB_SLAM_Project/rgbd_benchmark_tools$ python3 ../rgbd_benchmark_tools/scripts/associate.py rgb.txt depth.txt > associations.txt
+   ```
+
+   1. Execute the following command. Change `TUMX.yaml` to TUM1.yaml,TUM2.yaml or TUM3.yaml for freiburg1, freiburg2 and freiburg3 sequences respectively. Change `PATH_TO_SEQUENCE_FOLDER`to the uncompressed sequence folder. Change `ASSOCIATIONS_FILE` to the path to the corresponding associations file.
+
+- **path_to_vocabulary** In ORBSLAM24Windows/Vocabulary folder, unpack the tar, a .txt file
+- **path_to_settings** rgbd_dataset_freiburg3_walking_static corresponding to TUM1.yaml
+- **path_to_sequence **rgbd_dataset_freiburg3_walking_static folder path
+
+1. Run app with following commadn:
+
+   1. `PS C:\ORB_SLAM_Project\ORBSLAM24Windows> .\Examples\RGB-D\Debug\rgbd_tum.exe .\Vocabulary\ORBvoc.txt\ORBvoc.txt .\Examples\RGB-D\TUM3.yaml ..\rgbd_dataset_freiburg3_walking_static ..\rgbd_dataset_freiburg3_walking_static\associations.txt`
+
+2.  it'll take a few minutes to load the vocabulary dictionary, and then you'll get the result.
+
+   ![image-20211204035338317](../images/all_in_one/image-20211204035338317.png)
+
+Here is the full video:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4wvgU-I8RI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+
+
+###  Monocular Examples
+
+**TUM Dataset**
+
+1. Download a sequence from http://vision.in.tum.de/data/datasets/rgbd-dataset/download and uncompress it.
+2. Execute the following command. Change `TUMX.yaml` to TUM1.yaml,TUM2.yaml or TUM3.yaml for freiburg1, freiburg2 and freiburg3 sequences respectively. Change `PATH_TO_SEQUENCE_FOLDER`to the uncompressed sequence folder.
+
+```powershell
+./Examples/Monocular/mono_tum Vocabulary/ORBvoc.txt Examples/Monocular/TUMX.yaml PATH_TO_SEQUENCE_FOLDER
+# My example
+PS C:\ORB_SLAM_Project\ORBSLAM24Windows> .\Examples\Monocular\Release\mono_tum.exe .\Vocabulary\ORBvoc.txt\ORBvoc.txt .\Examples\Monocular\TUM2.yaml ..\rgbd_dataset_freiburg2_desk\^C
+```
+
+**KITTI Dataset**
+
+1. Download the dataset (grayscale images) from http://www.cvlibs.net/datasets/kitti/eval_odometry.php
+2. Execute the following command. Change `KITTIX.yaml`by KITTI00-02.yaml, KITTI03.yaml or KITTI04-12.yaml for sequence 0 to 2, 3, and 4 to 12 respectively. Change `PATH_TO_DATASET_FOLDER` to the uncompressed dataset folder. Change `SEQUENCE_NUMBER` to 00, 01, 02,.., 11.
+
+```
+./Examples/Monocular/mono_kitti Vocabulary/ORBvoc.txt Examples/Monocular/KITTIX.yaml PATH_TO_DATASET_FOLDER/dataset/sequences/SEQUENCE_NUMBER
+```
+
+**EuRoC Dataset**
+
+1. Download a sequence (ASL format) from http://projects.asl.ethz.ch/datasets/doku.php?id=kmavvisualinertialdatasets
+2. Execute the following first command for V1 and V2 sequences, or the second command for MH sequences. Change PATH_TO_SEQUENCE_FOLDER and SEQUENCE according to the sequence you want to run.
+
+```
+./Examples/Monocular/mono_euroc Vocabulary/ORBvoc.txt Examples/Monocular/EuRoC.yaml PATH_TO_SEQUENCE_FOLDER/mav0/cam0/data Examples/Monocular/EuRoC_TimeStamps/SEQUENCE.txt 
+./Examples/Monocular/mono_euroc Vocabulary/ORBvoc.txt Examples/Monocular/EuRoC.yaml PATH_TO_SEQUENCE/cam0/data Examples/Monocular/EuRoC_TimeStamps/SEQUENCE.txt 
+```
+
+
+
+### RGB-D Example
+
+**TUM Dataset**
+
+1. Download a sequence from http://vision.in.tum.de/data/datasets/rgbd-dataset/download and uncompress it.
+2. Associate RGB images and depth images using the python script [associate.py](http://vision.in.tum.de/data/datasets/rgbd-dataset/tools). We already provide associations for some of the sequences in *Examples/RGB-D/associations/*. You can generate your own associations file executing:
+
+```
+python associate.py PATH_TO_SEQUENCE/rgb.txt PATH_TO_SEQUENCE/depth.txt > associations.txt
+```
+
+1. Execute the following command. Change `TUMX.yaml` to TUM1.yaml,TUM2.yaml or TUM3.yaml for freiburg1, freiburg2 and freiburg3 sequences respectively. Change `PATH_TO_SEQUENCE_FOLDER`to the uncompressed sequence folder. Change `ASSOCIATIONS_FILE` to the path to the corresponding associations file.
+
+```powershell
+./Examples/RGB-D/rgbd_tum Vocabulary/ORBvoc.txt Examples/RGB-D/TUMX.yaml PATH_TO_SEQUENCE_FOLDER ASSOCIATIONS_FILE
+# My Example
+PS C:\ORB_SLAM_Project\ORBSLAM24Windows> .\Examples\RGB-D\Release\rgbd_tum.exe .\Vocabulary\ORBvoc.txt\ORBvoc.txt .\Examples\RGB-D\TUM3.yaml ..\rgbd_dataset_freiburg3_walking_static ..\rgbd_dataset_freiburg3_walking_static\associations.txt
+```
 
 
 
@@ -990,12 +1397,106 @@ mkdir -p src
 - !!! About catkin_make, read more here, http://wiki.ros.org/camera_calibration/Tutorials/MonocularCalibration
 
 ```bash
-If you would like to build specific packages in the workspace, invoke the following in the root of your workspace:
+If you would like to build 
+specific packages in the workspace, invoke the following in the root of your workspace:
 
 $ catkin_make -DCATKIN_WHITELIST_PACKAGES="package1;package2"
 If you want to revert back to building all packages, do the following:
 
 $ catkin_make -DCATKIN_WHITELIST_PACKAGES=""
+```
+
+melodict_isntallation_script.bash
+
+```bash
+#!/bin/bash
+# Apache License 2.0
+# Copyright (c) 2018, ROBOTIS CO., LTD.
+
+echo ""
+echo "[Note] Target OS version  >>> Ubuntu 18.04.x (Bionic Beaver) or Linux Mint 19.x"
+echo "[Note] Target ROS version >>> ROS Melodic Morenia"
+echo "[Note] Catkin workspace   >>> $HOME/catkin_ws"
+echo ""
+echo "PRESS [ENTER] TO CONTINUE THE INSTALLATION"
+echo "IF YOU WANT TO CANCEL, PRESS [CTRL] + [C]"
+read
+
+echo "[Set the target OS, ROS version and name of catkin workspace]"
+name_os_version=${name_os_version:="bionic"}
+name_ros_version=${name_ros_version:="melodic"}
+name_catkin_workspace=${name_catkin_workspace:="catkin_ws"}
+
+echo "[Update the package lists]"
+sudo apt update -y
+
+echo "[Install build environment, the chrony, ntpdate and set the ntpdate]"
+sudo apt install -y chrony ntpdate curl build-essential
+sudo ntpdate ntp.ubuntu.com
+
+echo "[Add the ROS repository]"
+if [ ! -e /etc/apt/sources.list.d/ros-latest.list ]; then
+  sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu ${name_os_version} main\" > /etc/apt/sources.list.d/ros-latest.list"
+fi
+
+echo "[Download the ROS keys]"
+roskey=`apt-key list | grep "Open Robotics"`
+if [ -z "$roskey" ]; then
+  curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+fi
+
+echo "[Check the ROS keys]"
+roskey=`apt-key list | grep "Open Robotics"`
+if [ -n "$roskey" ]; then
+  echo "[ROS key exists in the list]"
+else
+  echo "[Failed to receive the ROS key, aborts the installation]"
+  exit 0
+fi
+
+echo "[Update the package lists]"
+sudo apt update -y
+
+echo "[Install the ros-desktop-full and all rqt plugins]"
+sudo apt install -y ros-$name_ros_version-desktop-full ros-$name_ros_version-rqt-*
+
+echo "[Environment setup and getting rosinstall]"
+source /opt/ros/$name_ros_version/setup.sh
+sudo apt install -y python-rosinstall python-rosinstall-generator python-wstool build-essential git
+
+echo "[Install rosdep]"
+sudo apt install python-rosdep
+
+echo "[Initialize rosdep and Update]"
+sudo sh -c "rosdep init"
+rosdep update
+
+echo "[Make the catkin workspace and test the catkin_make]"
+mkdir -p $HOME/$name_catkin_workspace/src
+cd $HOME/$name_catkin_workspace/src
+catkin_init_workspace
+cd $HOME/$name_catkin_workspace
+catkin_make
+
+echo "[Set the ROS evironment]"
+sh -c "echo \"alias eb='nano ~/.bashrc'\" >> ~/.bashrc"
+sh -c "echo \"alias sb='source ~/.bashrc'\" >> ~/.bashrc"
+sh -c "echo \"alias gs='git status'\" >> ~/.bashrc"
+sh -c "echo \"alias gp='git pull'\" >> ~/.bashrc"
+sh -c "echo \"alias cw='cd ~/$name_catkin_workspace'\" >> ~/.bashrc"
+sh -c "echo \"alias cs='cd ~/$name_catkin_workspace/src'\" >> ~/.bashrc"
+sh -c "echo \"alias cm='cd ~/$name_catkin_workspace && catkin_make'\" >> ~/.bashrc"
+
+sh -c "echo \"source /opt/ros/$name_ros_version/setup.bash\" >> ~/.bashrc"
+sh -c "echo \"source ~/$name_catkin_workspace/devel/setup.bash\" >> ~/.bashrc"
+
+sh -c "echo \"export ROS_MASTER_URI=http://localhost:11311\" >> ~/.bashrc"
+sh -c "echo \"export ROS_HOSTNAME=localhost\" >> ~/.bashrc"
+
+source $HOME/.bashrc
+
+echo "[Complete!!!]"
+exit 0
 ```
 
 
@@ -1128,6 +1629,16 @@ The **node** uses
 The basic unit of ROS.
 
 The ROS application is developed on a package basis, and the package contains either a configuration file to launch other packages or nodes. <u>The package also contains all the files necessary for running the package, including ROS dependency libraries for running various processes, datasets, and configuration file.</u> The number of official packages is about 2,500 for ROS Indigo as of July 2017 (http://repositories.ros.org/status_page/ ros_indigo_default.html) and about 1,600 packages for ROS Kinetic (http://repositories.ros.org/status_page/ros_kinetic_default.html). In addition, although there could be some redundancies, there are about 4,600 packages developed and released by users (http://rosindex.github.io/stats/).
+
+To create a package:
+
+`catkin_create_pkg package_name {dependencies}`
+
+
+
+![image-20211201014615700](../images/all_in_one/image-20211201014615700.png)
+
+Courtesy: [https://ethz.ch/content/dam/ethz/special-interest/mavt/robotics-n-intelligent-systems/rsl-dam/ROS2021/lec2/ROS%20Course%20Slides%20Course%202.pdf](https://ethz.ch/content/dam/ethz/special-interest/mavt/robotics-n-intelligent-systems/rsl-dam/ROS2021/lec2/ROS%20Course%20Slides%20Course%202.pdf)
 
 **Metapackage:**
 
@@ -1274,6 +1785,8 @@ TCP and UDP的区别就是TCP需要three-handshake process, but UDP doesn’t, t
 **CMakeLists.txt**
 
 Catkin, which is the build system of ROS, uses CMake by default. The build environment is specified in the ‘CMakeLists.txt’26 file in each package folder.
+
+![image-20211201014823069](../images/all_in_one/image-20211201014823069.png)
 
 ```cmake
 cmake_minimum_required(VERSION 2.8.3)	# the minimum required version of ‘cmake’ installed on the operating system.

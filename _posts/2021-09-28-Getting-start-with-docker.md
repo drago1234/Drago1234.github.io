@@ -1299,6 +1299,201 @@ Other Good Resources:
 
 
 
+#### Backend Deployment
+
+**Enabling HTTPS on your website:**
+
+To enable HTTPS on your website, you need to get a certificate (a type of file) from a Certificate Authority (CA). Let’s Encrypt is a free CA. In order to get a certificate for your website’s domain from Let’s Encrypt, you have to demonstrate control over the domain. With Let’s Encrypt, you do this using software that uses the [ACME protocol](https://tools.ietf.org/html/rfc8555). The Automatic Certificate Management Environment protocol(ACME) is a communications protocol for automating interactions between certificate authorities and their users' web servers, allowing the automated deployment of public key infrastructure at very low cost.
+
+Step 1: Have some understanding about HTTPS, CA, and SSL
+
+Step 2: Understand what is L[et’s Encrypt](https://letsencrypt.org/getting-started/)
+
+Step 3: Follow instruction [here](https://certbot.eff.org/instructions?ws=webproduct&os=ubuntufocal) to install certbot to your backend server, ubuntu 20.04
+
+1. SSH into the server
+
+   SSH into the server running your HTTP website as a user with sudo privileges.
+
+2. Install snapd (Skip for Ubuntu 20.04)
+
+   You'll need to install snapd and make sure you follow any instructions to enable classic snap support.
+
+   Follow these instructions on [snapcraft's site to install snapd](https://snapcraft.io/docs/installing-snapd/).
+
+3. Ensure that your version of snapd is up to date
+
+   Execute the following instructions on the command line on the machine to ensure that you have the latest version of `snapd`.
+
+   ```
+   sudo snap install core; sudo snap refresh core
+   ```
+
+4. Remove certbot-auto and any Certbot OS packages
+
+   If you have any Certbot packages installed using an OS package manager like `apt`, `dnf`, or `yum`, you should remove them before installing the Certbot snap to ensure that when you run the command `certbot` the snap is used rather than the installation from your OS package manager. The exact command to do this depends on your OS, but common examples are `sudo apt-get remove certbot`, `sudo dnf remove certbot`, or `sudo yum remove certbot`. If you previously used Certbot through the certbot-auto script, you should also remove its installation by following the instructions [here](https://certbot.eff.org/docs/uninstall.html).
+
+5. Install Certbot
+
+   Run this command on the command line on the machine to install Certbot.
+
+   ```bash
+   sudo snap install --classic certbot -d mejia.ml
+   # mejia.ml is you domain name
+   ```
+
+Note:
+
+ Also, making your to set your domain name pointing to your server IP address, like the following:
+
+![image-20211202185859371](../images/all_in_one/image-20211202185859371.png)
+
+DNS TTL (**time to live**) is a setting that tells the DNS resolver how long to cache a query before requesting a new one…. ==> 600 is 10min, so should be enough
+
+
+
+Note 2:  Here is a log for the command that I run throught:
+
+```bash
+$ sudo snap install core; sudo snap refresh core
+core 16-2.52.1 from Canonical✓ installed
+snap "core" has no updates available
+$ sudo snap install --classic certbot
+Mount snap "certbot" (1582) \error: change finished in status "Undone" with no error message
+
+$ sudo ln -s /snap/bin/certbot /usr/bin/certbot
+$ sudo certbot certonly --standalone
+sudo: certbot: command not found
+$ snap changes
+ID   Status  Spawn               Ready               Summary
+6    Done    today at 22:41 UTC  today at 22:43 UTC  Install "core" snap
+7    Undone  today at 22:43 UTC  today at 22:44 UTC  Install "certbot" snap
+$ snap change 7
+Status  Spawn               Ready               Summary
+Done    today at 22:43 UTC  today at 22:44 UTC  Ensure prerequisites for "certbot" are available
+Undone  today at 22:43 UTC  today at 22:44 UTC  Download snap "certbot" (1582) from channel "stable"
+Done    today at 22:43 UTC  today at 22:44 UTC  Fetch and check assertions for snap "certbot" (1582)
+Undone  today at 22:43 UTC  today at 22:44 UTC  Mount snap "certbot" (1582)
+Hold    today at 22:43 UTC  today at 22:44 UTC  Copy snap "certbot" data
+Hold    today at 22:43 UTC  today at 22:44 UTC  Setup snap "certbot" (1582) security profiles
+Hold    today at 22:43 UTC  today at 22:44 UTC  Make snap "certbot" (1582) available to the system
+Hold    today at 22:43 UTC  today at 22:44 UTC  Automatically connect eligible plugs and slots of snap "certbot"
+Hold    today at 22:43 UTC  today at 22:44 UTC  Set automatic aliases for snap "certbot"
+Hold    today at 22:43 UTC  today at 22:44 UTC  Setup snap "certbot" aliases
+Hold    today at 22:43 UTC  today at 22:44 UTC  Run install hook of "certbot" snap if present
+Hold    today at 22:43 UTC  today at 22:44 UTC  Start snap "certbot" (1582) services
+Hold    today at 22:43 UTC  today at 22:44 UTC  Run configure hook of "certbot" snap if present
+Hold    today at 22:43 UTC  today at 22:44 UTC  Run health check of "certbot" snap
+
+## ==> If you see something like this after installation, just reinstall again, and it will work magically
+
+
+$ sudo snap install --classic certbot
+certbot 1.21.0 from Certbot Project (certbot-eff✓) installed
+```
+
+6. Prepare the Certbot command
+
+   Execute the following instruction on the command line on the machine to ensure that the `certbot` command can be run.
+
+   ```bash
+   sudo ln -s /snap/bin/certbot /usr/bin/certbot
+   ```
+
+7. Choose how you'd like to run Certbot
+
+   Are you ok with temporarily stopping your website?
+
+   ### Yes, my web server is not currently running on this machine.
+
+   Stop your webserver, then run this command to get a certificate. Certbot will temporarily spin up a webserver on your machine.
+
+   ```
+   sudo certbot certonly --standalone
+   ```
+
+Note: 
+
+```bash
+$ sudo certbot certonly --standalone
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Enter email address (used for urgent renewal and security notices)
+ (Enter 'c' to cancel): dong760@bu.edu
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Please read the Terms of Service at
+https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf. You must
+agree in order to register with the ACME server. Do you agree?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Yes
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would you be willing, once your first certificate is successfully issued, to
+share your email address with the Electronic Frontier Foundation, a founding
+partner of the Let's Encrypt project and the non-profit organization that
+develops Certbot? We'd like to send you email about our work encrypting the web,
+EFF news, campaigns, and ways to support digital freedom.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+(Y)es/(N)o: Yes
+Account registered.
+Please enter the domain name(s) you would like on your certificate (comma and/or
+space separated) (Enter 'c' to cancel): mejia.ml
+Requesting a certificate for mejia.ml
+
+Certbot failed to authenticate some domains (authenticator: standalone). The Certificate Authority reported these problems:
+  Domain: mejia.ml
+  Type:   dns
+  Detail: No valid IP addresses found for mejia.ml
+
+Hint: The Certificate Authority failed to download the challenge files from the temporary standalone webserver started by Certbot on port 80. Ensure that the listed domains point to this machine and that it can accept inbound connections from the internet.
+
+Some challenges have failed.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+
+$ sudo certbot certonly --standalone -d mejia.ml
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Requesting a certificate for mejia.ml
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/mejia.ml/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/mejia.ml/privkey.pem
+This certificate expires on 2022-03-02.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# ==> If you see this in the terminal. Congraduation, that means you have CA registered sucessfully!
+```
+
+8. Install your certificate
+
+You'll need to install your new certificate in the configuration file for your webserver.
+
+9. Test automatic renewal
+
+The Certbot packages on your system come with a cron job or systemd timer that will renew your certificates automatically before they expire. You will not need to run Certbot again, unless you change your configuration. You can test automatic renewal for your certificates by running this command:
+
+```
+sudo certbot renew --dry-run
+```
+
+The command to renew certbot is installed in one of the following locations:
+
+- `/etc/crontab/`
+- `/etc/cron.*/*`
+- `systemctl list-timers`
+
+10. Confirm that Certbot worked
+
+To confirm that your site is set up properly, visit `https://yourwebsite.com/` in your browser and look for the lock icon in the URL bar.
+
+
+
 
 
 Reference:
