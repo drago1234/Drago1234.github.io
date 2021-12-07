@@ -13,7 +13,7 @@ excerpt: >-
 
 
 
-## Table of contents
+# Table of contents
 
 {: .no_toc .text-delta }
 
@@ -24,41 +24,7 @@ excerpt: >-
 
 [TOC]
 
-
-
-## Plan:
-
-1. ROS tutorial #1: Introduction, Installing ROS, and running the Turtlebot simulator, https://www.youtube.com/watch?v=9U6GDonGFHw&list=PLJNGprAk4DF5PY0kB866fEZfz6zMLJTF8
-
-
-
-# Resources:
-
-
-
-## Paper:
-
-
-
-## Course Video
-
-- Udemy
-  - ROS2 For Beginners (ROS Foxy - 2021), https://www.udemy.com/cart/success/704244436/
-  - ROS for Beginners II: Localization, Navigation and SLAM, https://www.udemy.com/course/ros-navigation/learn/lecture/11785182#overview
-
-Books:
-
-![image-20211120024828774](../images/all_in_one/image-20211120024828774.png)
-
-
-
-
-
-
-
-
-
-
+![mono_tum_demo_x15](../images/all_in_one/mono_tum_demo_x15.gif)
 
 # Robot Category:
 
@@ -4952,6 +4918,26 @@ ROS_DISTRO=melodic
 
 - Implementing ORB-SLAM on Ubuntu 18.04 & ROS Melodic, https://medium.com/@mhamdaan/implementing-orb-slam-on-ubuntu-18-04-ros-melodic-606e668deffa
 - YouTube, Justin Huang ROS Tutorial, https://www.youtube.com/watch?v=9U6GDonGFHw&list=PLJNGprAk4DF5PY0kB866fEZfz6zMLJTF8
+
+
+
+### Paper:
+
+
+
+### Course Video
+
+- Udemy
+  - ROS2 For Beginners (ROS Foxy - 2021), https://www.udemy.com/cart/success/704244436/
+  - ROS for Beginners II: Localization, Navigation and SLAM, https://www.udemy.com/course/ros-navigation/learn/lecture/11785182#overview
+
+ROS tutorial #1: Introduction, Installing ROS, and running the Turtlebot simulator, https://www.youtube.com/watch?v=9U6GDonGFHw&list=PLJNGprAk4DF5PY0kB866fEZfz6zMLJTF8
+
+Books:
+
+![image-20211120024828774](../images/all_in_one/image-20211120024828774.png)
+
+
 
 
 
