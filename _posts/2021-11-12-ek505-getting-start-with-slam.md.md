@@ -31,9 +31,9 @@ excerpt: >-
 **我定义的类别：**
 
 1. Mobile Robot: 只要是带轮子的，履带也算，反正以轮子作为驱动 ==》 这研究就是 robot motion control, path planning/navigation 这一块，还有就是些是视觉的东西，比如 object detection, object avoidance, object following. 
-2. 爬虫类：所有考腿来移动的，用的都是rigit body作为支架，比如robot dog, 模拟人的/动物的腿的，都算
-3. Drone：所有带翅膀的，天上飞的
-4. Industrial robot: 带机械臂的，不用移动的那种 ==> 这个可以研究的东西就很多了, 但大多都是控制上面的，robot arm manipulation 这些，比如 forward/backward kinematic, 
+2. 爬虫类：所有考腿来移动的，用的都是rigit body作为支架，比如robot dog, 模拟人的/动物的腿的，都算, 这主要研究的就是static and dynamic mechanics了
+3. Drone：所有能在天上飞的，不管是翅膀驱动，还是螺旋桨驱动的
+4. Industrial robot: 带机械臂的，不用移动的那种 ==> 这个可以研究的东西就很多了, 但大多都是控制上面的，robot arm manipulation, 3D space configuration, forward/backward kinematic,  还有robustness and safety 层面的，比如如何不伤害到人, 紧急情况能安全的停下来。。。
 
 ==》 搞懂上面这4种基本就够了
 
@@ -677,6 +677,8 @@ python associate.py PATH_TO_SEQUENCE/rgb.txt PATH_TO_SEQUENCE/depth.txt > associ
 ./Examples/RGB-D/rgbd_tum Vocabulary/ORBvoc.txt Examples/RGB-D/TUMX.yaml PATH_TO_SEQUENCE_FOLDER ASSOCIATIONS_FILE
 # My Example
 PS C:\ORB_SLAM_Project\ORBSLAM24Windows> .\Examples\RGB-D\Release\rgbd_tum.exe .\Vocabulary\ORBvoc.txt\ORBvoc.txt .\Examples\RGB-D\TUM3.yaml ..\rgbd_dataset_freiburg3_walking_static ..\rgbd_dataset_freiburg3_walking_static\associations.txt
+
+
 ```
 
 
@@ -826,6 +828,8 @@ https://forums.developer.nvidia.com/t/jetpack-4-3-mesa-loader-failed-to-open-swr
 
 
 
+
+
 ## Q: How to run both cpp and python code?
 
 
@@ -932,7 +936,7 @@ Other Reference:
 
 
 
-### [Install ROS on windows 10 using WSL (Full guide)](https://github.com/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)) 
+### [Install ROS on windows 10 using WSL and WSL2 (Full guide)](https://github.com/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)) 
 
 Here a full guide how to install ROS on Windows 10 using [Windows Subsystem for Linux (WSL)](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F).
 
@@ -1209,8 +1213,6 @@ If they are not then you might need to 'source' some setup.
 
 
 
-###
-
 ```bash
 
 :: activate the ROS environment
@@ -1293,9 +1295,222 @@ export SVGA_VGPU10=0
 
 
 
+#### Step 5: WSL GUI setup
 
 
-## Installation:
+
+Other Reference:
+
+- [How to run Gazebo + RVIZ on Windows 10 using WSL2](https://www.youtube.com/watch?v=DW7l9LHdK5c)
+
+- [How to Install Programs With a Graphical User Interface in WSL2](https://david-littlefield.medium.com/how-to-install-programs-with-a-graphical-user-interface-gui-in-wsl2-e8ea9476cb78)
+
+Basically, here is the command that you need to type in before launching and GUI applicaiton.
+
+```bash
+# First find you localhost ip addr
+cat /etc/resolv.conf
+# Or ipconfig in CMD terminal
+
+
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0 
+cd src
+git clone https://github.com/ROBOTIS-GIT/turtlebot3
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations
+cd .. && catkin_make
+source devel/setup.bash
+export DISPLAY="grep nameserver /etc/resolv.conf | sed 's/nameserver //':0"
+
+export GAZEBO_IP=127.0.0.1	# Setting to local host
+export DISPLAY=172.30.192.1:0 # it will choose the first local display that was started, read more here, https://unix.stackexchange.com/questions/193827/what-is-display-0
+export LIBGL_ALWAYS_INDIRECT=1
+```
+
+As you can see the ROS Gazebo simulation is running under WSL2 on Wi:
+
+![image-20211211190245906](../images/all_in_one/image-20211211190245906.png)
+
+
+
+**Debug:**
+
+Error 1:
+
+```bash
+drago_ubuntu20@DESKTOP-9PMBFRH:~$ export DISPLAY=172.30.192.1:0.0
+drago_ubuntu20@DESKTOP-9PMBFRH:~$ export LIBGL_ALWAYS_INDIRECT=1
+drago_ubuntu20@DESKTOP-9PMBFRH:~$ gedit
+Unable to init server: Could not connect: Connection refused
+
+(gedit:16150): Gtk-WARNING **: 11:59:37.329: cannot open display: 172.30.192.1:0.0
+```
+
+Solu: https://github.com/microsoft/WSL/issues/6430
+
+Basically, it’s not about the DISPLAY, it’s about the firewall for VcXsrv application. You need to create an new inbound rule in your Windows Firewall. See below:
+
+> I changed my display to this as you suggested:
+>
+> ```bash
+> export DISPLAY=`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0
+> ```
+>
+> This didn't solve this issue... BUT in that link you posted, I looked at some of the solutions people were offering. I decided to check VcXsrv's firewall permissions and discovered it never even created a profile for itself when I installed it.
+>
+> I went to Control Panel > System and Security > Windows Defender Firewall > Advanced Settings > Inbound Rules > New Rule...
+> \> Program > %ProgramFiles%\VcXsrv\vcxsrv.exe > Allow the connection > checked Domain/Private/Public > Named and Confirmed Rule.
+>
+> And it worked!!! I've been working on this for 3 days, I don't know how it has taken this long to find the solution, but I am so grateful for your help [@moloned](https://github.com/moloned)!
+
+Error2: 
+
+![image-20211211173825629](../images/all_in_one/image-20211211173825629.png)
+
+Or
+
+![image-20211211173847865](../images/all_in_one/image-20211211173847865.png)
+
+After running `gazebo`, you see some error related to gazebo_gui, or say something like, `[Err] [RenderEngine.cc:749] Can't open display: 192.168.50.1:0.0` 
+
+==> There are two things you need to make sure are configured correctly: 
+
+1) The value for`$DISPLAY` must match to the IPv4 address in your Windows Terminal (you can figure out with `ipconfig`); 
+
+ open an cmd or powerShell terminal, and type, `ipconfig`. Note down IPv4 address and DNS Servers in Wi-Fi
+
+```bash
+   IPv4 Address. . . . . . . . . . . : 192.168.51.52(Preferred)
+   DNS Servers . . . . . . . . . . . : 192.168.51.1
+```
+
+Second, go to WSL terminal, type `sudo vim /etc/resolv.conf`, and edit it as below:
+
+```
+nameserver 192.168.51.52	
+nameserver 192.168.51.1
+```
+
+2. You need to uncheck the OpenGL setting, any application requires OpenGL setting won’t work in WSL2, check this blog — [Announcing Windows 11 Insider Preview Build 22518](https://blogs.windows.com/windows-insider/2021/12/08/announcing-windows-11-insider-preview-build-22518/) ==> When launching X-Launch, make sure you uncheck this one:
+
+![image-20211211174943973](../images/all_in_one/image-20211211174943973.png)
+
+And setting `LIBGL_ALWAYS_INDIRECT` to 0 with `export LIBGL_ALWAYS_INDIRECT=0 `
+
+Then check again with following command:
+
+```bash
+export GAZEBO_IP=127.0.0.1	# Setting to local host
+# it will choose the first local display that was started, read more here, https://unix.stackexchange.com/questions/193827/what-is-display-0
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk 'NR==1{print $2}'):0.0
+export LIBGL_ALWAYS_INDIRECT=0
+gazeo --verbose
+```
+
+
+
+
+
+
+
+#### Step6: [Enable NVIDIA CUDA on WSL 2](https://docs.microsoft.com/en-us/windows/ai/directml/gpu-cuda-in-wsl)
+
+Reference:
+
+- [Enable NVIDIA CUDA on WSL 2](https://docs.microsoft.com/en-us/windows/ai/directml/gpu-cuda-in-wsl) 
+- [Run Linux GUI apps on the Windows Subsystem for Linux (preview)](https://docs.microsoft.com/en-us/windows/wsl/tutorials/gui-apps)
+- [How to run Gazebo + RVIZ on Windows 10 using WSL2](https://www.youtube.com/watch?v=DW7l9LHdK5c)
+  - [Windows Subsystem for Linux 2: Installing VcXsrv X Server](https://www.rickmakes.com/windows-subsystem-for-linux-2-installing-vcxrv-x-server/) 
+- [Install the CUDA Driver and Toolkit in WSL2](https://levelup.gitconnected.com/install-the-cuda-driver-and-toolkit-in-wsl2-be38703fed5c)
+- [Announcing CUDA on Windows Subsystem for Linux 2](https://developer.nvidia.com/blog/announcing-cuda-on-windows-subsystem-for-linux-2/)
+- [CUDA Toolkit Installation, CUDA Toolkit 11.5 Update 1 Downloads](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network)
+- Nvidia cuda download repo, I[ndex of /compute/cuda/repos/ubuntu2004/x86_64](http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/)
+
+
+
+Let’s verify the WSL can access the GPU, follow this article here, https://docs.nvidia.com/cuda/wsl-user-guide/index.html#installing-insider-preview-builds
+
+```bash
+$ nvidia-smi		# Check you have GPU driver installed
+Sat Dec 11 18:12:25 2021
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 470.81       Driver Version: 472.39       CUDA Version: 11.4     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA GeForce ...  Off  | 00000000:01:00.0  On |                  N/A |
+| N/A   61C    P8     7W /  N/A |    663MiB /  8192MiB |    ERR!      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+
+
+$ nvcc --version	# Checking you have CUDA compiler
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2019 NVIDIA Corporation
+Built on Sun_Jul_28_19:07:16_PDT_2019
+Cuda compilation tools, release 10.1, V10.1.243
+
+
+# Check WSL can access the GPU
+$ cd /usr/local/cuda-11.4/samples/4_Finance/BlackScholes/
+$ sudo make
+$ ./BlackScholes	
+# You should see something similar below
+[/usr/local/cuda-11.4/samples/4_Finance/BlackScholes/BlackScholes] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+Initializing data...
+...allocating CPU memory for options.
+...allocating GPU memory for options.
+...generating input data in CPU mem.
+...copying input data to GPU mem.
+Data init done.
+
+Executing Black-Scholes GPU kernel (512 iterations)...
+Options count             : 8000000
+BlackScholesGPU() time    : 0.244465 msec
+Effective memory bandwidth: 327.245417 GB/s
+Gigaoptions per second    : 32.724542
+
+BlackScholes, Throughput = 32.7245 GOptions/s, Time = 0.00024 s, Size = 8000000 options, NumDevsUsed = 1, Workgroup = 128
+
+Reading back GPU results...
+Checking the results...
+...running CPU calculations.
+
+Comparing the results...
+L1 norm: 1.741792E-07
+Max absolute error: 1.192093E-05
+
+Shutting down...
+...releasing GPU memory.
+...releasing CPU memory.
+Shutdown done.
+
+[BlackScholes] - Test Summary
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+
+Test passed
+```
+
+As you can see CUDA driven GPU is running under WSL 2: walalala….
+
+![image-20211211182725227](../images/all_in_one/image-20211211182725227.png)
+
+
+
+### Installationon Script with Ubuntu:
 
 !!! Use the bash script here to download directly, https://github.com/ROBOTIS-GIT/robotis_tools/blob/master/install_ros_melodic.sh
 
@@ -1463,6 +1678,58 @@ source $HOME/.bashrc
 
 echo "[Complete!!!]"
 exit 0
+```
+
+
+
+### ERROR Debug:
+
+==> Use `sudo apt install <package> -y`
+
+```bash
+$ sudo apt install ros-noetic-turtle3-gazebo
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package ros-noetic-turtle3-gazebo
+$ sudo apt install ros-noetic-turtle3-ga^C
+$ sudo apt-get install -y ros-noetic-turtlebot3-gazebo
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+```
+
+==> Use `python3-rosinstall`
+
+```bash
+$ sudo apt install -y python-rosinstall python-rosinstall-generat
+or python-wstool build-essential git
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Package python-rosinstall-generator is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+However the following packages replace it:
+  python3-rosinstall-generator
+
+Package python-wstool is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+However the following packages replace it:
+  python3-wstool
+
+E: Unable to locate package python-rosinstall2
+E: Package 'python-rosinstall-generator' has no installation candidate
+E: Package 'python-wstool' has no installation candidate
+
+## ==> Solu: 
+$ sudo apt install python3-rosinstall*
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Note, selecting 'python3-rosinstall' for glob 'python3-rosinstall*'
+Note, selecting 'python3-rosinstall-generator' for glob 'python3-rosinstall*'
 ```
 
 

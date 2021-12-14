@@ -1005,11 +1005,9 @@ A container is a normal operating system process except that this process is iso
 
 To run an image inside of a container, we use the `docker run` command. The `docker run` command requires one parameter which is the name of the image. Let’s start our image and make sure it is running correctly. Run the following command in your terminal.
 
-```
+```bash
 $ docker run python-docker
 ```
-
-
 
 You can try to open a new terminal, and use curl command to make a GET requests:
 
@@ -1076,48 +1074,7 @@ $ docker volume create mysql_config
 
 
 
-
-
-## Configure CI/CD
-
-
-
-Figure2: DevOps Tools Ecosystem:
-
-![image-20211111215341444](../images/all_in_one/image-20211111215341444.png)
-
-Figure1: CI/CD Tool chain, https://www.suntechnologies.com/wp-content/uploads/2021/02/tools.png
-
-![img](../images/all_in_one/tools.png)
-
-
-
-
-
-### Overview
-
-This page guides you through the process of setting up a GitHub Action CI/CD pipeline with Docker containers. Before setting up a new pipeline, we recommend that you take a look at [Ben’s blog](https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/) on CI/CD best practices .
-
-This guide contains instructions on how to:
-
-1. Use a sample Docker project as an example to configure GitHub Actions
-2. Set up the GitHub Actions workflow
-3. Optimize your workflow to reduce the number of pull requests and the total build time, and finally,
-4. Push only specific versions to Docker Hub.
-
-– Read more here, https://docs.docker.com/language/python/configure-ci-cd/
-
-
-
-Reference:
-
-- Best 14 CI/CD Tools You Must Know | Updated for 2021, https://www.katalon.com/resources-center/blog/ci-cd-tools/
-- Best practices for using Docker Hub for CI/CD, https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/
-- 
-
-## Deploy your app
-
-### Overview
+### Deploy your app
 
 Now, that we have configured a CI/CD pipleline, let’s look at how we can deploy the application. Docker supports deploying containers on Azure ACI and AWS ECS. You can also deploy your application to Kubernetes if you have enabled Kubernetes in Docker Desktop.
 
@@ -1283,23 +1240,11 @@ Other Good Resources:
 
 
 
-# Docker Compose
 
 
+# CS501 Prisma Project Specific:
 
-## Dockmer-compose Command
-
-
-
-## Basic Understanding
-
-
-
-## CS501 Prisma Project Specific:
-
-
-
-#### Backend Deployment
+## Backend Deployment
 
 **Enabling HTTPS on your website:**
 
@@ -1494,8 +1439,6 @@ To confirm that your site is set up properly, visit `https://yourwebsite.com/` i
 
 
 
-
-
 Reference:
 
 - Run postgres database in docker container, https://egghead.io/lessons/egghead-run-postgres-database-in-docker-container
@@ -1505,7 +1448,7 @@ Reference:
   - dockersamples/example-voting-app, https://github.com/dockersamples/example-voting-app/tree/master/vote
   - Overview of docker-compose CLI, https://docs.docker.com/compose/reference/
 
-### Common workflows
+## Common workflows
 
 The [Docker CLI](https://docs.docker.com/engine/reference/commandline/cli) and [Docker Compose CLI](https://docs.docker.com/compose/reference/) are used to manage the Prisma servers.
 
@@ -1522,7 +1465,7 @@ Here's a quick rundown of the most important commands:
 
 
 
-## File Structure
+## Docker .yaml File Structure
 
 This [.yaml file](https://yaml.org/) has 3 top-lev­el keys:
 
@@ -1567,19 +1510,9 @@ Set­ting init: true for an image caus­es [sig­nals to be for­ward­ed](https
 
 This just lets you spec­i­fy what oth­er ser­vices this par­tic­u­lar ser­vice depends on; this allows you to ensure that oth­er con­tain­ers are up and run­ning before this con­tain­er starts up.
 
-
-
-
-
 ## Extra Note:
 
 - [Dock­er does not allow for quotes](https://github.com/docker/compose/issues/3702) in its .env file, which is con­trary to how .env files work almost every­where else… so remove any quotes you have in your .env file.
-
-
-
-
-
-
 
 
 
@@ -1588,3 +1521,57 @@ This just lets you spec­i­fy what oth­er ser­vices this par­tic­u­lar ser
 - An Annotated Docker Config for Frontend Web Development, https://nystudio107.com/blog/an-annotated-docker-config-for-frontend-web-development
 - Dockerizing a NestJS app with Prisma and PostgreSQL, https://notiz.dev/blog/dockerizing-nestjs-with-prisma-and-postgresql
 - Connect prisma to PostgreSQL database running in docker container, https://egghead.io/lessons/egghead-connect-prisma-to-postgresql-database-running-in-docker-container
+
+
+
+## Configure CI/CD
+
+Figure1: DevOps Tools Ecosystem:
+
+![image-20211111215341444](../images/all_in_one/image-20211111215341444.png)
+
+Figure2: CI/CD Tool chain, https://www.suntechnologies.com/wp-content/uploads/2021/02/tools.png
+
+![img](../images/all_in_one/tools.png)
+
+
+
+Figure3: [Continuous Integration + Continuous Delivery Vs Continuous Deployment](https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment)
+
+![ci cd asset updates .007](../images/all_in_one/ci cd asset updates .007-16391082576382.png)
+
+**Continous Integration(CI):** So CI stands for continuous integration. Basically, **it’s composed of build and test two step.** The build and test should run in the same environment every single time. And, this process should be done in a consistent and repeatable environment. **The build and test is an indication of whether your code is gonna work in production, and this will result you to have an artifact or failed test feedback at all times.** If the build and test is sucessful, you'll have an artifact ready for deployment, if you don't have an artifact for deployment, then there is a failure, and you should have a closed feedback loop that tell you where it failed, so you can go to the code and fix it, and trigger another CI cycle for a new deployment. 
+
+**Continuous Delivery(CD)**: CD can refers to Continuous delivery or continuous deployment. <u>For Continuous delivery, it's an extension of CI, which allows an automated released or deployment process after the integration process.</u> Continuous deployment goes one step further than continuous delivery. It provides fully automation pipeline from build to test, to deployment in production, there is no human intervention, and only a failed test will prevent a new change to be deployed to production.
+
+**Continuous Deployment(CD):** Continuous deployment is an excellent way to accelerate the feedback loop with your customers and take pressure off the team as there isn't a Release Day anymore. Developers can focus on building software, and they see their work go live minutes after they've finished working on it
+
+And overall with the CI/CD pipeline, we increased the lead time, the time taken from source to deployment, and that means the organization can be more responsive based on customer's request, and deliver to customer fater. Also, for the development team, the failure rate can be reduced as the development team can get feedbacks more often than in the past.
+
+- Q: What is difference between Continous Delivery and Continuous Deployment?
+
+
+They are quite similar, Continous delivery just requires some extra manually step you need to perfrom, as a gateway before you go to the production. So you need somebody to approve and make sure that the changes that are about to be deployed are in fact what you want. 
+
+
+
+### Best Practice
+
+This page guides you through the process of setting up a GitHub Action CI/CD pipeline with Docker containers. Before setting up a new pipeline, we recommend that you take a look at [Ben’s blog](https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/) on CI/CD best practices .
+
+This guide contains instructions on how to:
+
+1. Use a sample Docker project as an example to configure GitHub Actions
+2. Set up the GitHub Actions workflow
+3. Optimize your workflow to reduce the number of pull requests and the total build time, and finally,
+4. Push only specific versions to Docker Hub.
+
+– Read more here, https://docs.docker.com/language/python/configure-ci-cd/
+
+
+
+Reference:
+
+- Best 14 CI/CD Tools You Must Know | Updated for 2021, https://www.katalon.com/resources-center/blog/ci-cd-tools/
+- Best practices for using Docker Hub for CI/CD, https://www.docker.com/blog/best-practices-for-using-docker-hub-for-ci-cd/
+- 
