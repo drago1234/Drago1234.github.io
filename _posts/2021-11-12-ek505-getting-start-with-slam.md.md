@@ -185,7 +185,6 @@ $ cd ~/catkin_ws && catkin_make
 
 catkin_make
 
-
 # made the modification in .bashrch file as follows:
 vim ~/.bashrc
 # Making alias is optional but recommended to speed-up typing the commands.
@@ -897,12 +896,16 @@ Tutorial:
 
 ## ROS with Windows
 
-
-
 ROS1 Noetic Installation in Windows: [1-2 hr]
 
 - Just follow the tutorial here, http://wiki.ros.org/noetic/Installation.
 - !! There is a YouTube video for Windows 10 installation, [How to Install ROS Melodic on Windows natively in just 3 Simple Steps || Install ROS without Ubuntu](https://www.youtube.com/watch?v=8QC7-Odeqhc)
+
+> Some Code snippet:
+>
+> ```bash
+> C:\Windows\System32\cmd.exe /k "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\VsDevCmd.bat" -arch=amd64 -host_arch=amd64&& set ChocolateyInstall=c:\opt\chocolatey&& c:\opt\ros\foxy\x64\setup.bat
+> ```
 
 ROS2 Foxy on WIndows:
 
@@ -942,153 +945,7 @@ Here a full guide how to install ROS on Windows 10 using [Windows Subsystem for 
 
 > **Note:** WSL is only available in Windows 10 version 1607 (the Anniversary update) or higher.
 
-#### **Step1: Install the Windows Subsystem for Linux (WSL).**
 
-1. **Enabling WSL in Windows 10**
-
-Before installing any Linux distributions on Windows, you must enable the "Windows Subsystem for Linux" optional feature in one of the following two ways:
-
-1.1.a Using the GUI for enabling Windows features:
-
-1. Open the Start Menu and search ***Turn Windows features on or off***
-
-2. Select ***Windows Subsystem for Linux***
-
-   ![img](https://i.imgur.com/a5PDpn8.png?4)
-
-3. Click ***OK***
-
-> **Note:** To only install [WSL 1](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-1), you should now restart your machine and move on to [**Step2:** Install Ubuntu distribution.](https://github-wiki-see.page/m/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)#step2-install-ubuntu-distribution)
-
-1.1.b Using PowerShell:
-
-1. Open [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6) as Administrator and run:
-
-```
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-```
-
-> **Note:** To only install [WSL 1](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-1), you should now restart your machine and move on to [**Step2:** Install Ubuntu distribution.](https://github-wiki-see.page/m/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)#step2-install-ubuntu-distribution)
-
-2. **Update to WSL 2 `(Optional)`**
-
-[WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2) is a new version of the architecture in WSL that changes how Linux distributions interact with Windows. WSL 2 has the primary goals of increasing file system performance and adding full system call compatibility. Each Linux distribution can run as WSL 1 or as WSL 2, and can be switched between at any time. WSL 2 is a major overhaul of the underlying architecture and uses virtualization technology and a Linux kernel to enable its new features.
-
-> **Note:** WSL 2 is only available in Windows 10, updated to version 2004, **Build 19041** or higher.
-
-2.1 Enable the 'Virtual Machine Platform' optional component:
-
-Before installing [WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2), you must enable the "Virtual Machine Platform" optional feature.
-
-1. Open [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6) as Administrator and run:
-
-```
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-```
-
-1. **Restart** your computer when prompted
-
-2.2 Updating the WSL 2 Linux kernel:
-
-To manually update the Linux kernel inside of [WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2) please **download and install** the [Linux kernel update package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi) for x64 machines.
-
-> **Note:** If you're using an ARM64 machine, please download the [ARM64 package](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_arm64.msi) instead.
-
-2.3 Set WSL 2 as your default version:
-
-Once you have the kernel installed, please run the following command in [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6) to set [WSL 2](https://github.com/MohanadSinan/Smart-Methods/wiki/What-is-the-Windows-Subsystem-for-Linux-(WSL)%3F#what-is-wsl-2) as the default version when installing a new Linux distribution:
-
-```
-wsl --set-default-version 2
-```
-
-> | **Additional Installation Resources**:                       |
-> | ------------------------------------------------------------ |
-> | [WSL1 Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/install-win10) from Microsoft |
-> | [WSL2 Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/wsl2-install) from Microsoft |
-> | [Windows Server Installation Guide](https://docs.microsoft.com/en-us/windows/wsl/install-on-server) from Microsoft |
-
-
-
-#### Step2: Install Ubuntu distribution.
-
-1. **Installing Ubuntu on WSL**
-
-1.1.a Installing Ubuntu on WSL via the Microsoft Store: `(Recommended)`
-
-The following Ubuntu releases are available as apps on the Microsoft Store:
-
-- [Ubuntu](https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6) (*without the release version*) always follows the **recommended** release, switching over to the next one when it gets the first point release.
-- [Ubuntu 20.04 LTS](https://www.microsoft.com/store/apps/9N6SVWS3RX71) (*Focal*) is the current LTS release, supporting both x64 and ARM64 architecture.
-- [Ubuntu 18.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-1804/9n9tngvndl3q) (*Bionic*) is the second LTS release and the first one supporting ARM64 systems, too.
-- [Ubuntu 16.04 LTS](https://www.microsoft.com/en-us/p/ubuntu-1604/9pjn388hp8c9) (*Xenial*) is the first release available for WSL. It supports the x64 architecture only.
-
-Each app creates a separate root file system in which Ubuntu shells are opened but app updates don’t change the root file system afterwards. Installing a different app in parallel creates a different root file system allowing you to have both Ubuntu LTS releases installed and running in case you need it for keeping compatibility with other external systems. You can also upgrade your Ubuntu 16.04 to 18.04 by running `do-release-upgrade` and have three different systems running in parallel, separating production and sandboxes for experiments.
-
-1.1.b Installing Ubuntu on WSL via rootfs:
-
-Ubuntu WSL distribution rootfs daily builds are available for download:
-
-- [Ubuntu 20.04 LTS](https://cloud-images.ubuntu.com/focal/current/) (*Focal*)
-- [Ubuntu 19.10](https://cloud-images.ubuntu.com/eoan/current/) (*Eoan*)
-- [Ubuntu 18.04 LTS](https://cloud-images.ubuntu.com/bionic/current/) (*Bionic*)
-- [Ubuntu 16.04 LTS](https://cloud-images.ubuntu.com/xenial/current/) (*Xenial*)
-
-They can be installed using the [wsl](https://docs.microsoft.com/en-us/windows/wsl/reference) command:
-
-```
-wsl --import <DistributionName> <InstallLocation> <FileName>
-```
-
-1.1.c Installing Ubuntu on WSL by sideloading the `.appx`:
-
-Ubuntu WSL distribution .appx builds are available for download:
-
-- [Ubuntu 20.04 LTS](https://aka.ms/wslubuntu2004) (*Focal*)
-- [Ubuntu 20.04 LTS arm64](https://aka.ms/wslubuntu2004arm)
-- [Ubuntu 18.04 LTS](https://aka.ms/wsl-ubuntu-1804) (*Bionic*)
-- [Ubuntu 18.04 LTS arm64](https://aka.ms/wsl-ubuntu-1804-arm)
-- [Ubuntu 16.04 LTS](https://aka.ms/wsl-ubuntu-1604) (*Xenial*)
-
-They can be installed by enabling sideloading in Windows 10 and double-clicking the .appx and clicking Install or with [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6):
-
-```
-Add-AppxPackage .\Ubuntu_2004.2020.424.0_x64.appx
-```
-
-**2. Set up a new Ubuntu distribution on WSL**
-
-2.1 Starting Ubuntu on WSL:
-
-The Ubuntu on WSL terminal can be started via:
-
-- The app tile in the Windows Start menu (or pinned to your taskbar)
-- [WSL - Remote extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) for [Visual Studio Code](https://code.visualstudio.com/).
-- The [wsl](https://docs.microsoft.com/en-us/windows/wsl/reference) command on the Windows command prompt or [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6)
-- By running `ubuntu2004.exe`, etc. on the Windows command prompt or [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-6)
-
-2.2 Create a user account and password:
-
-The first time you launch a newly installed Linux distribution, a console window will open and you'll be asked to wait for a minute or two for files to de-compress and be stored on your PC. All future launches should take less than a second.
-
-Once you have [installed Ubuntu on WSL](https://github-wiki-see.page/m/MohanadSinan/Smart-Methods/wiki/Install-ROS-on-windows-10-using-WSL-(Full-guide)#1-installing-ubuntu-on-wsl), the first step you will be asked to complete when opening your newly installed Linux distribution is to create an account, including a **User Name** and **Password**.
-
-- This **User Name** and **Password** is specific to your Linux distribution and has no bearing on your Windows user name.
-- Once you create this **User Name** and **Password**, the account will be your default user for the distribution and automatically sign-in on launch.
-- This account will be considered the Linux administrator, with the ability to run `sudo` (Super User Do) administrative commands.
-- Each Linux distribution running on the Windows Subsystem for Linux has its own Linux user accounts and passwords. You will have to configure a Linux user account every time you add a distribution, reinstall, or reset.
-
-![Ubuntu unpacking in the Windows console](../images/all_in_one/ubuntuinstall.png)
-
-**2.3 Update and upgrade packages**
-
-Most distributions ship with an empty or minimal package catalog. We strongly recommend regularly updating your package catalog and upgrading your installed packages using your distribution's preferred package manager. For Ubuntu, use apt:
-
-```
-sudo apt update && sudo apt upgrade
-```
-
-Windows does not automatically update or upgrade your Linux distribution(s). This is a task that the most Linux users prefer to control themselves.
 
 #### Step3: Install ROS distribution.
 
@@ -1363,6 +1220,18 @@ Basically, it’s not about the DISPLAY, it’s about the firewall for VcXsrv ap
 >
 > And it worked!!! I've been working on this for 3 days, I don't know how it has taken this long to find the solution, but I am so grateful for your help [@moloned](https://github.com/moloned)!
 
+At the end, your `/etc/resolv.conf` will be looking like the following:
+
+```txt
+# This file was automatically generated by WSL. To stop automatic generation of this file, add the following entry to /etc/wsl.conf:
+# [network]
+generateResolvConf = false
+nameserver 192.168.50.52
+nameserver 192.168.50.1
+```
+
+
+
 Error2: 
 
 ![image-20211211173825629](../images/all_in_one/image-20211211173825629.png)
@@ -1408,6 +1277,97 @@ gazeo --verbose
 ```
 
 
+
+Error 3:
+
+```bash
+(tf_latest) drago_ubuntu20@DESKTOP-6R3DAQI:~$ python test_tensorflow_installation.py
+2021-12-18 16:02:58.656006: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:925] could not open file to read NUMA node: /sys/bus/pci/devices/0000:01:00.0/numa_node
+Your kernel may have been built without NUMA support.
+```
+
+
+
+Solu:
+
+Step 1: remove all installed CUDA packages, https://stackoverflow.com/questions/56431461/how-to-remove-cuda-completely-from-ubuntu
+
+```bash
+$ sudo apt-get remove --auto-remove nvidia-cuda-toolkit
+
+To remove cuda toolkit:
+
+sudo apt-get --purge remove "*cublas*" "cuda*" "nsight*" 
+To remove Nvidia drivers:
+
+sudo apt-get --purge remove "*nvidia*"
+If you have installed via source files (assuming the default location to be /use/local) then remove it using:
+
+sudo rm -rf /usr/local/cuda*
+From cuda 11.4 onwards, an uninstaller script has been provided. Use it for the uninstallation instead:
+
+# To uninstall cuda
+sudo /usr/local/cuda-11.4/bin/cuda-uninstaller 
+# To uninstall nvidia
+sudo /usr/bin/nvidia-uninstall
+If you get the problem of broken packages, it has happened since you added repo to the apt/sources.lst. Run the following to delete it:
+
+sudo vim /etc/apt/sources.list
+Go to the line containing reference to Nvidia repo and comment it by appending # in front of the line, for e.g.:
+
+#deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /
+Then run
+
+sudo apt-get update 
+This will fix the problem.
+```
+
+References: [Nvidia uninstallation](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile-uninstallation)
+
+Step 2: Follow this instruction, to reinstall the CUDA package:
+
+[Download Installer for Linux WSL-Ubuntu 2.0 x86_64](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=WSL-Ubuntu&target_version=2.0&target_type=deb_network) 
+
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
+sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/7fa2af80.pub
+sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/ /"
+sudo apt-get update
+sudo apt-get -y install cuda
+```
+
+
+
+
+
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
+sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/11.4.2/local_installers/cuda-repo-ubuntu1804-11-4-local_11.4.2-470.57.02-1_amd64.deb
+sudo apt-key add /var/cuda-repo-ubuntu1804-11-4-local/7fa2af80.pub
+sudo dpkg -i cuda-repo-ubuntu1804-11-4-local_11.4.2-470.57.02-1_amd64.deb
+sudo apt-get update
+sudo apt-get -y install cuda
+```
+
+
+
+You cannot see the GPU being connected with WSL2
+
+```bash
+$ lspci 
+9563:00:00.0 3D controller: Microsoft Corporation Device 008e
+c8d5:00:00.0 3D controller: Microsoft Corporation Device 008e
+```
+
+And the output from powershell is nothing:
+
+```powershell
+> wsl cat /proc/version
+```
+
+Solu:
 
 
 
@@ -1547,14 +1507,59 @@ source ~/.bashrc
 # 1.6 Dependencies for building packages
 # Up to now you have installed what you need to run the core ROS packages. To create and manage your own ROS workspaces, there are various tools and requirements that are distributed separately. For example, rosinstall is a frequently used command-line tool that enables you to easily download many source trees for ROS packages with one command.
 # To install this tool and other dependencies for building ROS packages, run:
-sudo apt install python-catkin-tools python-rosinstall python-rosinstall-generator python-wstool build-essential
+sudo apt install python3-catkin-tools python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 
 # 1.6.1 Initialize rosdep
 # Before you can use many ROS tools, you will need to initialize rosdep. rosdep enables you to easily install system dependencies for source you want to compile and is required to run some core components in ROS. If you have not yet installed rosdep, do so as follows.
-sudo apt install python-rosdep
+sudo apt install python3-rosdep
 # With the following, you can initialize rosdep.
 sudo rosdep init
 rosdep update
+
+# 1.7.1 Make the catkin workspace and test the catkin_make
+echo "[Make the catkin workspace and test the catkin_make]"
+mkdir -p $HOME/catkin_ws/src
+cd $HOME/catkin_ws/src
+catkin_init_workspace
+cd $HOME/catkin_ws
+catkin_make
+
+# Installs the navigation stack.
+sudo apt-get install ros-noetic-navigation
+# Installs the SLAM package.
+sudo apt-get install ros-noetic-slam-gmapping
+
+sudo apt-get update
+sudo apt-get upgrade
+
+# This will install the core packages of Turtlebot3.
+$ cd ~/catkin_ws/src/
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git -b melodic-devel
+$ git clone  https://github.com/ROBOTIS-GIT/turtlebot3.git -b melodic-devel
+$ cd ~/catkin_ws && catkin_make
+
+# Install Turtlebot3 simulator
+$ cd ~/catkin_ws/src/
+$ git clone https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git
+$ cd ~/catkin_ws && catkin_make -DPYTHON_EXECUTABLE=/usr/bin/python3
+
+
+# made the modification in .bashrch file as follows:
+vim ~/.bashrc
+# Making alias is optional but recommended to speed-up typing the commands.
+alias burger='export TURTLEBOT3_MODEL=burger'
+alias waffle='export TURTLEBOT3_MODEL=waffle'
+alias tb3fake='roslaunch turtlebot3_fake turtlebot3_fake.launch'
+alias tb3teleop='roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch'
+alias tb3='roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch'
+alias tb3maze='roslaunch turtlebot3_gazebo turtlebot3_world.launch'
+alias tb3house='roslaunch turtlebot3_gazebo turtlebot3_house.launch'
+
+# Reuired: At the end of the file, write the following commands. The last command will let you open Gazebo on a Virtual Machine and avoid crashing its display.
+source /opt/ros/noetic/setup.bash
+source /home/akoubaa/catkin_ws/devel/setup.bash
+export TURTLEBOT3_MODEL=waffle
+export SVGA_VGPU10=0
 ```
 
 Tutorial
@@ -1565,8 +1570,6 @@ sudo rosdep init
 
 # update ros package
 rosdep update
-
-# 
 
 source ~/.bashrc
 
