@@ -39,6 +39,8 @@ Reference:
 ```bash
 # Check File System Disk Space Usage
 df
+Filesystem      Size  Used Avail Use% Mounted on
+05-AU21         932G  300G  632G  33% /media/sf_05-AU21
 # 3. Show Disk Space Usage in Human Readable Format
 df -h
 
@@ -326,6 +328,20 @@ dd	# delete a line
 ```
 
 
+
+
+
+# Setting up a brand new Linux Env
+
+- CTRL-ATL-t  to open an terminal
+- Enter the following to install some useful packages (compilers and manual pages) which you’ll need in future labs:
+
+```bash
+sudo apt update
+sudo apt-get install build-essential
+sudo apt-get install manpages-dev
+sudo apt-get install manpages-posix-dev
+```
 
 
 
