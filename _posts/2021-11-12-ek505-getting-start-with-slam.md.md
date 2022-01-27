@@ -2000,7 +2000,11 @@ have been developed.
 MD5 (Message-Digest algorithm 5)24 is a 128-bit cryptographic hash function. It is used primarily to verify data integrity, such as checking whether programs or files are in its unmodified original form. The integrity of the message transmission/reception in ROS is verified with MD5.
 
 **RPC:**
-<u>RPC (Remote Procedure Call)</u> stands for the function that calls a sub procedure on a remote computer from another computer in the network. RPC uses protocols such as TCP/IP and IPX, and allows execution of functions or procedures without having the developer to write a program for remote control.
+**RPC (Remote Procedure Call**) <u>allowing function to call a sub procedure on a remote computer from another computer in the network. The function is then executed as requested, and any output is sent back to the requester in a separate message</u>. RPC uses protocols such as TCP/IP and IPX, and allows execution of functions or procedures without having the developer to write a program for remote control.
+
+- Reference: Dragon textbook, p188
+
+
 
 **XML:**
 
@@ -5083,12 +5087,6 @@ source devel/setup.bash
 
 
 
-
-
-
-
-
-
 ### ROS Command cheatsheet	
 
 ```bash
@@ -5660,5 +5658,73 @@ source /opt/ros/melodic/setup.bash
 source /home/jetbot/catkin_ws/devel/setup.bash
 export TURTLEBOT3_MODEL=waffle # If you want to use TB3 BUrger, change to TURTLEBOT3_MODEL=burger
 export SVGA_VGPU10=0
+```
+
+
+
+# WIndow's Env setup cheatsheet
+
+```bash
+# After Anaconda is installed:
+# 1) Let's get the OpenCV ready
+conda create --name latest_tf python=3.9.7
+conda activate latest_tf
+pip install opencv-contrib-python
+# Let's test opencv is installed
+python
+>>> import cv2
+>>> print(cv2.__version__)
+4.5.5
+>>> exit()
+# Reference: 1) For windows, https://learnopencv.com/install-opencv-on-windows/; 2)
+# 2) Let's configure the OpenCV DNN Module with Nvidia GPU support (It's 10X faster with GPU support than on CPU)
+# Download cudnn, https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html#install-windows
+# Download CUDA Toolkit, https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html#compiling-examples__valid-results-from-sample-cuda-bandwidthtest-program
+Include cudnn.lib in your Visual Studio project.
+Open the Visual Studio project and right-click on the project name.
+Click Linker > Input > Additional Dependencies.
+Add cudnn.lib and click OK.
+
+
+# Reference: https://learnopencv.com/how-to-use-opencv-dnn-module-with-nvidia-gpu-on-windows/
+```
+
+Quick Help:
+
+1. What is my Visual Studio Version?
+
+```bash
+> "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -property catalog_productDisplayVersion
+```
+
+2. How to check my Windows version and build?
+
+press Windows Key + R, type “winver” into the Run dialog,
+
+3. How to check by NVIDIA GPU driver version, CUDA version and build?
+
+```bash
+> nvidia-smi
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 496.13       Driver Version: 496.13       CUDA Version: 11.5     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name            TCC/WDDM | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  NVIDIA GeForce ... WDDM  | 00000000:01:00.0  On |                  N/A |
+| N/A   73C    P8     9W /  N/A |    381MiB /  8192MiB |      1%      Default |
+
+```
+
+
+
+```bash
+> nvcc -V
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2021 NVIDIA Corporation
+Built on Mon_Sep_13_20:11:50_Pacific_Daylight_Time_2021
+Cuda compilation tools, release 11.5, V11.5.50
+Build cuda_11.5.r11.5/compiler.30411180_0
 ```
 

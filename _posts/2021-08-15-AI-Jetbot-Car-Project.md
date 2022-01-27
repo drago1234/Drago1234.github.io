@@ -700,6 +700,13 @@ If you have any questions or just want to chat with me, feel free to leave a com
 
 
 
+# Relevant Software:
+
+- VNC viewer, https://www.realvnc.com/en/connect/download/viewer/ ==> This allows you remote control AI Jetbot in your WIndows, and it provides GUI support as well
+- 
+
+
+
 # Appendix A: quick reference for Jetson Inference demo
 
 Here are more information about [Camera Streaming and Multimedia](https://github.com/dusty-nv/jetson-inference/blob/master/docs/aux-streaming.md), https://github.com/dusty-nv/jetson-inference/blob/master/docs/aux-streaming.md

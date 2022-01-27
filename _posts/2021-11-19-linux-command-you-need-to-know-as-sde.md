@@ -30,11 +30,25 @@ Reference:
 
 
 
+# Setting up a brand new Linux Env
+
+- CTRL-ATL-t  to open an terminal
+- Enter the following to install some useful packages (compilers and manual pages) which you’ll need in future labs:
+
+```bash
+sudo apt update
+sudo apt-get install build-essential
+sudo apt-get install manpages-dev
+sudo apt-get install manpages-posix-dev
+```
+
+To be continue...
+
+
+
 # All linux command you will need as SDE
 
 ## Disk Space Storage
-
-
 
 ```bash
 # Check File System Disk Space Usage
@@ -47,13 +61,9 @@ df -h
 4. Display Information of /home File System
 ```
 
-
-
 Reference
 
 - https://www.tecmint.com/how-to-check-disk-space-in-linux/
-
-
 
 
 
@@ -259,7 +269,7 @@ Reference:
 
 
 
-## Extra
+## Some Basic Stuff
 
 ```bash
 # Checking hostname/username
@@ -329,19 +339,69 @@ dd	# delete a line
 
 
 
+## Performance Monitoring and Tuning
+
+We mentioned earlier that performance tuning seeks to improve performance by removing processing bottlenecks. To identify bottlenecks, we must be able to monitor system performance. Thus, the operating system must have some means of computing and displaying measures of system behavior. Tools may
+be characterized as providing either per-process or system-wide observations. To make these observations, tools may use one of two approaches—counters or tracing. We explore each of these in the following sections.
+
+2.10.2.1 Counters
+Operating systems keep track of system activity through a series of counters, such as the number of system calls made or the number of operations performed to a network device or disk. The following are examples of Linux tools that use counters:
+**Per-Process**
+• ps—reports information for a single process or selection of processes
+• top—reports real-time statistics for current processes
+**System-Wide**
+• vmstat—reports memory-usage statistics
+• netstat—reports statistics for network interfaces
+• iostat—reports I/O usage for disks
+
+Most of the counter-based tools on Linux systems read statistics from the /proc file system. /proc is a “pseudo” file system that exists only in kernel memory and is used primarily for querying various per-process as well as kernel statistics. The /proc file system is organized as a directory hierarchy,
+with the process (a unique integer value assigned to each process) appearing as a subdirectory below /proc. For example, the directory entry /proc/2155 would contain per-process statistics for the process with an ID of 2155. There are /proc entries for various kernel statistics as well. In both this chapter and
+Chapter 3, we provide programming projects where you will create and access the /proc file system.
+Windows systems provide the Windows Task Manager, a tool that includes information for current applications as well as processes, CPU and memory usage, and networking statistics. A screen shot of the task manager inWindows 10 appears in Figure 2.19.
+
+2.10.3 Tracing
+Whereas counter-based tools simply inquire on the current value of certain statistics that are maintained by the kernel, tracing tools collect data for a specific event—such as the steps involved in a system-call invocation. The following are examples of Linux tools that trace events:
+**Per-Process**
+• strace—traces system calls invoked by a process
+• gdb—a source-level debugger
+**System-Wide**
+• perf—a collection of Linux performance tools
+• tcpdump—collects network packets
+
+![image-20220115235253755](../images/2021-11-19-linux-command-you-need-to-know-as-sde/image-20220115235253755.png)
+
+Reference:
+
+- Dragon book(OS Concepts 10th), Chap2.10.2, p96
 
 
-# Setting up a brand new Linux Env
 
-- CTRL-ATL-t  to open an terminal
-- Enter the following to install some useful packages (compilers and manual pages) which you’ll need in future labs:
+## More Advance:
+
+**Dispatch Latency**: 
+
+An interesting question to consider is, how often do context switches occur? On a system-wide level, the number of context switches can be obtained by using the vmstat command that is available on Linux systems. Below is the output (which has been trimmed) from the command:
 
 ```bash
-sudo apt update
-sudo apt-get install build-essential
-sudo apt-get install manpages-dev
-sudo apt-get install manpages-posix-dev
+$ vmstat
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 39069548  32788  90876    0    0     2    77    1    4  0  0 100  0  0
+$ vmstat 1 3
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 39069540  32796  90956    0    0     2    76    1    4  0  0 100  0  0
+ 0  0      0 39069540  32796  90956    0    0     0     0    4   24  0  0 100  0  0
+ 0  0      0 39069540  32796  90956    0    0     0     0    4   28  0  0 100  0  0
 ```
+
+![image-20220116191857800](../images/2021-11-19-linux-command-you-need-to-know-as-sde/image-20220116191857800.png)
+
+![image-20220116191919296](../images/2021-11-19-linux-command-you-need-to-know-as-sde/image-20220116191919296.png)
+
+Reference:
+
+- Dragon book, chap 5.1.4, p271
 
 
 
