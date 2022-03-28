@@ -111,6 +111,7 @@ Books
 - [The-Art-of-Linear-Algebra.pdf](https://github.com/kenjihiranabe/The-Art-of-Linear-Algebra/blob/main/The-Art-of-Linear-Algebra.pdf)
   - provides some visualization of important concepts introduced in “Linear Algebra for Everyone”, including Column-Row(CR), Gaussian Elimination(LU), Gram-Schmidt Orthogonalization(RQ), Eigenvalues and Diagnoalization(Q$\Lambda Q^T$), and SIngluar Value Decomposition($U\Sigma V^T$) 
 - [Linear Algebra for Everyone](http://math.mit.edu/~gs/everyone/)
+- Advance Linear Algebra, https://www.cs.utexas.edu/users/flame/laff/alaff/chapter07-sor.html
 - 
 
 ### Probability
