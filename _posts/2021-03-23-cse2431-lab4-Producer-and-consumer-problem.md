@@ -18,40 +18,6 @@ excerpt: >-
 
 
 
-Motivation: Why I created this personal Blog or the whole website? ==> Because when I was in the interview, I realize it’s so hard to build a strong trust and understanding between me and the company that is trying to hire me. For company, they want you to show them something and prove them you are competent for the job/position and worth for that amount of salary, right? ==> For me(as interviewee), I need to cudgel my brain and pitch out all those knowledge and experience that are noted in my resume are valid and genuine, within that 1-2 hours interview. While, they might not care too much about your problem because mostly likely is they choose you over you choose them. Plus, most of people tend to assume the candidate should take duty in doing “homework” about their company before interview. (Unless you are one of those very famous and talented genius）
-
-为什么我当初创建了这个个人博客或整个网站? ==> 因为当初我在面试的时候，我经常意识到，想要在我和想要雇佣我的公司之间建立牢固的信任和理解是非常困难的一件事。对于公司来说，他们希望你向他们展示一些东西，证明你有能力胜任这份工作/职位，并且你值得拿那么多薪水。而对于我(作为应聘者)来说，我需要在1-2小时的面试中绞尽脑汁，把简历中提到的所有知识和经验毫无疑问的表达出来。一般公司都不会太关心你的个人问题，因为多数是他们选择了你而不是你选择了他们。此外，大多数人倾向于认为候选人应该在面试前对公司做一些“功课”。(除非你是一个非常有名的天才)。
-
-
-
-然而，我觉我很难在这很短时间内表达自己，把自己的优点都展现出来，特别是很多技术细节，基本过了一两个星期之后就不会记得是怎么实现的了。
-
-
-
-However, realistically, the problem for me is, as a student, there are too many thing to worry about in a day, and just no enough time for me to prepare those technical details and get all thing work perfectly right within that couple days before interview. You know those academic commitment, such as taking class, doing homework, finding research advisors, learning out-of-class skills. And the school is more than just study, what is real important and can make your different is the school relationship, building social network, taking leadership responsibility, and helping other peoples. (And, I am a human as well,  need some sleep, food too, and some afternoon workout time as well) ==> But, obviously, nobody would care those crap. ==> That’s why, instead of cramming my head with all those details that might or might not being asked during interview, I built this personal blog to relive my burden, to keep all those technical project details online, to share my wisdom, insight, knowledge and experience with other people, to show some of my past and background, and build some connection or understanding between me and those future friends or colleagues.
-
-然而，现实而言，对我来说，问题是，作为一名学生，一天有太多的事情要担心，只是没有足够的时间让我准备那些技术细节，并在面试前几天把所有事情都做好（尽管说会提前一两天通知你，但能用来准备的时间估计就几个小时，不可能整天都拿去准备面试的）。你知道那些学术承诺，比如上课、做作业、寻找研究顾问、学习课外技能。学校不仅仅是学习，真正重要的和能让你与众不同的是学校关系，建立社会网络，承担领导责任，帮助他人。(而且，我也是人，也需要一些睡眠，食物，以及一些下午的锻炼时间)==>但是，很明显，没有人会在意这些废话。= = >这是为什么, 而不是填鸭式的脑袋与所有这些细节可能或不可能被要求在采访中,建立个人博客重温我的负担,保持所有这些在线技术项目细节,分享我的智慧、洞察力,与他人的知识和经验,给一些我的过去和背景,在我和那些未来的朋友或同事之间建立一些联系或理解。
-
-
-
-As a result, everyone will be happy and better off. This will not only make it easier for interviewer to access my ability, but also make it easier for future me to retrieve the knowledge when I need to.
-
-作为结果，每个人都会很快乐，生活也会更好。这不仅让面试官更容易了解我的能力，也让未来的我更容易在需要的时候检索知识。
-
-
-
-==> Yes, documentation makes us a better life, and internet make it last longer. That’s why we are homo sapiens, and that’s what distinguish us from animals. 
-
-是的，文档使我们的生活更美好，而互联网使它更持久。这就是为什么我们是智人，这就是我们区别于动物的地方
-
-
-
-==> I probably will never be one of those famous person in the world, but if I do, those documentation will the record and speak for me!
-
-
-
-
-
 
 ## Problem Statement: 
 * **Background:**
