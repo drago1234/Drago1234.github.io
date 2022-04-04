@@ -1,18 +1,17 @@
 ---
-
 layout: post  # Required
 title: 'OS Lab: Multi-threaded programming with Python' # Required
-date: 2022-01-03  # Required
+date: 2022-01-03    # Required
 categories: [Python, Multi-treaded] # Option
 tags: []  # Option
 permalink: 2022-01-03-multi-threaded-programming
-toc: true# Option
-excerpt: >- 	
-**Purpose of this lab**
-a.   Gain experience with the classic producer/consumer problem
-b.   Gain additional familiarity with Linux, threads, processes, and python
-c.    Gain experience looking though code provided, then extending and completing it 
-d.   Gain experience debugging a multi-threaded solution
+toc: true   # Option
+excerpt: >-
+    **Purpose of this lab**
+    a.   Gain experience with the classic producer/consumer problem
+    b.   Gain additional familiarity with Linux, threads, processes, and python
+    c.    Gain experience looking though code provided, then extending and completing it 
+    d.   Gain experience debugging a multi-threaded solution
 ---
 
 
