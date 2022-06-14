@@ -575,41 +575,60 @@ echo "===========================> Checking CPU Information"
 lscpu
 # Check you have GPU driver installed
 echo "===========================> Checking GPU Configuration"
-nvidia-smi		
+nvidia-smi
+# nvidia-htop.py --color -l 30	# Read here to learn more about GPU monitoring, https://github.com/peci1/nvidia-htop
 # Checking you have CUDA compiler
 nvcc --version	
-
 uname -arv
 
-echo "==========================> Loading Interactive computing node"
-# qrsh -P dl523 -l gpus=1 -l gpu_c=3.5
-
-## Some routine command for activating conda tensorflow pytorch with cuda support
-# echo "==========================> Activate conda tensorflow env"
+echo "==========================> Loading moudule for Project Environment"
+# module load python3/3.9.4
 module load python3/3.8.10
-module load tensorflow/2.5.0
+# module load tensorflow/2.5.0
 module load pytorch/1.9.0
 module load opencv/4.5.0
 module load cuda/11.1
 module load pandoc/2.5
 module load texlive/2018
 # module load miniconda/4.9.2
+module load gcc/9.3.0
 
 # If you don't have miniconda, run the following code
 # curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 # sh Miniconda3-latest-Linux-x86_64.sh
 
-# source ~/miniconda3/bin/activate
+
+# echo "==========================> Activate conda tensorflow env"
+## Some routine command for activating conda tensorflow pytorch with cuda support
+# Setting up the python pip environment, follow this guildence here, https://www.bu.edu/tech/support/research/software-and-programming/common-languages/python/packages/
+# export PYTHONPATH=/share/pkg.7/python3/3.8.10/install/lib/python3.8/site-packages:$PYTHONPATH
+export PATH=$PATH:/usr4/dl523/dong760/.local/lib/python3.8/site-packages
+# export PATH=/usr4/dl523/dong760/.local/bin:$PATH
+# export PATH=/usr4/dl523/dong760/.local/lib/python3.8/site-packages:$PATH
+# export PACKAGEINSTALLDIR=/projectnb/dl523/projects/RWD/pythonlibs
+# export PYTHONPATH=$PACKAGEINSTALLDIR/lib/python3.8/site-packages:$PYTHONPATH
+# export PATH=$PACKAGEINSTALLDIR/bin:$PATH
+
+
+# pip install --no-cache-dir --upgrade --force-reinstall --ignore-installed --prefix=/usr4/dl523/dong760/.local/lib/python3.8/site-packages pycocotools
+# pip install --no-cache-dir --prefix=/usr4/dl523/dong760/.local/lib/python3.8/site-packages pycocotools
+
+# pip install --no-cache-dir --prefix=/share/pkg.7/python3/3.8.10/install/lib/python3.8/site-packages pycocotools
+# Read here to learn more about pip, https://www.journaldev.com/16160/python-pip
 # export PATH=/projectnb/dl523/students/dong760/miniconda3/envs/tf_latest/bin:$PATH
 # export PATH=/projectnb/dl523/students/dong760/miniconda3/condabin:$PATH 
+# export PATH=/usr4/dl523/dong760/.local/bin:$PATH
+# echo $PATH
 
-# source /projectnb/dl523/students/dong760/miniconda3/bin/activate
-source ~/miniconda3/bin/activate
+# Where is the default local install location for pip? ==> /share/pkg.7/python3/3.8.10/install/bin/python
+source /projectnb/dl523/students/dong760/miniconda3/bin/activate
 export PYTHONNOUSERSITE=true
 conda activate dl_env
-which python
 # conda activate tf_latest
 # module list
+
+# Example: get a node with 1 gpu cores and 3.5 gpu computing ability   ==> Read more here, https://www.bu.edu/tech/files/2020/01/2020_spr-Tutorial-Intermediate-Usage-of-Shared-Compute-Cluster-SCC.pdf
+# qrsh -P dl523 -l gpus=1 -l gpu_c=3.5
 
 # Verify the installation:
 # >>> import torch
@@ -619,6 +638,7 @@ which python
 # >>> tf.test.gpu_device_name()
 # '/device:GPU:0'
 
+
 ### Some Alias command
 # Remember to activate it with command: $ source ~/.bashrc
 # alias python=/usr/bin/python3
@@ -627,7 +647,11 @@ which python
 alias pip=pip3
 alias open="explorer.exe"
 alias pbcopy="clip.exe"
-alias ll="ls -lt"
+alias ll="ls -lth"  # long formate, sorted on time, and show data size
+alias cdzw="cd /projectnb/dl523/students/dong760/zerowaste_dataset"     # cd to zerowaste project folder
+alias cdRWD="cd /projectnb/dl523/projects/RWD"     # shared project folder
+alias tree="tree -C -L 5"  # with color, directory only, and descent 5 level in maximum
+alias du="du -h --max-depth=1 ./ | sort -rh"
 
 ### Some package installation command
 # pip install tensorflow
@@ -643,16 +667,51 @@ alias ll="ls -lt"
 # cnda clean -a                         # Remove all conda cache,
 # More reference: 1) https://docs.conda.io/projects/conda/en/latest/commands.html 2) https://www.bu.edu/tech/support/research/software-and-programming/common-languages/python/anaconda/#exp2
 
+
+### For Homework Submission:    
+# module load python3/3.7.7
+# module load pandoc/2.5
+# module load texlive/2018
+# jupyter nbconvert --to notebook --execute hw5.ipynb
+# jupyter nbconvert hw5.nbconvert.ipynb --to pdf
+
+# Or if you want to save it into HTML format then:
+# module load python3/3.7.7
+# jupyter nbconvert --execute hw5.ipynb
+
+# jupyter notebook --generate-config
+# vim  ~/.jupyter/jupyter_notebook_config.py
+# jupyter lab --no-browser --ip=0.0.0.0 --port=8888
+# jupyter lab --no-browser --ip=0.0.0.0 --port=8888 --NotebookApp.allow_origin='https://colab.research.google.com' --NotebookApp.port_retries=0
+# ssh -N -f -L 8889:scc2:8888 dong760@scc2.bu.edu
+# ssh -N -f -L 6006:scc-203:6006 dong760@scc2.bu.edu
+
 ### Other common utility command
+# cp -R /projectnb/dl523/students/dong760/roboflow-ai ~      # How to copy folder recusively
 # cp -R ~/miniconda3 /projectnb/dl523/students/dong760      # How to copy folder recusively
 # zip -r <output_file> <folder_1> <folder_2> ... <folder_n> # Zip multiple folder
 
+####### ===========> Read here about more using jupyte notebook with remote server, http://rcs.bu.edu/classes/CS542/SC542.html
 echo "==========================> Checking SCC Quota Usage"
-pquota dl523
+# pquota dl523
+pquota -u dl523 | grep dong76
 quota -s
 qstat -u dong760
-# which python
-# module list
+module list
+echo "==========================> Current ENV Path"
+echo $PATH
+echo $PYTHONPATH
+python -V
+which python
+# qrsh -P dl523 -l gpus=1 -l gpu_c=3.5
+# qrsh -P ec527 -l gpus=1 -l gpu_c=3.5 -l gpu_type=V100
+# qsub run_batch.sh
+# Read more here about Managing and Tracking SCC batch jobs, https://www.bu.edu/tech/support/research/system-usage/running-jobs/tracking-jobs/#qdel
+
+# ls ./ | wc -l    # Count number of file in currenct dir
+# "du -h --max-depth=1 ./ | sort -rh"   # Measure the data usage for current dir
+
+
 
 ```
 
