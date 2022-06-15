@@ -81,7 +81,7 @@ excerpt: >-
 - Don't let self-doubt get in the way, and realize that anything is possible, define how you want your life to be right now!
 - Don't let the past or anything else hold you back. Your write the script to your life! No one else, you are the programmer!
 
-> #### Habit 2: "Begin with the end in mind"[[edit](https://en.wikipedia.org/w/index.php?title=The_7_Habits_of_Highly_Effective_People&action=edit&section=4)]
+> Habit 2: "Begin with the end in mind"
 >
 > Covey discusses envisioning what one wants in the future (a [personal mission statement](https://en.wikipedia.org/wiki/Personal_mission_statement)) so one can work and plan towards it, and understanding how people make important life decisions. To be effective one needs to act based on principles and constantly review one's mission statements, says Covey. Covey asks: Are you—right now—who you want to be? What do you have to say about yourself? How do you want to be remembered? If habit 1 advises changing one's life to act and be proactive, habit 2 advises that "you are the programmer". Grow and stay humble, Covey says.
 >
@@ -148,15 +148,15 @@ This jump have something to do with speaking skills in critical conversation, Le
 
 
 
->### Interdependence[[edit](https://en.wikipedia.org/w/index.php?title=The_7_Habits_of_Highly_Effective_People&action=edit&section=6)]
+>**Interdependence**
 >
 >The next three habits talk about [interdependence](https://en.wikipedia.org/wiki/Interdependence) (i.e., working with others):
 >
->#### Habit 4: "Think win–win"[[edit](https://en.wikipedia.org/w/index.php?title=The_7_Habits_of_Highly_Effective_People&action=edit&section=7)]
+>**Habit 4: "Think win–win"**
 >
 >Seek mutually beneficial [win–win solutions](https://en.wikipedia.org/wiki/Win–win_solution) or agreements in your relationships, says Covey. Valuing and respecting people by seeking a "win" for all is ultimately a better long-term resolution than if only one person in the situation had gotten their way. Thinking win–win isn't about being nice, nor is it a quick-fix technique; it is a character-based code for human interaction and collaboration, says Covey.
 >
->#### Habit 5: "Seek first to understand, then to be understood"[[edit](https://en.wikipedia.org/w/index.php?title=The_7_Habits_of_Highly_Effective_People&action=edit&section=8)]
+>Habit 5: "Seek first to understand, then to be understood"
 >
 >See also: [Rogerian argument](https://en.wikipedia.org/wiki/Rogerian_argument)
 >
@@ -170,15 +170,15 @@ This jump have something to do with speaking skills in critical conversation, Le
 >
 >The order of the concepts indicates their relative importance, says Covey.
 >
->#### Habit 6: "Synergize"[[edit](https://en.wikipedia.org/w/index.php?title=The_7_Habits_of_Highly_Effective_People&action=edit&section=9)]
+>**Habit 6: "Synergize"**
 >
 >Combine the strengths of people through positive [teamwork](https://en.wikipedia.org/wiki/Teamwork), so as to achieve goals that no one could have done alone, Covey exhorts.
 >
->### Continual improvement[[edit](https://en.wikipedia.org/w/index.php?title=The_7_Habits_of_Highly_Effective_People&action=edit&section=10)]
+>**Continual improvement**
 >
 >The final habit is that of [continuous improvement](https://en.wikipedia.org/wiki/Continuous_improvement) in both the personal and interpersonal spheres of influence.
 >
->#### Habit 7: "Sharpen the saw"[[edit](https://en.wikipedia.org/w/index.php?title=The_7_Habits_of_Highly_Effective_People&action=edit&section=11)]
+>**Habit 7: "Sharpen the saw"**
 >
 >See also: [Kaizen](https://en.wikipedia.org/wiki/Kaizen)
 >
