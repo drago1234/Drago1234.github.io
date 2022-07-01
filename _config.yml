@@ -1,4 +1,6 @@
-# Reference: to learn more about YAML formats, https://idratherbewriting.com/documentation-theme-jekyll
+# Reference: 
+# 1) Configuration Options, https://jekyllrb.com/docs/configuration/options/
+# 2) to learn more about YAML formats, https://idratherbewriting.com/documentation-theme-jekyll
 # Setup
 title:            "Drago's Blog"
 url:              'https://drago1234.github.io'
@@ -68,6 +70,9 @@ plugins:
   - jekyll-gist
   - jekyll-feed
 
+# Disable non-whitelisted plugins, caching to disk, and ignore symbolic links.
+safe: true
+
 # mimic GitHub Pages with --safe
 whitelist:
   - jekyll-paginate
@@ -102,8 +107,8 @@ defaults:
       related:    true
       comments:   true
 
-# Things you don't want to process
-exclude: ["filename.md", "subfolder_name/", "*.gitignore"]
+# Things you don't want to be processed
+exclude: [*.gitignore, _exclude/, TBD/, pdf/]
 
 # Other Custome Parameters
 locales:
