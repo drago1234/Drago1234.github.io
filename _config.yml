@@ -71,7 +71,7 @@ plugins:
   - jekyll-feed
 
 # Disable non-whitelisted plugins, caching to disk, and ignore symbolic links.
-# safe: true
+safe: true
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -108,7 +108,7 @@ defaults:
       comments:   true
 
 # Things you don't want to be processed
-exclude: [*.gitignore, _exclude/, TBD/, pdf/]
+exclude: ["*.gitignore", "_exclude/", 'TBD/', 'pdf/']
 
 # Other Custome Parameters
 locales:
