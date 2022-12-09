@@ -4,6 +4,7 @@ title: About Me
 ---
 <!-- Using Embedded ruby to do calculation , se more detail: https://www.startuprocket.com/articles/a-quick-introduction-to-embedded-ruby-a-k-a-erb-eruby-->
 ![trophy.jpg](/assets/images/trophy.jpg)
+
 Welcome to my blog!
 
 
