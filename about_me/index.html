@@ -209,7 +209,7 @@ title: About Me
               d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z">
             </path>
           </svg><!-- <i class="fa fa-paper-plane" aria-hidden="true"></i> Font Awesome fontawesome.com -->GPA
-          3.9/4.0
+          3.93/4.0
           (<a href="pdf/2022_Summer_Advising_Report.pdf">Degree Advice Report</a>)
         </div>
       </div>
@@ -352,8 +352,6 @@ title: About Me
 </section>
 <br>
 
-
-
 <!-- <ul> -->
 <!-- <li>
           09/2020: Completed 2 specializations on Coursera: <a href="https://www.coursera.org/specializations/mathematics-machine-learning">Mathematics for Machine Learning</a> and <a href="https://www.coursera.org/specializations/data-science-python">Applied Data Science with Python</a> on Coursera. [<a href="file/MfML.pdf">Certification_MfML</a>] [<a href="file/ADS.pdf">Certification_ADS</a>]
@@ -362,9 +360,20 @@ title: About Me
 
 <h3 id="Project"><strong>Projects</strong></h3>
 <div class="boxed">
-  <strong>2022Spring--BU EC523, Deep Learning Project: Automatic Waste Detection on ZeroWaste<a
-      href="https://docs.google.com/document/u/1/d/e/2PACX-1vRWUcub0rMfzZOc4kAcXP4StqQcvkv07utUBKVXCUaMEVwlPHXrdN8NPHODJ96o62N_wVMpKiYMiQ9E/pub">
-      [Course Syllabus]</a></strong><br>
+  <strong>2022 Fall--BU ME570, Motion Planning Final Project: A Deep Learning Based Approach for Foot Placement Prediction with Attention Mechanism <a href="pdf/BU_ME570_Motion_Planning/syllabus(13).pdf"> [Course Syllabus]</a></strong><br>
+  <div class="row">
+    <div class="column">
+      <img class="displayed" src="pdf/BU_ME570_Motion_Planning/foot_placement_prediction.png" style="display: block; margin: auto">
+    </div>
+  </div>
+  <list>
+    <li><a href="pdf/BU_ME570_Motion_Planning/2022_ME570_Draft--SubmitV3.pdf">Final Project Paper</a></li>
+  </list>
+  <strong>Abstract: </strong> Predicting the next foot placement of human walking or running activity is an important task for developing a comfortable and intelligent walking aid robot. The previous study mainly focuses on designing the walking aid robot with better mechanical support or adding some traditional machining learning approaches that require extensive manual feature selection to generate the foot placement probability grid map. Those approaches can be difficult to generalize to various complicated scenarios in human daily life activities. Therefore, an attention mechanism with several state-of-the-art neural network techniques was investigated for improving the generalization ability and accuracy of the foot placement prediction task. In this study, we implemented and compared four different neural network architectures for foot placement prediction, and the experimental result are obtained and showed a clear improvement in the effectiveness of adding an attention mechanism to the novel network architecture that only consists of Long Short-Term Memory (LSTM) layer or Bidirectional LSTM (Bi-LSTM) layer. An experimental comparison found that the MAE, MSE, and RMSE prediction error has reduced by about 8.64%, 16.97%, and 8.88% after adding the attention layer meanwhile this performance does not correlate with the model size. Besides, our result also shows that simply replacing the LSTM with the Bi-LSTM layer would not improve the performance and can be harmful instead. 
+</div>
+
+<div class="boxed">
+  <strong>2022Spring--BU EC523, Deep Learning Project: Automatic Waste Detection on ZeroWaste<a href="https://docs.google.com/document/u/1/d/e/2PACX-1vRWUcub0rMfzZOc4kAcXP4StqQcvkv07utUBKVXCUaMEVwlPHXrdN8NPHODJ96o62N_wVMpKiYMiQ9E/pub"> [Course Syllabus]</a></strong><br>
   <div class="row">
     <div class="column">
       <img class="displayed" src="pdf/BU_EC523_Waste_Detection/test_batch2_pred.jpg" style="float:left; width: 45%">
@@ -385,30 +394,13 @@ title: About Me
   </list>
   <strong>Summary: </strong> Increased air, water, soil and sea pollution is still an big problem today. According to
   the data forecasted by <a href="https://openknowledge.worldbank.org/handle/10986/30317">World Bank Group at
-    2018(p24)</a>, 2.59 billion tonnes of waste will be generated annually by 2030, and this number will be expected
-  to
-  reach 3.40 billion tonnes by 2050. In addition, based on the data reported by <a
-    href="https://www.epa.gov/facts-and-figures-about-materials-waste-and-recycling/national-overview-facts-and-figures-materials">States
-    Environmental Protection Agency</a>, there is less than 35% of recyclable waste is actually being recycled in
-  the
-  US. Due to high cost of waste management($50-$100 per tonnes), inadequate waste collection and uncontrolled dumping
-  or
-  burning of solid waste are still an unfortunated reality, polluting the air, waster, and soil in the world.
-  Therefore,
-  in this project, we are aiming at pushing on the barriers of automatic waste detection and sorting and try to
-  experiment different state-of-the-art detection model (both single-stage and two-stage detector) on the Zero Waste
-  dataset, the largest public waste detection dataset. At the end, three detection models were tested with some
-  customized pre-processing and data augmentation, and their performance all exceeds the baseline shown in the <a
-    href="https://arxiv.org/abs/2106.02740">original paper</a> that was published three monthes ago. Among them,
-  YOLOR
-  has achieved the best performance over all evaluation criteria and has outperformed TridentNet greatly, 2.57x higher
-  on AP and 5.92x higher on AP_small. The detailed benchmark and explanations are shown in the report!
+    2018(p24)</a>, 2.59 billion tonnes of waste will be generated annually by 2030, and this number will be expected to reach 3.40 billion tonnes by 2050. In addition, based on the data reported by <a href="https://www.epa.gov/facts-and-figures-about-materials-waste-and-recycling/national-overview-facts-and-figures-materials">States
+    Environmental Protection Agency</a>, there is less than 35% of recyclable waste is actually being recycled in the US. Due to high cost of waste management($50-$100 per tonnes), inadequate waste collection and uncontrolled dumping or burning of solid waste are still an unfortunated reality, polluting the air, waster, and soil in the world. Therefore, in this project, we are aiming at pushing on the barriers of automatic waste detection and sorting and try to experiment different state-of-the-art detection model (both single-stage and two-stage detector) on the Zero Waste dataset, the largest public waste detection dataset. At the end, three detection models were tested with some customized pre-processing and data augmentation, and their performance all exceeds the baseline shown in the <a href="https://arxiv.org/abs/2106.02740">original paper</a> that was published three monthes ago. Among them, YOLOR has achieved the best performance over all evaluation criteria and has outperformed TridentNet greatly, 2.57x higher on AP and 5.92x higher on AP_small. The detailed benchmark and explanations are shown in the report!
 </div>
 
 <div class="boxed">
   <strong>2022Spring--BU CS585, Image Processing Challenge: Monocular camera based Visual Odometry(or Localization) <a
-      href="https://docs.google.com/document/u/1/d/e/2PACX-1vSPc7lwEaPBExAhnnzbi4hv38e2BcG-L8n0Uxw5TOpAS3RYDwjb8Rm09uPcNTIkC47Me0Oxg5LTfyXY/pub">
-      [Course Syllabus]</a></strong><br>
+      href="https://docs.google.com/document/u/1/d/e/2PACX-1vSPc7lwEaPBExAhnnzbi4hv38e2BcG-L8n0Uxw5TOpAS3RYDwjb8Rm09uPcNTIkC47Me0Oxg5LTfyXY/pub"> [Course Syllabus]</a></strong><br>
   <div class="row">
     <div class="column">
       <img src="pdf/BU_CS585_Visual_Odometry/cs585_sift_result.gif" style="width: 75%; display: block; margin: auto">

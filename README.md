@@ -13,10 +13,9 @@ You would need the following code to run:
 gem install jekyll  # Update jekyll gem (Yes, jekyll is a gem as well)
 bundle update   # Update all gem packages
 bundle install  # Install newly added gem packages
-bundle exec jekyll serve    # Start the server and running
+bundle exec jekyll serve    # Start the server and running # Always use this command not the normal 'jekell serve', read more here https://idratherbewriting.com/documentation-theme-jekyll/index.html
 # Note: you can use jekyll serve, which means run it without generating the Gemfile.lock
 ```
-
 
 You might also want to update Github gem frequently, this can help to seamlessly synchronize the reflection that you build on Github server match your local build
  

@@ -13,7 +13,7 @@ rss:              'atom.xml'
 permalink:        pretty  # Name to use in domain, e.g., Drago1234.github.io/pretty
 paginate_path:    '/page:num'
 timezone:         'America/New_York'  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
+repository: drago1234/Drago1234.github.io
 
 # Build settings (Reference for more theme: https://mmistakes.github.io/minimal-mistakes/docs/configuration/#theme)
 # theme: minima 
