@@ -22,3 +22,12 @@ You might also want to update Github gem frequently, this can help to seamlessly
 ``` bash
 gem update github-pages
 ```
+
+
+## Q&A
+- How to fix HTTP 404 on Github Pages?
+I had just one commit with all my files. I pushed an empty commit, refreshed the page and it worked.
+```
+git commit --allow-empty -m "Trigger rebuild"
+git push
+```
